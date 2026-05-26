@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura｜資料透明中心</title>
+  <meta name="description" content="Aura 資料透明中心，以互動式隱私控制艙呈現資料權限、本地端處理、個人化記憶、刪除與下載控制。">
+  <meta name="theme-color" content="#08060b">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Aura 資料透明中心",
+    "description": "Aura 資料透明中心說明資料權限、本地端優先、AI Companion 記憶、刪除、下載與撤回授權。",
+    "about": ["data transparency", "privacy-first design", "revocable consent", "AI Companion memory"]
+  }
+  </script>
+
+  <style>
+    /* Privacy Center｜mobile-only layout fix
+       只修 privacy.html 手機版：避免儀表板、導覽列與權限列被壓縮。 */
+    @media (max-width: 760px) {
+      body[data-page="privacy"] {
+        overflow-x: hidden;
+      }
+
+      body[data-page="privacy"] .privacy-center-page,
+      body[data-page="privacy"] .privacy-console-section {
+        overflow-x: hidden;
+      }
+
+      body[data-page="privacy"] .privacy-center-hero {
+        padding: calc(var(--header-h, 78px) + 36px) 0 24px;
+      }
+
+      body[data-page="privacy"] .privacy-center-hero__inner {
+        width: min(100% - 28px, var(--max, 1180px));
+        gap: 18px;
+      }
+
+      body[data-page="privacy"] .privacy-center-hero h1 {
+        margin-top: 12px;
+        font-size: clamp(2.65rem, 13vw, 4.15rem);
+        line-height: 1;
+        letter-spacing: -0.055em;
+      }
+
+      body[data-page="privacy"] .privacy-center-hero p {
+        max-width: 100%;
+        font-size: .95rem;
+        line-height: 1.78;
+      }
+
+      body[data-page="privacy"] .privacy-secure-pill {
+        width: auto;
+        max-width: 100%;
+        min-height: 42px;
+        padding: 0 15px;
+        justify-content: flex-start;
+        font-size: .76rem;
+      }
+
+      body[data-page="privacy"] .privacy-console-section {
+        padding-top: 12px;
+        padding-bottom: 56px;
+      }
+
+      body[data-page="privacy"] .privacy-console-section .privacy-console,
+      body[data-page="privacy"] .privacy-console {
+        width: min(100% - 22px, var(--max, 1180px)) !important;
+        max-width: calc(100% - 22px) !important;
+        margin-inline: auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px;
+        padding: 13px;
+        border-radius: 22px;
+        overflow: visible;
+      }
+
+      body[data-page="privacy"] .privacy-sidebar {
+        position: static;
+        top: auto;
+        min-height: auto;
+        padding: 12px 8px 14px;
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.09);
+        gap: 12px;
+      }
+
+      body[data-page="privacy"] .privacy-sidebar__brand {
+        gap: 10px;
+        letter-spacing: .24em;
+      }
+
+      body[data-page="privacy"] .privacy-sidebar__brand img {
+        width: 34px;
+        height: 34px;
+      }
+
+      body[data-page="privacy"] .privacy-side-nav {
+        display: flex !important;
+        grid-template-columns: none !important;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2px 2px 8px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      body[data-page="privacy"] .privacy-side-nav::-webkit-scrollbar {
+        height: 5px;
+      }
+
+      body[data-page="privacy"] .privacy-side-nav::-webkit-scrollbar-thumb {
+        background: rgba(246,219,162,.26);
+        border-radius: 999px;
+      }
+
+      body[data-page="privacy"] .privacy-side-nav a {
+        flex: 0 0 auto;
+        min-width: max-content;
+        min-height: 40px;
+        padding: 0 13px;
+        justify-content: center;
+        border-radius: 999px;
+        font-size: .86rem;
+        white-space: nowrap;
+        scroll-snap-align: start;
+      }
+
+      body[data-page="privacy"] .privacy-side-nav a span {
+        display: inline-block;
+        width: auto;
+      }
+
+      body[data-page="privacy"] .privacy-sidebar__note {
+        display: none;
+      }
+
+      body[data-page="privacy"] .privacy-dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px;
+        width: 100%;
+        min-width: 0;
+      }
+
+      body[data-page="privacy"] .privacy-dashboard-grid > *,
+      body[data-page="privacy"] .privacy-status-card,
+      body[data-page="privacy"] .privacy-permission-card,
+      body[data-page="privacy"] .privacy-mini-card,
+      body[data-page="privacy"] .privacy-activity-card,
+      body[data-page="privacy"] .privacy-plan-depth,
+      body[data-page="privacy"] .privacy-action-card,
+      body[data-page="privacy"] .privacy-principle-card {
+        grid-column: 1 / -1 !important;
+        width: 100%;
+        min-width: 0;
+      }
+
+      body[data-page="privacy"] .privacy-card {
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      body[data-page="privacy"] .privacy-card__head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+        padding: 17px 15px 0;
+      }
+
+      body[data-page="privacy"] .privacy-card__head h2,
+      body[data-page="privacy"] .privacy-mini-card h2,
+      body[data-page="privacy"] .privacy-action-card h2,
+      body[data-page="privacy"] .privacy-principle-card h2 {
+        font-size: 1.05rem;
+        line-height: 1.25;
+      }
+
+      body[data-page="privacy"] .privacy-status-layout {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 18px;
+        padding: 18px 15px 20px;
+      }
+
+      body[data-page="privacy"] .pc-status-ring {
+        width: min(210px, 72vw);
+      }
+
+      body[data-page="privacy"] .pc-status-list {
+        gap: 12px;
+      }
+
+      body[data-page="privacy"] .pc-status-list div {
+        align-items: flex-start;
+      }
+
+      body[data-page="privacy"] .pc-permission-row {
+        grid-template-columns: 24px minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 14px 15px;
+        align-items: center;
+      }
+
+      body[data-page="privacy"] .pc-permission-row strong,
+      body[data-page="privacy"] .pc-permission-row small {
+        overflow-wrap: anywhere;
+      }
+
+      body[data-page="privacy"] .pc-permission-row small {
+        font-size: .78rem;
+        line-height: 1.45;
+      }
+
+      body[data-page="privacy"] .pc-permission-row i {
+        width: 48px;
+        height: 26px;
+      }
+
+      body[data-page="privacy"] .pc-permission-row i::before {
+        width: 16px;
+        height: 16px;
+      }
+
+      body[data-page="privacy"] .pc-permission-row.is-on i::before {
+        transform: translateX(22px);
+      }
+
+      body[data-page="privacy"] .privacy-mini-card {
+        grid-template-columns: 50px minmax(0, 1fr) !important;
+        gap: 13px;
+        min-height: auto;
+        padding: 18px 15px;
+        align-items: flex-start;
+      }
+
+      body[data-page="privacy"] .privacy-mini-icon,
+      body[data-page="privacy"] .privacy-action-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.35rem;
+      }
+
+      body[data-page="privacy"] .privacy-mini-card p,
+      body[data-page="privacy"] .privacy-action-card p,
+      body[data-page="privacy"] .privacy-principle-card p,
+      body[data-page="privacy"] .privacy-depth-copy p {
+        font-size: .91rem;
+        line-height: 1.68;
+      }
+
+      body[data-page="privacy"] .activity-bars {
+        height: 82px;
+        gap: 5px;
+        padding: 14px 15px 8px;
+      }
+
+      body[data-page="privacy"] .activity-foot {
+        margin: 0 15px 16px;
+      }
+
+      body[data-page="privacy"] .privacy-plan-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 16px 15px 0;
+      }
+
+      body[data-page="privacy"] .privacy-plan-tabs button {
+        min-width: 0;
+        min-height: 42px;
+        padding: 0 10px;
+        font-size: .82rem;
+      }
+
+      body[data-page="privacy"] .privacy-depth-copy {
+        padding: 16px 15px 18px;
+      }
+
+      body[data-page="privacy"] .privacy-depth-copy h3 {
+        font-size: 1.08rem;
+        line-height: 1.35;
+      }
+
+      body[data-page="privacy"] .privacy-action-card {
+        grid-template-columns: 50px minmax(0, 1fr) !important;
+        gap: 13px;
+        min-height: auto;
+        padding: 18px 15px;
+        align-items: flex-start;
+      }
+
+      body[data-page="privacy"] .privacy-action-card .btn {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-height: 44px;
+        white-space: normal;
+      }
+
+      body[data-page="privacy"] .privacy-principle-card {
+        padding: 20px 16px;
+      }
+
+      body[data-page="privacy"] .privacy-principle-card h2 {
+        font-size: clamp(1.55rem, 8vw, 2.2rem);
+        line-height: 1.12;
+        letter-spacing: -0.045em;
+      }
+
+      body[data-page="privacy"] .privacy-feedback {
+        font-size: .9rem;
+        line-height: 1.6;
+      }
+    }
+
+    @media (max-width: 380px) {
+      body[data-page="privacy"] .privacy-console-section .privacy-console,
+      body[data-page="privacy"] .privacy-console,
+      body[data-page="privacy"] .privacy-center-hero__inner {
+        width: min(100% - 18px, var(--max, 1180px)) !important;
+        max-width: calc(100% - 18px) !important;
+      }
+
+      body[data-page="privacy"] .pc-permission-row {
+        grid-template-columns: 22px minmax(0, 1fr);
+      }
+
+      body[data-page="privacy"] .pc-permission-row i,
+      body[data-page="privacy"] .pc-permission-row em {
+        grid-column: 2;
+        justify-self: start;
+        margin-top: 8px;
+      }
+
+      body[data-page="privacy"] .privacy-plan-tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+</head>
+<body data-page="privacy">
+  <div data-site-header></div>
+
+  <main class="privacy-center-page" data-privacy-center>
+    <section class="privacy-center-hero" aria-label="Aura 資料透明中心主視覺">
+      <div class="privacy-orb orb-a" aria-hidden="true"></div>
+      <div class="privacy-orb orb-b" aria-hidden="true"></div>
+      <div class="page-shell privacy-center-hero__inner">
+        <div data-reveal>
+          <span class="eyebrow">Privacy Dashboard</span>
+          <h1>資料透明中心</h1>
+          <p>你的感知，不是商品。Aura 只在你同意時使用資料，並保留可關閉、可下載、可刪除的控制權。</p>
+        </div>
+        <div class="privacy-secure-pill" data-reveal aria-label="Aura 安全狀態">
+          <span aria-hidden="true">◆</span>
+          <strong>AURA SECURE</strong>
+          <i aria-hidden="true"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="section privacy-console-section" aria-label="互動式資料透明儀表板">
+      <div class="page-shell privacy-console">
+        <aside class="privacy-sidebar" data-reveal aria-label="資料透明導覽">
+          <a class="privacy-sidebar__brand" href="index.html" aria-label="回到 Aura 首頁">
+            <img src="aura-logo.png" alt="Aura Logo">
+            <span>AURA</span>
+          </a>
+          <nav class="privacy-side-nav" aria-label="資料透明區塊">
+            <a href="#overview" class="is-active"><span>⌂</span>總覽</a>
+            <a href="#permissions"><span>◈</span>資料權限</a>
+            <a href="#personal"><span>◎</span>個人化</a>
+            <a href="#local"><span>▣</span>本地端</a>
+            <a href="#control"><span>⌫</span>清除 / 下載</a>
+          </nav>
+          <div class="privacy-sidebar__note">
+            <span class="mini-orb" aria-hidden="true"></span>
+            <p>隱私，是自我照護的一部分。</p>
+          </div>
+        </aside>
+
+        <div class="privacy-dashboard-grid">
+          <section class="privacy-card privacy-status-card" id="overview" data-reveal>
+            <div class="privacy-card__head">
+              <h2>隱私狀態</h2>
+              <span data-status-label>Excellent</span>
+            </div>
+            <div class="privacy-status-layout">
+              <div class="pc-status-ring" aria-label="目前隱私分數">
+                <span class="checkmark">✓</span>
+                <strong data-privacy-score>92</strong>
+                <small>你的資料受到保護</small>
+              </div>
+              <div class="pc-status-list">
+                <div><span>✓</span><p><strong>不出售資料</strong><small>Verified</small></p></div>
+                <div><span>✓</span><p><strong>本地端優先</strong><small>Active</small></p></div>
+                <div><span>✓</span><p><strong>記憶可刪除</strong><small>Enabled</small></p></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="privacy-card privacy-permission-card" id="permissions" data-reveal>
+            <div class="privacy-card__head">
+              <h2>資料權限</h2>
+              <span data-permission-summary>2 項開啟</span>
+            </div>
+
+            <label class="pc-permission-row is-locked is-on">
+              <span class="pc-icon">●</span>
+              <span><strong>必要資料</strong><small>登入、方案與裝置狀態</small></span>
+              <em>必要</em>
+            </label>
+
+            <label class="pc-permission-row is-on">
+              <span class="pc-icon">◒</span>
+              <span><strong>個人化洞察</strong><small>場景、語氣與偏好推薦</small></span>
+              <input type="checkbox" data-center-toggle="personalization" checked>
+              <i></i>
+            </label>
+
+            <label class="pc-permission-row">
+              <span class="pc-icon">◌</span>
+              <span><strong>敏感感知資料</strong><small>情緒與同步訊號，預設關閉</small></span>
+              <input type="checkbox" data-center-toggle="sensitive">
+              <i></i>
+            </label>
+
+            <label class="pc-permission-row">
+              <span class="pc-icon">▥</span>
+              <span><strong>匿名分析</strong><small>僅用於改善體驗</small></span>
+              <input type="checkbox" data-center-toggle="analytics">
+              <i></i>
+            </label>
+          </section>
+
+          <section class="privacy-card privacy-mini-card" id="personal" data-reveal>
+            <div class="privacy-mini-icon">◎</div>
+            <div>
+              <h2>個人化</h2>
+              <p>平衡模式：保留推薦，但不擴張權限。</p>
+              <input class="pc-range" type="range" min="0" max="100" value="56" data-personal-depth aria-label="個人化深度">
+              <small data-personal-label>Balanced</small>
+            </div>
+          </section>
+
+          <section class="privacy-card privacy-mini-card" id="local" data-reveal>
+            <div class="privacy-mini-icon">▣</div>
+            <div>
+              <h2>本地端處理</h2>
+              <p><strong>Active</strong>｜敏感訊號優先在裝置端處理，減少不必要傳輸。</p>
+              <a href="product.html" class="privacy-inline-link">查看產品設計 →</a>
+            </div>
+          </section>
+
+          <section class="privacy-card privacy-activity-card" data-reveal>
+            <div class="privacy-card__head">
+              <h2>隱私活動</h2>
+              <span>7 Days</span>
+            </div>
+            <div class="activity-bars" aria-hidden="true">
+              <i style="height:82%"></i><i style="height:42%"></i><i style="height:30%"></i><i style="height:48%"></i>
+              <i style="height:66%"></i><i style="height:62%"></i><i style="height:38%"></i><i style="height:44%"></i>
+              <i style="height:30%"></i><i style="height:58%"></i><i style="height:28%"></i><i style="height:60%"></i>
+              <i style="height:31%"></i><i style="height:57%"></i><i style="height:28%"></i><i style="height:24%"></i>
+            </div>
+            <div class="activity-foot"><span>本地端處理事件</span><strong>1,287</strong></div>
+          </section>
+
+          <section class="privacy-card privacy-plan-depth" data-reveal>
+            <div class="privacy-card__head">
+              <h2>方案資料深度</h2>
+              <span>可調整</span>
+            </div>
+            <div class="privacy-plan-tabs" role="tablist" aria-label="方案資料深度選擇">
+              <button type="button" class="is-active" data-depth-plan="preview">Preview</button>
+              <button type="button" data-depth-plan="ritual">Ritual</button>
+              <button type="button" data-depth-plan="plus">Plus</button>
+              <button type="button" data-depth-plan="sanctuary">Sanctuary</button>
+            </div>
+            <div class="privacy-depth-copy">
+              <h3 data-depth-title>Free Preview｜最少資料</h3>
+              <p data-depth-desc>只保留當次體驗狀態，不延伸 Companion 記憶。</p>
+            </div>
+          </section>
+
+          <section class="privacy-card privacy-action-card" id="control" data-reveal>
+            <div class="privacy-action-icon">⌫</div>
+            <div>
+              <h2>刪除紀錄</h2>
+              <p>永久清除本次體驗互動紀錄。</p>
+            </div>
+            <button class="btn btn-danger" type="button" data-center-action="delete">立即刪除</button>
+          </section>
+
+          <section class="privacy-card privacy-action-card" data-reveal>
+            <div class="privacy-action-icon">⇩</div>
+            <div>
+              <h2>下載我的資料</h2>
+              <p>匯出一份資料使用摘要。</p>
+            </div>
+            <button class="btn btn-ghost" type="button" data-center-action="download">下載</button>
+          </section>
+
+          <section class="privacy-card privacy-principle-card" data-reveal>
+            <span class="eyebrow">Aura Privacy Promise</span>
+            <h2>不偷看、不出售、不強迫記憶。</h2>
+            <p>資料最小化、明示授權、可撤回控制，是 Aura 會員與 NOEMA 體驗的共同底線。</p>
+            <div class="privacy-feedback" data-center-feedback>你可以切換權限，系統會即時更新目前狀態。</div>
+            <a class="btn btn-ghost privacy-crisis-link" href="crisis.html">查看信任回應機制</a>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

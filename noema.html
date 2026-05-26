@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura｜NOEMA 體驗入口</title>
+  <meta name="description" content="NOEMA 是 Aura 的感知空間入口，進入全畫面沉浸式體驗。">
+  <meta name="theme-color" content="#09070d">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="noema">
+  <div data-site-header></div>
+
+  <main class="noema-minimal-page">
+    <section class="noema-minimal-hero" aria-label="NOEMA 體驗入口">
+      <div class="noema-minimal-bg" aria-hidden="true"></div>
+      <div class="noema-minimal-shade" aria-hidden="true"></div>
+
+      <div class="page-shell noema-minimal-layout">
+        <section class="noema-minimal-copy" data-reveal>
+          <span class="eyebrow" data-i18n="noema.clean.eyebrow">NOEMA</span>
+          <h1 data-i18n="noema.clean.title">進入屬於你的感知空間。</h1>
+          <p data-i18n="noema.clean.desc">選擇狀態，開始全畫面體驗。</p>
+        </section>
+
+        <section class="noema-focus-stage" aria-label="NOEMA 場景預覽" data-reveal>
+          <figure class="noema-focus-image">
+            <img id="noemaFocusImage" src="noema-scene.png" alt="Calm Room 低刺激安定場域">
+            <figcaption id="noemaFocusCaption">Calm Room</figcaption>
+          </figure>
+
+          <div class="noema-scene-selector" role="tablist" aria-label="選擇 NOEMA 場景">
+            <button type="button" class="is-active" data-noema-scene="calm">
+              <span>01</span>
+              <strong>Calm Room</strong>
+              <small data-i18n="noema.clean.calm">低刺激安定場域</small>
+            </button>
+            <button type="button" data-noema-scene="reflection">
+              <span>02</span>
+              <strong>Reflection Lounge</strong>
+              <small data-i18n="noema.clean.reflection">內在整理場域</small>
+            </button>
+            <button type="button" data-noema-scene="companion">
+              <span>03</span>
+              <strong>Companion Garden</strong>
+              <small data-i18n="noema.clean.companion">AI 陪伴互動場域</small>
+            </button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="noema-entry-only" aria-label="進入全畫面體驗">
+      <a class="btn btn-primary noema-entry-button" href="experience-signal.html" data-i18n="noema.clean.enter">進入全畫面體驗</a>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="js/script.js"></script>
+  <script>
+    (function () {
+      const scenes = {
+        zh: {
+          calm: {
+            img: "noema-scene.png",
+            alt: "Calm Room 低刺激安定場域",
+            caption: "Calm Room"
+          },
+          reflection: {
+            img: "noema-world-bg.png",
+            alt: "Reflection Lounge 內在整理場域",
+            caption: "Reflection Lounge"
+          },
+          companion: {
+            img: "noema-private-sensory-space.png",
+            alt: "Companion Garden AI 陪伴互動場域",
+            caption: "Companion Garden"
+          }
+        },
+        en: {
+          calm: {
+            img: "noema-scene.png",
+            alt: "Calm Room low-stimulation space",
+            caption: "Calm Room"
+          },
+          reflection: {
+            img: "noema-world-bg.png",
+            alt: "Reflection Lounge inner reflection space",
+            caption: "Reflection Lounge"
+          },
+          companion: {
+            img: "noema-private-sensory-space.png",
+            alt: "Companion Garden AI companion space",
+            caption: "Companion Garden"
+          }
+        }
+      };
+
+      const buttons = Array.from(document.querySelectorAll("[data-noema-scene]"));
+      const image = document.getElementById("noemaFocusImage");
+      const caption = document.getElementById("noemaFocusCaption");
+      let current = "calm";
+
+      function lang() {
+        return localStorage.getItem("auraLang") === "en" ? "en" : "zh";
+      }
+
+      function render(key) {
+        current = key || current;
+        const item = scenes[lang()][current] || scenes.zh[current];
+        buttons.forEach(btn => btn.classList.toggle("is-active", btn.dataset.noemaScene === current));
+        if (image) {
+          image.style.opacity = "0";
+          setTimeout(() => {
+            image.src = item.img;
+            image.alt = item.alt;
+            image.style.opacity = "1";
+          }, 120);
+        }
+        if (caption) caption.textContent = item.caption;
+      }
+
+      buttons.forEach(btn => btn.addEventListener("click", () => render(btn.dataset.noemaScene)));
+      document.addEventListener("change", event => {
+        if (event.target.matches("[data-language-select]")) setTimeout(() => render(current), 0);
+      });
+      render(current);
+    })();
+  </script>
+</body>
+</html>

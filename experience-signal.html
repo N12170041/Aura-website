@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura｜Signal Lock</title>
+  <meta name="description" content="Aura 產品體驗流程 Step 01：意識同步頭盔啟動與本地端訊號鎖定。" />
+  <style>
+    :root {
+      --bg: #050307;
+      --bg-soft: #0e0a11;
+      --surface: rgba(25, 17, 28, 0.72);
+      --surface-strong: rgba(39, 24, 38, 0.88);
+      --border: rgba(255, 224, 199, 0.16);
+      --text: #f7efe8;
+      --muted: #d8c9c0;
+      --soft-muted: #a99996;
+      --wine: #6e1f37;
+      --wine-deep: #2d0f1f;
+      --purple: #7f57b7;
+      --purple-soft: #c7a6ff;
+      --gold: #f2c98c;
+      --gold-strong: #ffd8a7;
+      --cyan: #79f4ff;
+      --success: #9affd8;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max-width: 1200px;
+      --font-body: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 84px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(7, 6, 10, 0.86);
+      border-bottom: 1px solid rgba(255, 232, 215, 0.08);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+      border-radius: 0 !important;
+      overflow: visible;
+    }
+
+    .nav-inner {
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: nowrap;
+      padding: 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      min-width: fit-content;
+    }
+
+    .brand-logo {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 18px rgba(255, 211, 150, 0.22));
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    .flow-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 18px;
+      border: 1px solid rgba(255, 224, 199, 0.14);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.045);
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        opacity 0.25s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #140c10;
+      background: linear-gradient(135deg, #f6d7ab 0%, #f0bf7d 100%);
+      box-shadow: 0 14px 28px rgba(240, 191, 125, 0.18);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 224, 199, 0.14);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .back-link::before {
+      content: "←";
+      margin-right: 8px;
+      color: var(--gold-strong);
+    }
+
+    .signal-page {
+      position: relative;
+      min-height: 100vh;
+      padding-top: 84px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(110, 31, 55, 0.28), transparent 26%),
+        radial-gradient(circle at 80% 12%, rgba(127, 87, 183, 0.24), transparent 24%),
+        linear-gradient(180deg, #050406 0%, #09070c 35%, #0c0811 100%);
+      overflow: hidden;
+    }
+
+    .signal-hero {
+      position: relative;
+      min-height: calc(100vh - 84px);
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      z-index: -6;
+      background-image: url("signal-headset.png");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.03);
+      filter: saturate(1.12) contrast(1.06) brightness(0.7);
+      animation: sceneBreath 9s ease-in-out infinite alternate;
+    }
+
+    @keyframes sceneBreath {
+      from {
+        transform: scale(1.03);
+        filter: saturate(1.05) contrast(1.02) brightness(0.64);
+      }
+      to {
+        transform: scale(1.09);
+        filter: saturate(1.22) contrast(1.1) brightness(0.78);
+      }
+    }
+
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      z-index: -5;
+      background:
+        radial-gradient(circle at 48% 47%, rgba(255, 215, 166, 0.02), transparent 18%),
+        radial-gradient(circle at 50% 42%, transparent 0 18%, rgba(7, 5, 9, 0.22) 44%, rgba(5, 4, 6, 0.74) 100%),
+        linear-gradient(90deg, rgba(5, 4, 6, 0.82) 0%, rgba(5, 4, 6, 0.42) 39%, rgba(5, 4, 6, 0.72) 100%);
+    }
+
+    .star-noise {
+      position: absolute;
+      inset: 0;
+      z-index: -4;
+      opacity: 0.28;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(255, 216, 167, 0.75) 0 1px, transparent 2px),
+        radial-gradient(circle at 72% 22%, rgba(199, 166, 255, 0.7) 0 1px, transparent 2px),
+        radial-gradient(circle at 41% 70%, rgba(121, 244, 255, 0.7) 0 1px, transparent 2px),
+        radial-gradient(circle at 87% 74%, rgba(255, 216, 167, 0.68) 0 1px, transparent 2px);
+      background-size: 180px 180px, 220px 220px, 260px 260px, 300px 300px;
+      animation: starDrift 16s linear infinite;
+    }
+
+    @keyframes starDrift {
+      to {
+        background-position: 180px -180px, -220px 220px, 260px -260px, -300px 300px;
+      }
+    }
+
+    .grid-floor {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: -14%;
+      height: 46%;
+      z-index: -2;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(255, 216, 167, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 166, 255, 0.14) 1px, transparent 1px);
+      background-size: 64px 64px;
+      transform: perspective(760px) rotateX(62deg);
+      transform-origin: bottom;
+      animation: gridMove 8s linear infinite;
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.86), transparent);
+    }
+
+    @keyframes gridMove {
+      to {
+        background-position: 0 128px;
+      }
+    }
+
+    .scan-beam {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      top: -18%;
+      height: 28%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      background: linear-gradient(to bottom, transparent, rgba(121, 244, 255, 0.18), transparent);
+      animation: scanDown 5.6s ease-in-out infinite;
+    }
+
+    @keyframes scanDown {
+      0% {
+        opacity: 0;
+        transform: translateY(0);
+      }
+      16% {
+        opacity: 0.9;
+      }
+      76% {
+        opacity: 0.24;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(118vh);
+      }
+    }
+
+
+    .reality-veil {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, transparent 0 35%, rgba(255, 216, 167, 0.08) 42%, transparent 50%),
+        repeating-linear-gradient(90deg, rgba(121, 244, 255, 0.05) 0 1px, transparent 1px 84px);
+      mix-blend-mode: screen;
+      opacity: 0.46;
+      animation: veilSweep 6.8s ease-in-out infinite;
+    }
+
+    @keyframes veilSweep {
+      0%, 100% {
+        transform: translateX(-6%) skewX(-8deg);
+        opacity: 0.24;
+      }
+      45% {
+        transform: translateX(8%) skewX(-8deg);
+        opacity: 0.72;
+      }
+    }
+
+    .tunnel-rings {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: min(760px, 74vw);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.72;
+      mix-blend-mode: screen;
+      perspective: 900px;
+    }
+
+    .tunnel-rings span {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 216, 167, 0.2);
+      box-shadow:
+        inset 0 0 42px rgba(127, 87, 183, 0.12),
+        0 0 50px rgba(121, 244, 255, 0.08);
+      transform: rotateX(64deg) scale(var(--scale));
+      opacity: var(--alpha);
+      animation: tunnelTravel 4.2s linear infinite;
+      animation-delay: var(--delay);
+    }
+
+    .tunnel-rings span:nth-child(1) { --scale: .32; --alpha: .86; --delay: 0s; }
+    .tunnel-rings span:nth-child(2) { --scale: .48; --alpha: .72; --delay: -.7s; }
+    .tunnel-rings span:nth-child(3) { --scale: .64; --alpha: .58; --delay: -1.4s; }
+    .tunnel-rings span:nth-child(4) { --scale: .82; --alpha: .44; --delay: -2.1s; }
+    .tunnel-rings span:nth-child(5) { --scale: 1.02; --alpha: .32; --delay: -2.8s; }
+
+    @keyframes tunnelTravel {
+      0% {
+        transform: rotateX(66deg) rotateZ(0deg) scale(calc(var(--scale) * .82));
+        filter: blur(1.4px);
+      }
+      45% {
+        opacity: calc(var(--alpha) + .15);
+        filter: blur(0);
+      }
+      100% {
+        transform: rotateX(66deg) rotateZ(360deg) scale(calc(var(--scale) * 1.18));
+        filter: blur(1.8px);
+      }
+    }
+
+    .portal-horizon {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      width: min(520px, 48vw);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+      border-radius: 50%;
+      opacity: .56;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.82) 0 2%, rgba(255,216,167,.78) 3% 8%, rgba(121,244,255,.18) 9% 18%, transparent 19%),
+        conic-gradient(from 90deg, rgba(255,216,167,.28), transparent 18%, rgba(127,87,183,.32), transparent 54%, rgba(121,244,255,.24), transparent 82%, rgba(255,216,167,.28));
+      filter: blur(.2px);
+      mix-blend-mode: screen;
+      animation: horizonPulse 3.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes horizonPulse {
+      from {
+        transform: translate(-50%, -50%) scale(.78) rotate(0deg);
+        opacity: .32;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1.04) rotate(36deg);
+        opacity: .72;
+      }
+    }
+
+    .light-ribbon {
+      position: absolute;
+      left: -12%;
+      width: 125%;
+      height: 2px;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(255, 216, 167, .88), rgba(121,244,255,.72), transparent);
+      box-shadow: 0 0 24px rgba(255, 216, 167, .34);
+      opacity: 0;
+      transform-origin: center;
+      animation: ribbonCross 5.2s ease-in-out infinite;
+    }
+
+    .light-ribbon.r1 {
+      top: 34%;
+      transform: rotate(13deg);
+      animation-delay: .4s;
+    }
+
+    .light-ribbon.r2 {
+      top: 58%;
+      transform: rotate(-16deg);
+      animation-delay: 1.4s;
+    }
+
+    .light-ribbon.r3 {
+      top: 71%;
+      transform: rotate(5deg);
+      animation-delay: 2.2s;
+    }
+
+    @keyframes ribbonCross {
+      0%, 100% {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+      }
+      18% {
+        opacity: .86;
+      }
+      56% {
+        opacity: .48;
+        clip-path: inset(0 0 0 0);
+      }
+      82% {
+        opacity: 0;
+        clip-path: inset(0 0 0 100%);
+      }
+    }
+
+    .calibration-points {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .calibration-points span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 216, 167, .78);
+      box-shadow: 0 0 18px rgba(255, 216, 167, .38);
+      animation: pointBlink 2.4s ease-in-out infinite;
+    }
+
+    .calibration-points span::after {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: inherit;
+      border: 1px solid rgba(121, 244, 255, .18);
+      animation: pointPulse 2.4s ease-in-out infinite;
+    }
+
+    .calibration-points span:nth-child(1) { left: 47%; top: 32%; animation-delay: .1s; }
+    .calibration-points span:nth-child(2) { left: 55%; top: 38%; animation-delay: .55s; }
+    .calibration-points span:nth-child(3) { left: 43%; top: 48%; animation-delay: 1s; }
+    .calibration-points span:nth-child(4) { left: 59%; top: 54%; animation-delay: 1.45s; }
+
+    @keyframes pointBlink {
+      0%, 100% { opacity: .14; transform: scale(.8); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+
+    @keyframes pointPulse {
+      0% { transform: scale(.45); opacity: .8; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+
+    .signal-layout {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: minmax(0, 0.94fr) minmax(360px, 0.64fr);
+      gap: 34px;
+      align-items: center;
+      padding: 74px 0;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 0.82rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(3.3rem, 8vw, 6rem);
+      line-height: 0.92;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #fff5ec;
+      text-shadow: 0 0 38px rgba(0,0,0,0.52);
+    }
+
+    .hero-copy h2 {
+      margin: 20px 0 18px;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.35;
+      color: var(--gold-strong);
+      font-weight: 500;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 570px;
+      color: rgba(247, 239, 232, 0.78);
+      font-size: 1rem;
+      text-shadow: 0 0 24px rgba(0,0,0,0.5);
+    }
+
+    .status-strip {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 224, 199, 0.14);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.052);
+      backdrop-filter: blur(16px);
+      font-size: 0.86rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px rgba(255, 216, 167, 0.75);
+      animation: dotPulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% {
+        transform: scale(0.8);
+        opacity: 0.55;
+      }
+      50% {
+        transform: scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    .virtual-core {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      width: min(420px, 38vw);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.72;
+      mix-blend-mode: screen;
+    }
+
+    .virtual-core .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 216, 167, 0.26);
+      box-shadow:
+        inset 0 0 46px rgba(127, 87, 183, 0.18),
+        0 0 48px rgba(255, 216, 167, 0.12);
+      animation: ringRotate 12s linear infinite;
+    }
+
+    .virtual-core .ring:nth-child(2) {
+      inset: 13%;
+      border-color: rgba(121, 244, 255, 0.22);
+      animation-duration: 9s;
+      animation-direction: reverse;
+      transform: scaleX(1.34) rotate(22deg);
+    }
+
+    .virtual-core .ring:nth-child(3) {
+      inset: 26%;
+      border-color: rgba(199, 166, 255, 0.22);
+      animation-duration: 7s;
+      transform: scaleX(0.78) rotate(-16deg);
+    }
+
+    .virtual-core .core-light {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, #fff 0 8%, var(--gold) 9% 26%, rgba(121, 244, 255, 0.34) 27% 58%, transparent 60%);
+      box-shadow:
+        0 0 50px rgba(255, 216, 167, 0.68),
+        0 0 98px rgba(121, 244, 255, 0.26);
+      animation: corePulse 1.9s ease-in-out infinite;
+    }
+
+    @keyframes ringRotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes corePulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(0.88);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.12);
+      }
+    }
+
+    .data-stream {
+      position: absolute;
+      z-index: 2;
+      width: 24%;
+      height: 2px;
+      left: 38%;
+      top: 45%;
+      transform-origin: left center;
+      opacity: 0;
+      background: linear-gradient(90deg, transparent, rgba(121, 244, 255, 0.9), rgba(255,255,255,0.9));
+      box-shadow: 0 0 18px rgba(121, 244, 255, 0.48);
+      animation: dataShoot 2.6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .data-stream.s2 { transform: rotate(40deg); animation-delay: .2s; }
+    .data-stream.s3 { transform: rotate(-35deg); animation-delay: .45s; }
+    .data-stream.s4 { transform: rotate(174deg); animation-delay: .7s; }
+    .data-stream.s5 { transform: rotate(118deg); animation-delay: 1s; }
+
+    @keyframes dataShoot {
+      0% {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+      }
+      25% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 0.78;
+        clip-path: inset(0 0 0 0);
+      }
+      100% {
+        opacity: 0;
+        clip-path: inset(0 0 0 100%);
+      }
+    }
+
+    .control-panel {
+      position: relative;
+      border: 1px solid rgba(255, 224, 199, 0.16);
+      border-radius: 30px;
+      padding: 26px;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(255, 216, 167, 0.12), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.028));
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .control-panel::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      top: -120px;
+      right: -120px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 216, 167, 0.14);
+      box-shadow: inset 0 0 60px rgba(121, 244, 255, 0.05);
+      pointer-events: none;
+    }
+
+    .panel-head {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 20px;
+    }
+
+    .panel-head h3 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1.15;
+      font-family: var(--font-display);
+      letter-spacing: 0.01em;
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .progress-block {
+      position: relative;
+      z-index: 1;
+      margin: 22px 0;
+      padding: 18px;
+      border: 1px solid rgba(255, 224, 199, 0.12);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .progress-top strong {
+      font-size: 0.98rem;
+    }
+
+    .percent {
+      color: var(--gold-strong);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--wine), var(--purple), var(--cyan), var(--gold));
+      box-shadow: 0 0 22px rgba(121, 244, 255, 0.35);
+      transition: width 0.65s ease;
+    }
+
+    .sequence-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sequence-item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid rgba(255, 224, 199, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.035);
+      transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s ease;
+    }
+
+    .sequence-index {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 246, 238, 0.75);
+      border: 1px solid rgba(255, 224, 199, 0.16);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .sequence-item strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.98rem;
+    }
+
+    .sequence-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .sequence-item.active {
+      border-color: rgba(255, 216, 167, 0.48);
+      background: rgba(255, 216, 167, 0.07);
+      transform: translateY(-2px);
+    }
+
+    .sequence-item.active .sequence-index {
+      color: #160d11;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--gold-strong), var(--gold));
+      box-shadow: 0 0 18px rgba(255, 216, 167, 0.28);
+    }
+
+    .sequence-item.done .sequence-index::before {
+      content: "✓";
+      font-size: 0.9rem;
+    }
+
+    .sequence-item.done .sequence-index {
+      font-size: 0;
+      color: #13231d;
+      background: linear-gradient(135deg, var(--success), #fff);
+    }
+
+    .panel-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .data-note {
+      margin-top: 18px;
+      color: rgba(247, 239, 232, 0.62);
+      font-size: 0.82rem;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 246, 238, 0.86);
+      box-shadow: 0 0 14px rgba(121, 244, 255, 0.6);
+      pointer-events: none;
+      animation: floatParticle linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0) scale(0.4);
+      }
+      18% {
+        opacity: 0.92;
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--move-x), -160px, 0) scale(1.05);
+      }
+    }
+
+
+    @media (max-width: 980px) {
+      .flow-label {
+        display: none;
+      }
+
+      .signal-layout {
+        grid-template-columns: 1fr;
+        padding: 54px 0;
+      }
+
+      .control-panel {
+        max-width: 680px;
+      }
+
+      .virtual-core,
+      .portal-horizon,
+      .tunnel-rings {
+        left: 68%;
+        top: 38%;
+        width: min(360px, 62vw);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 28px));
+      }
+
+      .navbar {
+        height: 78px;
+        position: fixed;
+        border-radius: 0 !important;
+      }
+
+      .nav-inner {
+        min-height: 78px;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .brand-logo {
+        width: 44px;
+        height: 44px;
+      }
+
+      .brand-name {
+        font-size: 1.6rem;
+      }
+
+      .nav-actions {
+        flex: 0 0 auto;
+      }
+
+      .back-link {
+        min-height: 40px;
+        padding: 0 14px;
+        font-size: .88rem;
+      }
+
+      .signal-page {
+        padding-top: 78px;
+      }
+
+      .signal-hero {
+        min-height: calc(100vh - 78px);
+      }
+
+      .signal-layout {
+        padding: 42px 0;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(3rem, 16vw, 4.4rem);
+      }
+
+      .panel-actions .btn {
+        width: 100%;
+      }
+
+      .hero-photo {
+        background-position: 52% center;
+      }
+
+      .hero-shade {
+        background:
+          radial-gradient(circle at 50% 28%, transparent 0 20%, rgba(5, 4, 6, 0.42) 52%, rgba(5, 4, 6, 0.88) 100%),
+          linear-gradient(180deg, rgba(5, 4, 6, 0.56), rgba(5, 4, 6, 0.84));
+      }
+
+      .virtual-core,
+      .portal-horizon,
+      .tunnel-rings {
+        opacity: 0.5;
+        left: 50%;
+        top: 34%;
+      }
+
+      .calibration-points {
+        opacity: .65;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .brand-name {
+        display: none;
+      }
+
+      .back-link::before {
+        display: none;
+      }
+
+      .back-link {
+        font-size: .82rem;
+        padding: 0 12px;
+      }
+    }
+  
+
+    /* Final QA｜desktop font and spacing polish */
+    @media (min-width: 981px) {
+      .signal-title h1, .hero-copy h1, h1 {
+        font-size: clamp(3rem, 6.4vw, 5.2rem) !important;
+        line-height: 1 !important;
+        letter-spacing: -0.055em !important;
+        text-wrap: balance;
+      }
+      .signal-hero { min-height: calc(100vh - 84px); }
+      .container { width: min(var(--max-width), calc(100% - 72px)); }
+      .signal-card, .status-panel, .flow-panel { min-width: 0; }
+    }
+    @media (min-width: 981px) and (max-width: 1366px) {
+      .signal-title h1, .hero-copy h1, h1 { font-size: clamp(2.85rem, 5.8vw, 4.75rem) !important; }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html" aria-label="Aura 首頁">
+        <img src="aura-logo.png" alt="Aura 品牌 Logo" class="brand-logo">
+        <span class="brand-name">Aura</span>
+      </a>
+
+      <nav class="nav-actions" aria-label="體驗流程導覽">
+        <span class="flow-label">Experience Flow・Step 01 / Signal Lock</span>
+        <a href="noema.html" class="btn btn-secondary back-link">返回 NOEMA 入口</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="signal-page">
+    <section class="signal-hero" aria-label="Aura Signal Lock 體驗動畫">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="star-noise" aria-hidden="true"></div>
+      <div class="grid-floor" aria-hidden="true"></div>
+      <div class="scan-beam" aria-hidden="true"></div>
+      <div class="reality-veil" aria-hidden="true"></div>
+      <div class="tunnel-rings" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="portal-horizon" aria-hidden="true"></div>
+      <div class="light-ribbon r1" aria-hidden="true"></div>
+      <div class="light-ribbon r2" aria-hidden="true"></div>
+      <div class="light-ribbon r3" aria-hidden="true"></div>
+      <div class="calibration-points" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="virtual-core" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="core-light"></div>
+      </div>
+
+      <div class="data-stream s1" aria-hidden="true"></div>
+      <div class="data-stream s2" aria-hidden="true"></div>
+      <div class="data-stream s3" aria-hidden="true"></div>
+      <div class="data-stream s4" aria-hidden="true"></div>
+      <div class="data-stream s5" aria-hidden="true"></div>
+
+      <div class="container signal-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">Signal Lock</p>
+          <h1>本地端訊號鎖定</h1>
+          <h2>意識同步頭盔啟動後，系統會先在本地端建立穩定連線。</h2>
+          <p>
+            這一步不是把敏感訊號直接送上雲端，而是先透過 Edge AI 建立低風險的狀態基準。
+            Aura 只同步必要的狀態摘要，讓 NOEMA 能理解使用者當下節奏，同時保留邊界與主控權。
+          </p>
+
+          <div class="status-strip">
+            <span class="status-pill"><i class="status-dot"></i>Headset Linked</span>
+            <span class="status-pill"><i class="status-dot"></i>Local First</span>
+            <span class="status-pill"><i class="status-dot"></i>Encrypted Channel</span>
+          </div>
+        </div>
+
+        <aside class="control-panel" aria-label="訊號鎖定狀態面板">
+          <div class="panel-head">
+            <p class="eyebrow">Start Sequence</p>
+            <h3>連線正在建立</h3>
+            <p id="sequenceStatus">正在確認頭盔佩戴狀態與基礎訊號穩定度。</p>
+          </div>
+
+          <div class="progress-block">
+            <div class="progress-top">
+              <strong>Signal Lock Progress</strong>
+              <span class="percent" id="percentText">0%</span>
+            </div>
+            <div class="progress" aria-hidden="true">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <ol class="sequence-list">
+            <li class="sequence-item active" data-step="0">
+              <span class="sequence-index">01</span>
+              <span>
+                <strong>頭盔連線</strong>
+                <span>確認意識同步頭盔佩戴與裝置連接狀態。</span>
+              </span>
+            </li>
+            <li class="sequence-item" data-step="1">
+              <span class="sequence-index">02</span>
+              <span>
+                <strong>本地訊號校準</strong>
+                <span>建立情緒節奏、壓力狀態與互動強度的本地基準。</span>
+              </span>
+            </li>
+            <li class="sequence-item" data-step="2">
+              <span class="sequence-index">03</span>
+              <span>
+                <strong>加密通道啟動</strong>
+                <span>只傳送必要狀態摘要，避免敏感原始訊號外流。</span>
+              </span>
+            </li>
+            <li class="sequence-item" data-step="3">
+              <span class="sequence-index">04</span>
+              <span>
+                <strong>準備開啟 NOEMA</strong>
+                <span>完成訊號鎖定後，進入下一階段：傳送門開啟。</span>
+              </span>
+            </li>
+          </ol>
+
+          <div class="panel-actions">
+            <button type="button" class="btn btn-secondary" id="restartSequence">重新掃描</button>
+            <a href="experience-portal.html" class="btn btn-primary">下一步：開啟傳送門</a>
+          </div>
+
+          <p class="data-note">
+            本頁以動畫說明 Aura 如何以「本地端優先、最小資料、明示授權」建立信任鏈路。
+          </p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const steps = [
+      {
+        percent: 18,
+        text: "正在確認頭盔佩戴狀態與基礎訊號穩定度。"
+      },
+      {
+        percent: 46,
+        text: "本地端 Edge AI 正在建立情緒節奏與壓力狀態基準。"
+      },
+      {
+        percent: 73,
+        text: "加密通道啟動，只同步 NOEMA 所需的必要狀態摘要。"
+      },
+      {
+        percent: 100,
+        text: "訊號鎖定完成。NOEMA 傳送門已準備開啟。"
+      }
+    ];
+
+    const sequenceItems = Array.from(document.querySelectorAll(".sequence-item"));
+    const statusText = document.getElementById("sequenceStatus");
+    const percentText = document.getElementById("percentText");
+    const progressFill = document.getElementById("progressFill");
+    const restartButton = document.getElementById("restartSequence");
+
+    let timers = [];
+
+    function clearTimers() {
+      timers.forEach((timer) => clearTimeout(timer));
+      timers = [];
+    }
+
+    function setStep(index) {
+      const step = steps[index];
+      sequenceItems.forEach((item, itemIndex) => {
+        item.classList.toggle("active", itemIndex === index);
+        item.classList.toggle("done", itemIndex < index);
+      });
+      statusText.textContent = step.text;
+      percentText.textContent = `${step.percent}%`;
+      progressFill.style.width = `${step.percent}%`;
+    }
+
+    function completeSequence() {
+      sequenceItems.forEach((item) => {
+        item.classList.remove("active");
+        item.classList.add("done");
+      });
+      statusText.textContent = "準備完成。可以進入下一階段：NOEMA 傳送門開啟。";
+      percentText.textContent = "100%";
+      progressFill.style.width = "100%";
+    }
+
+    function runSequence() {
+      clearTimers();
+      sequenceItems.forEach((item) => item.classList.remove("active", "done"));
+      progressFill.style.width = "0%";
+      percentText.textContent = "0%";
+      statusText.textContent = "正在確認頭盔佩戴狀態與基礎訊號穩定度。";
+
+      steps.forEach((_, index) => {
+        timers.push(setTimeout(() => setStep(index), 450 + index * 1250));
+      });
+
+      timers.push(setTimeout(completeSequence, 450 + (steps.length - 1) * 1250 + 900));
+    }
+
+    restartButton.addEventListener("click", runSequence);
+    runSequence();
+
+    const hero = document.querySelector(".signal-hero");
+
+    function createParticle() {
+      const particle = document.createElement("span");
+      particle.className = "particle";
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${58 + Math.random() * 36}%`;
+      particle.style.setProperty("--move-x", `${(Math.random() - 0.5) * 160}px`);
+      particle.style.animationDuration = `${4.5 + Math.random() * 4.5}s`;
+      particle.style.animationDelay = `${Math.random() * 1.8}s`;
+      particle.style.opacity = `${0.28 + Math.random() * 0.72}`;
+      hero.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 9000);
+    }
+
+    for (let i = 0; i < 70; i += 1) {
+      setTimeout(createParticle, i * 80);
+    }
+
+    setInterval(() => {
+      for (let i = 0; i < 3; i += 1) createParticle();
+    }, 680);
+  </script>
+</body>
+</html>

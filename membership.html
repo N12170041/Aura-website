@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura｜會員方案與 NOEMA 接續體驗</title>
+  <meta name="description" content="選擇適合自己的 Aura NOEMA 會員方案，從免費體驗延伸到日常沉浸、AI 陪伴、資料透明與高端個人化模組。">
+  <meta name="theme-color" content="#09070d">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": "Aura NOEMA Membership Plans",
+    "itemListElement": [
+      {"@type":"Offer","name":"Free Preview","description":"短版 NOEMA 回訪與資料透明入口。"},
+      {"@type":"Offer","name":"NOEMA Ritual","description":"日常自我照護與完整 NOEMA 場景庫。"},
+      {"@type":"Offer","name":"NOEMA Plus","description":"多層級角色宇宙與進階體驗回顧。"},
+      {"@type":"Offer","name":"Sanctuary","description":"高端個人化、聲紋敘事包與深度記憶劇本，需明示授權。"}
+    ]
+  }
+  </script>
+</head>
+<body data-page="membership">
+  <div data-site-header></div>
+
+  <main>
+    <section class="membership-hero" aria-label="Aura 會員方案主視覺">
+      <div class="membership-hero__bg" aria-hidden="true">
+        <img src="noema-world-bg.png" alt="">
+      </div>
+      <div class="membership-hero__veil" aria-hidden="true"></div>
+      <div class="page-shell membership-hero__grid">
+        <div class="membership-hero__copy" data-reveal>
+          <span class="eyebrow" data-i18n="membership.hero.eyebrow">NOEMA Membership</span>
+          <h1 data-i18n="membership.hero.title">選擇你的 NOEMA 進入深度。</h1>
+          <p data-i18n="membership.hero.desc">免費體驗結束後，你不需要立刻被推向承諾。Aura 讓你依照自己的節奏，從回訪、日常沉浸到深度陪伴，選擇一個安全、合意、可控的接續方式。</p>
+          <div class="membership-hero__actions">
+            <a class="btn btn-primary" href="#plans" data-i18n="membership.hero.ctaPlans">查看會員方案</a>
+            <a class="btn btn-ghost" href="#privacy-note" data-i18n="membership.hero.ctaPrivacy">先看資料透明</a>
+          </div>
+        </div>
+
+        <aside class="membership-status" data-reveal aria-label="體驗校準摘要">
+          <div class="membership-status__orb" aria-hidden="true"></div>
+          <span class="eyebrow" data-i18n="membership.status.eyebrow">Calibration Summary</span>
+          <h2 id="membershipCompanionName">Luna</h2>
+          <p id="membershipCompanionHint" data-i18n="membership.status.defaultHint">系統會依據你的陪伴者語氣，推薦適合的 NOEMA 體驗深度。</p>
+          <div class="membership-status__rows">
+            <div><span data-i18n="membership.status.row1.label">同步狀態</span><strong data-i18n="membership.status.row1.value">已完成校準</strong></div>
+            <div><span data-i18n="membership.status.row2.label">資料模式</span><strong data-i18n="membership.status.row2.value">本地優先＋明示授權</strong></div>
+            <div><span data-i18n="membership.status.row3.label">目前建議</span><strong id="membershipRecommendedPlan">Ritual</strong></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section membership-model" aria-label="Aura 商業模式三層結構">
+      <div class="page-shell">
+        <div class="section-heading compact" data-reveal>
+          <span class="eyebrow" data-i18n="membership.model.eyebrow">Business Logic</span>
+          <h2 data-i18n="membership.model.title">會員方案不是刺激加購，而是體驗邊界的分層。</h2>
+          <p data-i18n="membership.model.desc">依照 Aura 的品牌架構，會員頁同時承接硬體入口、訂閱式內容與高端個人化模組，讓使用者知道自己正在選擇的是「靠近 NOEMA 的方式」，不是失去控制權。</p>
+        </div>
+
+        <div class="membership-model__grid">
+          <article data-reveal>
+            <span>01</span>
+            <h3 data-i18n="membership.model.hardware.title">硬體入口</h3>
+            <p data-i18n="membership.model.hardware.desc">意識同步頭盔與本地端訊號處理，負責進入 NOEMA 前的安全邊界。</p>
+          </article>
+          <article data-reveal>
+            <span>02</span>
+            <h3 data-i18n="membership.model.content.title">內容訂閱</h3>
+            <p data-i18n="membership.model.content.desc">場景庫、AI 陪伴者語氣與儀式感介面，讓體驗能持續更新。</p>
+          </article>
+          <article data-reveal>
+            <span>03</span>
+            <h3 data-i18n="membership.model.premium.title">高端模組</h3>
+            <p data-i18n="membership.model.premium.desc">聲紋敘事包、限定宇宙與深度記憶劇本，必須建立在明示授權之上。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section membership-plans" id="plans" aria-label="NOEMA 會員方案">
+      <div class="page-shell">
+        <div class="membership-plans__head" data-reveal>
+          <div>
+            <span class="eyebrow" data-i18n="membership.plans.eyebrow">Choose Your Plan</span>
+            <h2 data-i18n="membership.plans.title">從一次回訪，到一個可持續的私密空間。</h2>
+          </div>
+          <div class="billing-toggle" aria-label="方案週期選擇">
+            <button type="button" class="is-active" data-billing="monthly" data-i18n="membership.billing.monthly">月度</button>
+            <button type="button" data-billing="annual" data-i18n="membership.billing.annual">年度</button>
+          </div>
+        </div>
+
+        <div class="membership-plan-grid">
+          <article class="membership-plan" data-plan-card data-plan="preview" data-reveal>
+            <div class="membership-plan__top">
+              <span class="membership-plan__index">00</span>
+              <small data-i18n="membership.plan.preview.badge">Trial</small>
+            </div>
+            <h3 data-i18n="membership.plan.preview.title">Free Preview</h3>
+            <p class="membership-plan__for" data-i18n="membership.plan.preview.for">適合：剛完成體驗、還想再確認一次的人</p>
+            <p data-i18n="membership.plan.preview.desc">保留短版 NOEMA 回訪，讓使用者重新感受場景、節奏與邊界設定。</p>
+            <ul>
+              <li data-i18n="membership.plan.preview.f1">7 分鐘 NOEMA 回訪</li>
+              <li data-i18n="membership.plan.preview.f2">重新選擇狀態與場景</li>
+              <li data-i18n="membership.plan.preview.f3">資料透明看板入口</li>
+            </ul>
+            <button class="btn btn-ghost" type="button" data-choose-plan data-i18n="membership.plan.preview.cta">選擇回訪</button>
+          </article>
+
+          <article class="membership-plan is-selected" data-plan-card data-plan="ritual" data-reveal>
+            <div class="membership-plan__tag" data-i18n="membership.plan.ritual.recommended">推薦</div>
+            <div class="membership-plan__top">
+              <span class="membership-plan__index">01</span>
+              <small data-i18n="membership.plan.ritual.badge">Self-care</small>
+            </div>
+            <h3 data-i18n="membership.plan.ritual.title">NOEMA Ritual</h3>
+            <p class="membership-plan__for" data-i18n="membership.plan.ritual.for">適合：想把沉浸體驗變成日常自我照護的人</p>
+            <p data-i18n="membership.plan.ritual.desc">以穩定節奏進入 Calm、Reflection 與 Companion 場景，保留每次進入前的權限確認。</p>
+            <ul>
+              <li data-i18n="membership.plan.ritual.f1">完整 NOEMA 場景庫</li>
+              <li data-i18n="membership.plan.ritual.f2">AI 陪伴者語氣保存</li>
+              <li data-i18n="membership.plan.ritual.f3">月度情緒回顧與反思日誌</li>
+            </ul>
+            <button class="btn btn-primary" type="button" data-choose-plan data-i18n="membership.plan.ritual.cta">選擇 Ritual</button>
+          </article>
+
+          <article class="membership-plan" data-plan-card data-plan="plus" data-reveal>
+            <div class="membership-plan__top">
+              <span class="membership-plan__index">02</span>
+              <small data-i18n="membership.plan.plus.badge">Immersion</small>
+            </div>
+            <h3 data-i18n="membership.plan.plus.title">NOEMA Plus</h3>
+            <p class="membership-plan__for" data-i18n="membership.plan.plus.for">適合：需要更多角色宇宙與內容庫的人</p>
+            <p data-i18n="membership.plan.plus.desc">在 Ritual 基礎上，加入多層級角色宇宙、進階場景路徑與更完整的體驗摘要。</p>
+            <ul>
+              <li data-i18n="membership.plan.plus.f1">多層級角色宇宙</li>
+              <li data-i18n="membership.plan.plus.f2">限定 NOEMA 場景更新</li>
+              <li data-i18n="membership.plan.plus.f3">感知摘要與體驗回顧</li>
+            </ul>
+            <button class="btn btn-ghost" type="button" data-choose-plan data-i18n="membership.plan.plus.cta">升級 Plus</button>
+          </article>
+
+          <article class="membership-plan" data-plan-card data-plan="sanctuary" data-reveal>
+            <div class="membership-plan__top">
+              <span class="membership-plan__index">03</span>
+              <small data-i18n="membership.plan.sanctuary.badge">Premium</small>
+            </div>
+            <h3 data-i18n="membership.plan.sanctuary.title">Sanctuary</h3>
+            <p class="membership-plan__for" data-i18n="membership.plan.sanctuary.for">適合：需要高端個人化與更強隱私控制的人</p>
+            <p data-i18n="membership.plan.sanctuary.desc">聲紋敘事包、限定宇宙與深度記憶劇本採預約制，所有敏感資料皆需明示授權。</p>
+            <ul>
+              <li data-i18n="membership.plan.sanctuary.f1">聲紋敘事包</li>
+              <li data-i18n="membership.plan.sanctuary.f2">深度記憶劇本</li>
+              <li data-i18n="membership.plan.sanctuary.f3">進階刪除與授權管理</li>
+            </ul>
+            <button class="btn btn-ghost" type="button" data-choose-plan data-i18n="membership.plan.sanctuary.cta">預約 Sanctuary</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section membership-trust" id="privacy-note" aria-label="會員方案與資料透明">
+      <div class="page-shell membership-trust__grid">
+        <div class="membership-trust__copy" data-reveal>
+          <span class="eyebrow" data-i18n="membership.trust.eyebrow">Privacy by Plan</span>
+          <h2 data-i18n="membership.trust.title">越個人化，越需要看得見的控制權。</h2>
+          <p data-i18n="membership.trust.desc">Aura 的高階體驗不應該偷偷擴權。當方案包含更細緻的 AI 陪伴、記憶劇本或感知摘要，就必須同時提供可關閉、可下載、可刪除與可撤回的資料控制。</p>
+          <div class="membership-trust__actions">
+            <a class="btn btn-primary" href="privacy.html" data-i18n="membership.trust.ctaPrivacy">查看資料透明中心</a>
+            <a class="btn btn-ghost" href="noema.html" data-i18n="membership.trust.ctaNoema">回到 NOEMA 入口</a>
+          </div>
+        </div>
+
+        <div class="membership-trust__panel" data-reveal>
+          <div><span data-i18n="membership.trust.item1.label">必要資料</span><strong data-i18n="membership.trust.item1.value">帳號、裝置與付款資訊</strong></div>
+          <div><span data-i18n="membership.trust.item2.label">個人化資料</span><strong data-i18n="membership.trust.item2.value">偏好、場景與語氣設定，可關閉</strong></div>
+          <div><span data-i18n="membership.trust.item3.label">敏感資料</span><strong data-i18n="membership.trust.item3.value">明示授權，可即時刪除</strong></div>
+          <div><span data-i18n="membership.trust.item4.label">匿名分析</span><strong data-i18n="membership.trust.item4.value">僅用於改善體驗，可關閉</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section membership-next" aria-label="會員方案下一步">
+      <div class="page-shell">
+        <div class="membership-next__panel" data-reveal>
+          <span class="eyebrow" data-i18n="membership.next.eyebrow">Selected Path</span>
+          <h2 id="membershipSelectedTitle" data-i18n="membership.selected.ritual.title">你目前選擇：NOEMA Ritual</h2>
+          <p id="membershipSelectedDesc" data-i18n="membership.selected.ritual.desc">建議從 Ritual 開始，保留 AI 陪伴者語氣與日常沉浸場景，同時每次進入前重新確認資料邊界。</p>
+          <div class="membership-next__actions">
+            <button class="btn btn-primary" type="button" data-open-trial data-i18n="membership.next.ctaTrial">建立會員預約</button>
+            <a class="btn btn-ghost" href="product.html" data-i18n="membership.next.ctaProduct">查看 Aura 頭盔</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="trial-modal" id="trial-modal" aria-hidden="true">
+    <div class="trial-modal__backdrop" data-close-trial></div>
+    <section class="trial-modal__panel" role="dialog" aria-modal="true" aria-labelledby="trial-title">
+      <button class="modal-close" type="button" aria-label="關閉會員預約表單" data-close-trial data-i18n-aria-label="membership.modal.closeAria">×</button>
+      <span class="eyebrow" data-i18n="membership.modal.eyebrow">會員預約</span>
+      <h2 id="trial-title" data-i18n="membership.modal.title">預約 Aura 會員方案</h2>
+      <p data-i18n="membership.modal.desc">送出後將建立體驗預約，Aura 團隊會依你選擇的方案提供接續資訊。</p>
+
+      <form class="trial-form" data-trial-form>
+        <label>
+          <span data-i18n="home.modal.name">稱呼</span>
+          <input type="text" name="name" placeholder="例如：CC" required data-i18n-placeholder="home.modal.namePlaceholder">
+        </label>
+        <label>
+          <span data-i18n="home.modal.email">電子郵件</span>
+          <input type="email" name="email" placeholder="請輸入電子郵件" required data-i18n-placeholder="home.modal.emailPlaceholder">
+        </label>
+        <label>
+          <span data-i18n="membership.modal.plan">想了解的方案</span>
+          <select name="mode" id="membershipModalPlan">
+            <option>NOEMA Ritual</option>
+            <option>Free Preview</option>
+            <option>NOEMA Plus</option>
+            <option>Sanctuary</option>
+          </select>
+        </label>
+        <label class="checkbox-line">
+          <input type="checkbox" required>
+          <span data-i18n="membership.modal.consent">我同意 Aura 依預約需求處理資料，並可於資料透明中心撤回授權。</span>
+        </label>
+        <button class="btn btn-primary" type="submit" data-i18n="membership.modal.submit">建立預約</button>
+      </form>
+      <div class="trial-success" data-trial-success hidden>
+        <p class="trial-feedback" id="trial-feedback"></p>
+        <div class="trial-success__actions">
+          <a class="btn btn-primary" href="privacy.html" data-i18n="membership.modal.goPrivacy">前往資料透明中心</a>
+          <button class="btn btn-ghost" type="button" data-close-trial data-i18n="home.modal.later">稍後再看</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div data-site-footer></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

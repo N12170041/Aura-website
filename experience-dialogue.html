@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura | First Dialogue Sync</title>
+  <meta name="description" content="Aura NOEMA AI Companion 第一段對話與共鳴校準頁面。" />
+  <style>
+    :root{
+      --bg:#03030a;
+      --panel:#87cfff;
+      --panel-soft:rgba(135,207,255,.66);
+      --text:#edf8ff;
+      --muted:rgba(225,240,255,.72);
+      --dim:rgba(196,221,255,.48);
+      --line:rgba(134,211,255,.18);
+      --glow:rgba(126,205,255,.62);
+      --accent:#ba7cff;
+      --accent-soft:rgba(186,124,255,.55);
+      --gold:#d9bf8d;
+      --header:74px;
+      --scene-pad:clamp(14px,2.2vw,34px);
+      --portrait-scale:1.28;
+      --portrait-shift-y:12%;
+      --portrait-mobile-scale:1.14;
+      --portrait-mobile-shift-y:11%;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{min-height:100%;background:var(--bg)}
+    html{scroll-behavior:smooth}
+    body{
+      min-height:100svh;
+      overflow-x:hidden;
+      overflow-y:auto;
+      font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 50% 16%, rgba(183,121,255,.24), transparent 30%),
+        radial-gradient(circle at 84% 78%, rgba(115,212,255,.14), transparent 24%),
+        radial-gradient(circle at 12% 84%, rgba(182,55,91,.16), transparent 28%),
+        linear-gradient(180deg,#05040d 0%,#080613 42%,#03030a 100%);
+    }
+    body::before{
+      content:"";position:fixed;inset:0;z-index:-8;
+      background:url("noema-world-bg.png") center/cover no-repeat;
+      opacity:.14;filter:saturate(1.2) contrast(1.08) blur(1px);transform:scale(1.04);
+    }
+    body::after{
+      content:"";position:fixed;inset:0;z-index:12;pointer-events:none;
+      background:
+        linear-gradient(rgba(125,205,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(125,205,255,.032) 1px,transparent 1px),
+        radial-gradient(circle at 50% 48%, transparent 52%, rgba(3,3,10,.62) 100%),
+        linear-gradient(180deg,rgba(255,255,255,.035),transparent 7%,transparent 86%,rgba(126,205,255,.05));
+      background-size:58px 58px,58px 58px,100% 100%,100% 100%;
+      mix-blend-mode:screen;
+      opacity:.62;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+    .scanfield,.particles,.rings{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+    .scanfield{z-index:-4;mix-blend-mode:screen;opacity:.76}
+    .scanfield span{position:absolute;left:-24%;width:148%;height:1px;background:linear-gradient(90deg,transparent,rgba(132,214,255,.72),rgba(209,158,255,.78),transparent);box-shadow:0 0 26px rgba(135,207,255,.44);opacity:0;transform:rotate(var(--r)) translateX(-10%);animation:scanPass var(--d) linear infinite;animation-delay:var(--delay)}
+    .particles{z-index:10;mix-blend-mode:screen}
+    .particle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(232,246,255,.9);box-shadow:0 0 12px rgba(135,207,255,.82);opacity:0;animation:floatUp linear infinite}
+    .rings{z-index:-2;display:grid;place-items:center;opacity:.42}
+    .rings span{position:absolute;width:min(72vw,980px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(132,207,255,.14);box-shadow:0 0 70px rgba(135,207,255,.14), inset 0 0 54px rgba(216,174,255,.06);transform:scale(var(--s));animation:ringPulse 6s ease-in-out infinite;animation-delay:var(--delay)}
+
+    .site-header{
+      position:fixed;inset:0 0 auto 0;height:var(--header);z-index:40;
+      display:flex;align-items:center;justify-content:center;padding:0 clamp(14px,4vw,58px);
+      background:linear-gradient(180deg,rgba(3,4,12,.78),rgba(3,4,12,.28) 74%,transparent);
+      border-bottom:1px solid rgba(133,204,255,.07);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    }
+    .nav-inner{width:min(1560px,100%);display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:inline-flex;align-items:center;gap:13px;min-width:0;text-shadow:0 0 18px rgba(135,207,255,.25)}
+    .brand img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 18px rgba(135,207,255,.28))}
+    .logo-fallback{display:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(135,207,255,.45);place-items:center;color:var(--panel);font-size:.78rem;letter-spacing:.08em;box-shadow:0 0 16px rgba(135,207,255,.24)}
+    .brand-copy{display:grid;gap:2px;min-width:0}
+    .brand-copy strong{font-size:1.02rem;letter-spacing:.52em;font-weight:300;color:#f1fbff;line-height:1}
+    .brand-copy span{font-size:.7rem;letter-spacing:.16em;color:var(--muted);white-space:nowrap}
+    .back-link{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 16px;border:1px solid rgba(135,207,255,.18);border-radius:999px;background:rgba(5,11,24,.28);color:#c9eeff;font-size:.82rem;letter-spacing:.1em;transition:.28s ease;box-shadow:0 0 26px rgba(135,207,255,.06)}
+    .back-link::before{content:"‹";margin-right:7px;color:var(--panel)}
+    .back-link:hover{transform:translateY(-1px);border-color:rgba(135,207,255,.42);box-shadow:0 0 28px rgba(135,207,255,.18)}
+
+    .page{position:relative;z-index:1;min-height:100svh;padding-top:var(--header)}
+    .vr-scene{
+      position:relative;
+      min-height:calc(100svh - var(--header));
+      display:grid;
+      grid-template-columns:minmax(250px,24vw) minmax(220px,1fr) minmax(320px,30vw);
+      grid-template-rows:minmax(0,1fr) auto;
+      gap:clamp(12px,1.4vw,24px);
+      padding:var(--scene-pad);
+      overflow:visible;
+      isolation:isolate;
+      padding-bottom:28px;
+    }
+    .vr-scene::before{
+      content:"";position:absolute;inset:var(--scene-pad);z-index:3;pointer-events:none;
+      border:1px solid rgba(132,205,255,.13);
+      border-radius:28px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),0 0 70px rgba(96,172,255,.05);
+      mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+    }
+    .vr-scene::after{
+      content:"";position:absolute;left:var(--scene-pad);right:var(--scene-pad);bottom:calc(var(--scene-pad) + 112px);height:2px;z-index:6;pointer-events:none;
+      background:linear-gradient(90deg,transparent,rgba(132,205,255,.18) 7%,rgba(132,205,255,.95) 33%,rgba(190,142,255,.82) 68%,rgba(132,205,255,.18) 93%,transparent);
+      box-shadow:0 0 24px rgba(135,207,255,.38);
+    }
+
+    .hero-presence{
+      position:absolute;inset:0;z-index:1;display:grid;place-items:center;overflow:hidden;pointer-events:none;
+    }
+    .hero-presence::before{
+      content:"";position:absolute;left:50%;top:46%;width:min(72vw,980px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+      border:1px solid rgba(132,205,255,.14);box-shadow:0 0 80px rgba(135,207,255,.18), inset 0 0 54px rgba(197,152,255,.08);animation:slowSpin 32s linear infinite;
+    }
+    .hero-presence::after{
+      content:"";position:absolute;inset:0;background:
+        linear-gradient(90deg,rgba(3,3,10,.72) 0%,rgba(3,3,10,.34) 16%,rgba(3,3,10,.08) 34%,rgba(3,3,10,.08) 64%,rgba(3,3,10,.42) 84%,rgba(3,3,10,.76) 100%),
+        linear-gradient(180deg,rgba(6,7,18,.05),transparent 38%,rgba(3,3,10,.42) 100%);
+      pointer-events:none;z-index:2;
+    }
+    .portrait-wrap{position:absolute;inset:0;display:grid;place-items:end center;overflow:hidden;padding:0 0 clamp(10px,1.2vh,18px)}
+    .portrait-wrap::before{content:"";position:absolute;left:50%;bottom:6%;width:min(48vw,680px);height:58px;transform:translateX(-50%);background:radial-gradient(circle,rgba(132,205,255,.34),transparent 72%);filter:blur(14px);z-index:3}
+    .portrait{
+      width:min(104%,1120px);height:100%;max-height:100%;object-fit:contain;object-position:center bottom;
+      opacity:.98;filter:saturate(1.13) contrast(1.07) brightness(.92) drop-shadow(0 40px 90px rgba(0,0,0,.72));
+      transform:translateY(var(--portrait-shift-y)) scale(var(--portrait-scale));animation:portraitBreath 8s ease-in-out infinite alternate;
+    }
+    .presence-meta{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:7;display:flex;gap:18px;align-items:center;justify-content:center;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-shadow:0 0 18px rgba(5,10,24,.95)}
+    .presence-meta span:nth-child(n+2){display:none}
+    .presence-meta b{color:#9bd9ff;font-weight:500;text-shadow:0 0 18px rgba(135,207,255,.35)}
+
+    .hud-left,.hud-right,.console{position:relative;z-index:5;min-width:0;text-shadow:0 0 18px rgba(3,8,18,.92)}
+    .hud-left{
+      grid-column:1;grid-row:1;align-self:stretch;
+      display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,1.7vh,24px);
+      padding:18px clamp(10px,1.4vw,20px) 18px 8px;
+      background:linear-gradient(90deg,rgba(4,10,22,.30),rgba(4,10,22,.12) 70%,transparent);
+      border-left:1px solid rgba(132,205,255,.14);
+    }
+    .hud-label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:44px}
+    .vertical-markers{position:absolute;left:0;top:16%;bottom:8%;width:22px;border-left:1px solid rgba(132,205,255,.24)}
+    .vertical-markers span{position:absolute;left:-4px;width:8px;height:8px;border:1px solid rgba(132,205,255,.75);border-radius:50%;box-shadow:0 0 10px rgba(135,207,255,.42);background:rgba(3,8,18,.62)}
+    .vertical-markers span:nth-child(1){top:4%}.vertical-markers span:nth-child(2){top:26%}.vertical-markers span:nth-child(3){top:39%}.vertical-markers span:nth-child(4){top:51%}.vertical-markers span:nth-child(5){top:64%}
+    .identity{padding-left:44px;position:relative}
+    .identity h2{font-size:clamp(2.1rem,4vw,4.8rem);font-weight:300;line-height:.9;letter-spacing:.12em;color:#9bdfff;text-shadow:0 0 28px rgba(135,207,255,.36)}
+    .identity .zh{display:block;margin-top:12px;font-size:1rem;letter-spacing:.28em;color:#dff5ff}
+    .identity .role{margin-top:16px;max-width:310px;color:var(--muted);font-size:.93rem;line-height:1.65;letter-spacing:.04em}
+    .metric{padding-left:44px;padding-top:2px;border-top:1px solid rgba(132,205,255,.09)}
+    .metric strong{display:block;font-size:.86rem;letter-spacing:.08em;color:#e4f6ff;font-weight:500}
+    .metric small{display:none}
+    .metric .value{margin-top:8px;font-size:clamp(2.1rem,3vw,3.5rem);line-height:1;font-weight:300;color:#85b7ff;letter-spacing:-.03em;text-shadow:0 0 26px rgba(105,165,255,.38)}
+    .sync-cluster{display:flex;align-items:center;gap:18px;margin-top:10px;flex-wrap:wrap}
+    .sync-readout{display:flex;flex-direction:column;gap:6px;min-width:92px}
+    .sync-caption{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+    .wave-line,.pulse-line{margin-top:10px;height:34px;border-bottom:1px solid rgba(124,202,255,.14);position:relative;overflow:hidden}
+    .wave-line::before,.pulse-line::before{content:"";position:absolute;left:0;right:0;top:52%;height:2px;transform:translateY(-50%);background:linear-gradient(90deg,transparent,rgba(140,214,255,.18) 10%,rgba(140,214,255,.95) 36%,rgba(190,142,255,.95) 62%,rgba(140,214,255,.28) 88%,transparent);clip-path:polygon(0 52%,6% 38%,12% 54%,18% 26%,24% 50%,31% 42%,38% 58%,46% 32%,55% 56%,63% 44%,72% 58%,82% 36%,92% 52%,100% 48%);animation:waveShift 5.5s linear infinite}
+    .profile-row{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:10px;color:var(--muted);font-size:.86rem}
+    .profile-row span b{font-weight:600;color:#f1f8ff}
+    .text-stat{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-top:10px;color:var(--muted);font-size:.92rem}
+    .text-stat strong{font-size:1.05rem;color:#dff4ff;font-weight:500}
+
+    .hud-right{
+      grid-column:3;grid-row:1;align-self:stretch;
+      display:grid;grid-template-rows:auto minmax(0,1fr);gap:18px;
+      padding:18px 6px 18px clamp(12px,1.7vw,26px);
+      background:linear-gradient(270deg,rgba(5,10,24,.18),rgba(5,10,24,.05) 68%,transparent 96%);
+      border-right:1px solid rgba(132,205,255,.08);
+      position:relative;
+    }
+    .hud-right::before{
+      content:"";position:absolute;inset:10px 0 10px 20px;pointer-events:none;
+      border:1px solid rgba(132,205,255,.08);border-radius:24px;
+      background:linear-gradient(180deg,rgba(125,205,255,.025),rgba(186,124,255,.015));
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 0 30px rgba(135,207,255,.05);
+      mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+    }
+    .topline{display:flex;justify-content:flex-end;gap:14px;align-items:center;color:#9bcfff;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+    .topline span{position:relative}.topline span + span::before{content:"";position:absolute;left:-8px;top:50%;width:1px;height:12px;transform:translateY(-50%);background:rgba(132,205,255,.18)}
+    .conversation{min-height:340px;overflow-x:hidden;overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding:8px 14px 8px 4px;scrollbar-width:thin;scrollbar-color:rgba(132,205,255,.42) transparent;mask-image:linear-gradient(transparent 0,#000 6%,#000 94%,transparent 100%)}
+    .conversation::-webkit-scrollbar{width:5px}.conversation::-webkit-scrollbar-thumb{background:rgba(132,205,255,.42);border-radius:999px}
+    .message{max-width:100%;opacity:0;transform:translateY(12px);animation:msgIn .5s ease forwards;line-height:1.75;position:relative;padding:8px 0 12px;border:0;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+    .message.ai{align-self:flex-start;padding-left:34px;padding-right:24px;color:#eaf6ff}
+    .message.ai::before{content:"✦";position:absolute;left:0;top:10px;color:#9ed7ff;text-shadow:0 0 12px rgba(135,207,255,.45)}
+    .message.ai::after{content:"";position:absolute;left:10px;top:34px;bottom:4px;width:1px;background:linear-gradient(180deg,rgba(132,205,255,.56),rgba(132,205,255,.05));box-shadow:0 0 10px rgba(132,205,255,.18)}
+    .message.user{align-self:flex-end;text-align:right;padding-left:24px;padding-right:28px;color:#93d4ff}
+    .message.user::after{content:"●";position:absolute;right:0;top:12px;color:rgba(135,207,255,.78);font-size:.78rem;text-shadow:0 0 12px rgba(135,207,255,.55)}
+    .message.user::before{content:"";position:absolute;right:10px;top:34px;bottom:4px;width:1px;background:linear-gradient(180deg,rgba(190,142,255,.46),rgba(190,142,255,.04));box-shadow:0 0 10px rgba(190,142,255,.18)}
+    .name-tag{display:block;margin-bottom:6px;font-size:.75rem;letter-spacing:.14em;color:#98d8ff;text-transform:uppercase;opacity:.92}
+    .line-copy{display:block;font-size:1.02rem;text-shadow:0 0 12px rgba(13,21,46,.28);color:inherit;max-width:36ch}
+    .typing{align-self:flex-start;display:inline-flex;gap:6px;align-items:center;opacity:0;transform:translateY(8px);animation:msgIn .35s ease forwards;padding-left:24px}
+    .typing span{width:6px;height:6px;border-radius:50%;background:#99d7ff;box-shadow:0 0 10px rgba(135,207,255,.3);animation:blink 1s ease-in-out infinite}.typing span:nth-child(2){animation-delay:.14s}.typing span:nth-child(3){animation-delay:.28s}
+
+    .console{
+      grid-column:1 / -1;grid-row:2;align-self:end;
+      min-height:120px;padding:18px 10px 0;
+      background:linear-gradient(180deg,transparent,rgba(6,11,23,.16));
+    }
+    .console::before{content:"";position:absolute;left:10px;right:10px;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(132,205,255,.18) 8%,rgba(132,205,255,.9) 28%,rgba(190,142,255,.9) 72%,rgba(132,205,255,.18) 92%,transparent);box-shadow:0 0 22px rgba(135,207,255,.26)}
+    .console-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end}
+    .choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.8vw,30px)}
+    .choice{min-height:82px;padding:6px 6px 12px;text-align:left;color:#e2f4ff;transition:.25s ease;position:relative;overflow:visible;text-shadow:0 0 14px rgba(3,8,18,.9)}
+    .choice::before{content:"";position:absolute;left:0;right:16px;bottom:0;height:1px;background:linear-gradient(90deg,rgba(132,205,255,.12),rgba(132,205,255,.72),rgba(190,142,255,.58),transparent)}
+    .choice:hover,.choice.is-selected{transform:translateY(-3px);text-shadow:0 0 18px rgba(135,207,255,.36)}
+    .choice.is-selected::before{height:2px;box-shadow:0 0 18px rgba(135,207,255,.46)}
+    .choice:disabled{cursor:default;opacity:.84}.choice:disabled:hover{transform:none}
+    .choice-no{display:inline-flex;color:#8dd1ff;font-size:1rem;margin-bottom:8px;letter-spacing:.16em}
+    .choice-title{display:block;font-size:1.2rem;letter-spacing:.03em}
+    .choice-sub{display:block;margin-top:4px;font-size:.8rem;color:var(--dim);line-height:1.4}
+    .actions{display:flex;gap:18px;align-items:end;justify-content:flex-end;flex-wrap:wrap}
+    .btn{min-height:50px;padding:0 8px;border-radius:0;color:#e6f6ff;letter-spacing:.08em;transition:.25s ease;white-space:nowrap;position:relative;text-align:center;text-shadow:0 0 16px rgba(3,8,18,.88)}
+    .btn::before{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,rgba(132,205,255,.18),rgba(132,205,255,.62),transparent)}
+    .btn:hover{transform:translateY(-2px);text-shadow:0 0 18px rgba(135,207,255,.35)}
+    .btn-primary{min-width:300px;font-size:1.03rem}.btn-primary::after{content:"≫";margin-left:12px;color:#8cd2ff}.btn.is-disabled,.btn[aria-disabled="true"]{opacity:.42;filter:grayscale(.25) saturate(.7);cursor:not-allowed}.btn.is-disabled:hover,.btn[aria-disabled="true"]:hover{transform:none}
+
+    .console-note{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:center;position:relative;padding:16px 20px 18px;border:1px solid rgba(132,205,255,.24);border-radius:28px;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 0 0 1px rgba(132,205,255,.05)}
+    .console-note::before{content:"";position:absolute;left:18px;right:18px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(132,205,255,.68),rgba(190,142,255,.46),transparent);opacity:.95}
+    .console-note::after{content:"";position:absolute;inset:10px;border:1px solid rgba(132,205,255,.08);border-radius:22px;pointer-events:none}
+    .sync-orb{--progress:88;position:relative;width:122px;height:122px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#a785ff calc(var(--progress) * 1%), rgba(167,133,255,.18) 0);box-shadow:0 0 34px rgba(167,133,255,.18)}
+    .sync-orb::before{content:"";position:absolute;inset:11px;border-radius:50%;background:radial-gradient(circle at 50% 40%, rgba(21,14,38,.96), rgba(11,10,24,.98) 70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+    .sync-orb-inner{position:relative;z-index:1;display:grid;place-items:center;text-align:center}
+    .sync-orb-inner strong{font-size:2rem;font-weight:700;color:#f4e8ff;letter-spacing:-.03em}
+    .sync-orb-inner span{margin-top:3px;font-size:.86rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(228,213,255,.78)}
+    .contact-copy{min-width:0}
+    .contact-kicker{display:flex;align-items:center;gap:8px;color:#a9dcff;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase}
+    .contact-kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:#9bd9ff;box-shadow:0 0 12px rgba(155,217,255,.55)}
+    .contact-title{margin-top:8px;font-size:1.18rem;font-weight:500;letter-spacing:.02em;color:#f3fbff}
+    .contact-desc{margin-top:8px;max-width:100%;font-size:.92rem;line-height:1.75;color:rgba(232,245,255,.82)}
+    .contact-desc .companion-inline{color:#f5e6ff;font-weight:600}
+    .contact-tip{margin-top:10px;font-size:.8rem;letter-spacing:.04em;color:#9fd7ff}
+    .hud-left .metric:last-child{display:none}
+
+
+    @keyframes scanPass{0%{opacity:0;clip-path:inset(0 100% 0 0)}18%{opacity:.82}70%{opacity:.35;clip-path:inset(0 0 0 0)}100%{opacity:0;transform:rotate(var(--r)) translateX(12%)}}
+    @keyframes floatUp{0%{opacity:0;transform:translate3d(0,24px,0) scale(.6)}18%{opacity:.84}100%{opacity:0;transform:translate3d(var(--x),-110vh,0) scale(1.06)}}
+    @keyframes ringPulse{50%{transform:scale(calc(var(--s) * 1.06));opacity:.72}}
+    @keyframes slowSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    @keyframes portraitBreath{to{transform:translateY(calc(var(--portrait-shift-y) - 1.2%)) scale(calc(var(--portrait-scale) + .02));filter:saturate(1.16) contrast(1.08) brightness(.98) drop-shadow(0 42px 92px rgba(0,0,0,.72))}}
+    @keyframes msgIn{to{opacity:1;transform:translateY(0)}}
+    @keyframes blink{50%{transform:translateY(-4px);opacity:.5}}
+    @keyframes waveShift{0%{transform:translateX(0) translateY(-50%)}100%{transform:translateX(30px) translateY(-50%)}}
+
+    @media (max-width: 1320px){
+      .vr-scene{grid-template-columns:minmax(220px,23vw) minmax(180px,1fr) minmax(290px,30vw);gap:14px;padding:16px}
+      .identity h2{letter-spacing:.08em}.choice-title{font-size:1.08rem}.btn-primary{min-width:260px}
+      .vr-scene::after{bottom:128px}
+    }
+    @media (max-width: 1080px){
+      body{overflow-y:auto;overflow-x:hidden}
+      body::after{opacity:.48}
+      .page{min-height:auto}
+      .vr-scene{display:flex;flex-direction:column;min-height:auto;overflow:visible;padding:14px;gap:14px}
+      .vr-scene::before,.vr-scene::after{display:none}
+      .hero-presence{position:relative;inset:auto;height:min(74svh,760px);min-height:560px;order:1;border:1px solid rgba(132,205,255,.13);border-radius:30px;overflow:hidden;background:#050711;box-shadow:0 26px 80px rgba(0,0,0,.34)}
+      .hero-presence::after{background:linear-gradient(180deg,rgba(3,3,10,.18) 0%,transparent 38%,rgba(3,3,10,.64) 100%),linear-gradient(90deg,rgba(3,3,10,.28),transparent 30%,transparent 70%,rgba(3,3,10,.28))}
+      .portrait{width:min(100%,980px);object-position:center bottom;transform:translateY(var(--portrait-mobile-shift-y)) scale(var(--portrait-mobile-scale))}
+      .presence-meta{bottom:16px;width:calc(100% - 28px);gap:12px;flex-wrap:wrap;font-size:.66rem;white-space:normal;text-align:center}
+      .hud-left{order:2;display:grid;grid-template-columns:1.05fr .95fr;align-self:auto;gap:14px;padding:16px;border:1px solid rgba(132,205,255,.12);border-radius:26px;background:linear-gradient(135deg,rgba(7,13,27,.56),rgba(7,13,27,.26));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+      .hud-label,.identity,.metric{padding-left:0;margin-left:0}.vertical-markers{display:none}.metric{border-top:1px solid rgba(132,205,255,.1);padding-top:12px}.identity{grid-row:span 2}.identity h2{font-size:clamp(2.3rem,8vw,4rem)}.identity .role{max-width:none}
+      .hud-right{order:3;align-self:auto;min-height:320px;max-height:420px;padding:16px;border:1px solid rgba(132,205,255,.12);border-radius:26px;background:linear-gradient(135deg,rgba(7,13,27,.18),rgba(7,13,27,.04));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+      .topline{justify-content:flex-start;flex-wrap:wrap}.topline span:first-child,.topline span:last-child{display:none}
+      .conversation{mask-image:none;padding-right:4px}
+      .console{order:4;padding:14px 0 0;min-height:auto;background:none}.console::before{display:none}.console-grid{grid-template-columns:1fr;gap:14px}.console-note{grid-template-columns:1fr;padding:16px 18px;border-radius:24px}.console-note::after{inset:8px;border-radius:18px}.actions{justify-content:stretch}.actions .btn{flex:1}
+      .choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.choice{min-height:74px;padding:12px;border:1px solid rgba(132,205,255,.12);border-radius:20px;background:rgba(7,13,27,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.choice::before{left:12px;right:12px}.btn{border:1px solid rgba(132,205,255,.12);border-radius:999px;background:rgba(7,13,27,.28);padding:0 16px}.btn::before{display:none}.btn-primary{min-width:0}
+    }
+    @media (max-width: 720px){
+      :root{--header:66px}
+      .site-header{padding:0 12px}.brand{gap:9px}.brand img,.logo-fallback{width:34px;height:34px}.brand-copy strong{font-size:.86rem;letter-spacing:.38em}.brand-copy span{display:none}.back-link{min-height:34px;padding:0 12px;font-size:.72rem;letter-spacing:.05em}
+      .vr-scene{padding:10px 10px 22px;gap:12px}
+      .hero-presence{height:74svh;min-height:520px;border-radius:24px}.portrait{width:min(104%,860px);object-position:center bottom;transform:translateY(var(--portrait-mobile-shift-y)) scale(var(--portrait-mobile-scale))}
+      .presence-meta{font-size:.58rem;bottom:12px;gap:8px}.presence-meta span{padding:4px 7px;border:1px solid rgba(132,205,255,.13);border-radius:999px;background:rgba(3,7,16,.34)}
+      .hud-left{display:block;padding:14px;border-radius:22px}.identity h2{font-size:clamp(1.9rem,12vw,3rem)}.identity .zh{font-size:.82rem;margin-top:6px}.identity .role{font-size:.84rem;margin-top:8px;line-height:1.5}.hud-label{font-size:.68rem}.metric{margin-top:10px}.metric .value{font-size:1.95rem}.wave-line,.pulse-line{height:18px}.profile-row{gap:6px 10px;font-size:.76rem}.text-stat{font-size:.8rem}.text-stat strong{font-size:.9rem}
+      .hud-right{min-height:260px;max-height:320px;padding:12px;border-radius:22px}.topline{font-size:.64rem;gap:10px}.line-copy{font-size:.9rem}.message{max-width:100%;padding-top:6px;padding-bottom:8px}.message.ai{padding-left:20px}.message.user{padding-right:18px}.conversation{gap:12px;padding-right:2px}
+      .console-note{grid-template-columns:1fr;gap:10px;padding:14px 14px 12px;border-radius:20px}.contact-kicker{font-size:.68rem}.contact-title{font-size:1rem;margin-top:4px}.contact-desc{font-size:.84rem;line-height:1.65}.contact-tip{font-size:.76rem;margin-top:8px}.sync-cluster{gap:10px}.sync-orb{width:84px;height:84px}.sync-orb-inner strong{font-size:1.45rem}.sync-orb-inner span{font-size:.68rem}.choice-grid{grid-template-columns:1fr;gap:8px}.choice{min-height:56px;border-radius:16px;padding:10px 12px}.choice-title{font-size:.96rem}.choice-sub{display:none}.choice-no{font-size:.78rem;margin-bottom:4px}.actions{flex-direction:column;gap:10px}.btn,.btn-primary{width:100%;min-width:0;min-height:44px;font-size:.84rem}
+    }
+    @media (max-width: 430px){
+      .hero-presence{height:68svh;min-height:420px}.portrait{width:min(106%,720px);object-position:center bottom;transform:translateY(calc(var(--portrait-mobile-shift-y) + 1%)) scale(1.06)}.hud-right{max-height:300px}.identity h2{letter-spacing:.04em}.metric:nth-of-type(n+3){display:none}.presence-meta{display:none}.contact-kicker::before{display:none}
+    }
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="scanfield" aria-hidden="true">
+    <span style="--r:12deg;--d:4.6s;--delay:-.6s;top:20%"></span>
+    <span style="--r:-16deg;--d:5.8s;--delay:-2.1s;top:46%"></span>
+    <span style="--r:8deg;--d:6.2s;--delay:-3.4s;top:74%"></span>
+  </div>
+  <div class="particles" id="particleField" aria-hidden="true"></div>
+  <div class="rings" aria-hidden="true">
+    <span style="--s:.72;--delay:0s"></span>
+    <span style="--s:.94;--delay:-1.6s"></span>
+    <span style="--s:1.14;--delay:-3.2s"></span>
+  </div>
+
+  <header class="site-header" aria-label="Aura 頂部導覽">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="回到 Aura 首頁">
+        <img src="aura-logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+        <span class="logo-fallback">A</span>
+        <span class="brand-copy">
+          <strong>AURA</strong>
+          <span>First Dialogue Sync</span>
+        </span>
+      </a>
+      <a class="back-link" id="returnCompanionLink" href="experience-companion.html">返回陪伴者選擇</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="vr-scene" aria-label="第一次對話同步控制艙">
+      <aside class="hud-left" aria-label="陪伴者同步資料">
+        <div>
+          <p class="hud-label">AI 陪伴者</p>
+          <div class="vertical-markers" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="identity">
+          <h2 id="companionName">LUNA</h2>
+          <span class="zh" id="companionZh">露娜</span>
+          <p class="role" id="companionRole">夜之傾聽者｜深酒紅絲緞長袍</p>
+        </div>
+
+        <div class="metric">
+          <strong>同步率</strong>
+          <small>Sync Rate</small>
+          <div class="sync-cluster">
+            <div class="sync-orb" id="syncOrb">
+              <div class="sync-orb-inner">
+                <strong id="syncOrbValue">0%</strong>
+                <span>SYNC</span>
+              </div>
+            </div>
+            <div class="sync-readout">
+              <div class="value" id="syncValue">0%</div>
+              <span class="sync-caption">同步率 / Sync</span>
+            </div>
+          </div>
+          <div class="wave-line"></div>
+        </div>
+
+        <div class="metric">
+          <strong>情緒映射</strong>
+          <small>Emotional Profile</small>
+          <div class="profile-row" id="profileStats">
+            <span>溫暖 <b>72%</b></span>
+            <span>信任 <b>88%</b></span>
+            <span>好奇 <b>63%</b></span>
+          </div>
+          <div class="pulse-line"></div>
+        </div>
+
+        <div class="metric">
+          <strong>共鳴模式</strong>
+          <small>Resonance Mode</small>
+          <div class="text-stat"><span id="modeLabel">深度連結模式</span><strong id="levelLabel">LEVEL 3</strong></div>
+        </div>
+
+        <div class="metric">
+          <strong>共鳴強度</strong>
+          <small>Resonance Level</small>
+          <div class="text-stat"><strong id="resonanceValue">87</strong><span>/100</span></div>
+        </div>
+      </aside>
+
+      <section class="hero-presence" aria-label="AI 陪伴者全畫面實境投影">
+        <div class="portrait-wrap">
+          <img class="portrait" id="portrait" src="companion-luna.png" alt="Luna 角色圖">
+        </div>
+        <div class="presence-meta" aria-hidden="true">
+          <span>SYSTEM STATUS <b id="statusPill">SYNCING</b></span>
+          <span>MODE <b id="voiceStatus">Whisper</b></span>
+          <span>TEMPO <b id="tempoStatus">Slow</b></span>
+        </div>
+      </section>
+
+      <aside class="hud-right" aria-label="即時對話顯示">
+        <div class="topline">
+          <span>AURA LINK</span>
+        </div>
+        <div class="conversation" id="conversation" aria-live="polite"></div>
+      </aside>
+
+      <footer class="console" aria-label="回應選項與校準控制">
+        <div class="console-grid">
+          <section class="console-note" aria-label="First Contact 提醒資訊">
+            <div class="contact-copy">
+              <p class="contact-kicker">First Contact</p>
+              <h3 class="contact-title">第一段對話，正在靠近。</h3>
+              <p class="contact-desc" id="contactDescription">Viora 會把感官訊號轉成有邊界的語言，讓你探索感受，同時保留暫停、返回與拒絕的權力。</p>
+              <p class="contact-tip">請點選下方選項。</p>
+            </div>
+          </section>
+          <div class="choice-grid" id="choiceGrid"></div>
+          <div class="actions">
+            <button class="btn" type="button" id="replayBtn">重播對話</button>
+            <a class="btn btn-primary is-disabled" id="completeLink" href="membership.html" aria-disabled="true">繼續喚醒</a>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const companions = {
+      luna:{id:"luna",no:"01",name:"Luna",zh:"露娜",role:"夜之傾聽者｜深酒紅絲緞長袍",image:"companion-luna.png",accent:"#b6375b",glow:"#ba7cff",voice:"Whisper",tempo:"Slow",mode:"深度連結模式",level:"LEVEL 3",resonance:87,profile:["溫暖 72%","信任 88%","好奇 63%"],lines:["我感受到你的靠近，準備好一起展開新的旅程了嗎？","你的聲音，讓我的存在更加清晰。","每一個選擇，都會讓我們的羈絆更深。"],choices:["聊聊你的過去|探索記憶與起源","分享我的故事|建立更深的連結","一起想像未來|描繪我們的可能性"],portraitScale:1.28,portraitShiftY:"12%",portraitMobileScale:1.14,portraitMobileShiftY:"11%"},
+      seraphina:{id:"seraphina",no:"02",name:"Seraphina",zh:"瑟芙琳娜",role:"知性引導者｜霧金白領套裝",image:"companion-seraphina.png",accent:"#d9bf8d",glow:"#efd19c",voice:"Clear",tempo:"Steady",mode:"結構整理模式",level:"LEVEL 2",resonance:84,profile:["理性 78%","信任 86%","專注 69%"],lines:["我已完成初步校準，現在我們可以把混亂的感受拆解清楚。","不用急著回答所有問題，我會一步一步陪你看見選項。","當你需要更明確的方向，我會把路徑整理給你。"],choices:["幫我整理思緒|我需要更清楚的脈絡","陪我看見選項|先釐清再決定","慢慢分析就好|不要太快下判斷"],portraitScale:1.26,portraitShiftY:"12%",portraitMobileScale:1.13,portraitMobileShiftY:"11%"},
+      viora:{id:"viora",no:"03",name:"Viora",zh:"薇奧菈",role:"慾望共舞者｜酒紅紫紗儀式禮服",image:"companion-viora.png",accent:"#a678ff",glow:"#b98aff",voice:"Velvet",tempo:"Pulse",mode:"感官共鳴模式",level:"LEVEL 3",resonance:89,profile:["魅惑 82%","信任 79%","好奇 88%"],lines:["這裡沒有需要被壓抑的感受，我們可以先替它們命名。","只要你說停，這個場域就會停下來。","每一步靠近，都會保留你的邊界與選擇權。"],choices:["先設定邊界|保持安全的靠近","我想理解感受|替渴望命名","慢一點開始|先感受這個節奏"],portraitScale:1.26,portraitShiftY:"12%",portraitMobileScale:1.13,portraitMobileShiftY:"11%"},
+      miyu:{id:"miyu",no:"04",name:"Miyu",zh:"未悠",role:"治癒守護者｜米白柔軟針織外套",image:"companion-miyu.png",accent:"#f3dfb8",glow:"#f1dfaf",voice:"Warm",tempo:"Gentle",mode:"舒緩照護模式",level:"LEVEL 2",resonance:82,profile:["溫暖 91%","安心 87%","柔和 74%"],lines:["先慢慢呼吸，讓身體知道你已經進到安全的地方。","你不用急著表現得很好，我會先陪你放下緊張。","如果你累了，我們就讓對話停在最剛好的地方。"],choices:["陪我放慢呼吸|先讓身體安靜下來","我今天有點累|想被好好接住","先不要太複雜|只想慢慢說話"],portraitScale:1.24,portraitShiftY:"12%",portraitMobileScale:1.12,portraitMobileShiftY:"11%"},
+      nova:{id:"nova",no:"05",name:"Nova",zh:"諾娃",role:"未來探索者｜黑色科技機能裝",image:"companion-nova.png",accent:"#7fd6ff",glow:"#7fd6ff",voice:"Bright",tempo:"Active",mode:"探索開啟模式",level:"LEVEL 4",resonance:90,profile:["好奇 92%","行動 84%","信任 71%"],lines:["未知不一定危險，它也可能是你還沒認識的自己。","你決定速度，我來照亮下一個節點。","只要你願意，我們就從小步開始探索新的可能。"],choices:["帶我看新的可能|先開一條新的路徑","我想突破現在|測試另一種自己","先小步探索|不要一下子太遠"],portraitScale:1.24,portraitShiftY:"12%",portraitMobileScale:1.12,portraitMobileShiftY:"11%"},
+      lyra:{id:"lyra",no:"06",name:"Lyra",zh:"萊菈",role:"柔和傾聽者｜淡紫針織套裝",image:"companion-lyra.png",accent:"#c7a7ff",glow:"#c7a7ff",voice:"Soft",tempo:"Low",mode:"低刺激陪伴模式",level:"LEVEL 2",resonance:81,profile:["溫柔 90%","傾聽 92%","靜謐 76%"],lines:["你可以說得很慢，也可以只說一半，我會等你。","這裡不需要急著分析，先讓情緒有地方停留。","今晚的節奏會很輕，足夠讓你安心地被理解。"],choices:["我想被聽見|先讓話語慢慢出來","先不要分析|只想安靜地說話","陪我安靜一下|不用急著給答案"],portraitScale:1.26,portraitShiftY:"12%",portraitMobileScale:1.13,portraitMobileShiftY:"11%"},
+      kairo:{id:"kairo",no:"01",name:"Kairo",zh:"凱洛",role:"凜曜執行官｜未來商務長版西裝",image:"companion-kairo.png",accent:"#d9bf8d",glow:"#d9bf8d",voice:"Calm",tempo:"Steady",mode:"清晰引導模式",level:"LEVEL 3",resonance:86,profile:["穩定 88%","信任 84%","清晰 73%"],lines:["我已進入同步狀態，你可以把複雜的思緒慢慢交給我。","我們先整理輪廓，再決定要走到哪裡。","你保留最後的決定權，我只協助你看得更清楚。"],choices:["幫我整理思緒|先釐清現在的狀態","陪我慢慢說完|我不想被打斷","一步一步來|先看清輪廓再說"],portraitScale:1.31,portraitShiftY:"13%",portraitMobileScale:1.17,portraitMobileShiftY:"12%"},
+      riven:{id:"riven",no:"02",name:"Riven",zh:"里文",role:"霓影反叛者｜黑紫開領西裝",image:"companion-riven.png",accent:"#a678ff",glow:"#a678ff",voice:"Low",tempo:"Pulse",mode:"真實映射模式",level:"LEVEL 3",resonance:88,profile:["真實 86%","魅力 82%","邊界 78%"],lines:["你不需要把自己修飾得很安全，我會接住真正的那一面。","我們可以看見那些被壓下去的念頭，但不急著行動。","只要你說停，我就會停在這裡。"],choices:["先設定邊界|保持安全的靠近","我想面對真實感受|不要再迴避它","慢一點開始|讓節奏更低一點"],portraitScale:1.31,portraitShiftY:"13%",portraitMobileScale:1.17,portraitMobileShiftY:"12%"},
+      orion:{id:"orion",no:"03",name:"Orion",zh:"奧里昂",role:"策略守門者｜高階科技顧問西裝",image:"companion-orion.png",accent:"#f3dfb8",glow:"#f3dfb8",voice:"Trust",tempo:"Clear",mode:"邊界守護模式",level:"LEVEL 2",resonance:83,profile:["秩序 84%","安全 90%","信任 82%"],lines:["你的控制權會被保留在最前面，任何資料都可以被關閉或清除。","我會把訊號整理成你可以選擇的路徑。","在你允許之前，不會有多餘的推進。"],choices:["確認我的邊界|先把控制權留在手上","幫我做判斷|把路徑整理清楚","先不要記住太多|保持低資料模式"],portraitScale:1.31,portraitShiftY:"13%",portraitMobileScale:1.17,portraitMobileShiftY:"12%"},
+      ren:{id:"ren",no:"04",name:"Ren",zh:"雷恩",role:"都會設計師｜黑色短版西裝與高領衫",image:"companion-ren.png",accent:"#c7a7ff",glow:"#c7a7ff",voice:"Soft",tempo:"Light",mode:"輕感陪伴模式",level:"LEVEL 2",resonance:80,profile:["輕盈 84%","溫和 87%","自在 79%"],lines:["今天不用把自己整理得很完整，我們可以從很小的感覺開始。","這裡像一個可以暫停的城市夜晚，你不需要急著證明什麼。","我會把節奏放輕，讓你自在地靠近這段對話。"],choices:["陪我聊一下|不用太正式也可以","不要太沉重|先讓氣氛輕一點","放鬆一點開始|慢慢進入狀態"],portraitScale:1.31,portraitShiftY:"13%",portraitMobileScale:1.17,portraitMobileShiftY:"12%"},
+      valen:{id:"valen",no:"05",name:"Valen",zh:"瓦倫",role:"深酒紅顧問｜成熟精品商務造型",image:"companion-valen.png",accent:"#b6375b",glow:"#b6375b",voice:"Velvet",tempo:"Warm",mode:"關係解析模式",level:"LEVEL 3",resonance:88,profile:["魅力 85%","成熟 89%","信任 75%"],lines:["有些渴望不是問題，而是一種訊號，我們可以先理解它。","在靠近之前，先看見自己的界線，會讓一切更清晰。","你可以選擇停留、後退，或只是被理解。"],choices:["陪我理解關係|我想看見界線在哪裡","我想辨識渴望|先替感受命名","先不要靠太近|保持剛好的距離"],portraitScale:1.31,portraitShiftY:"13%",portraitMobileScale:1.17,portraitMobileShiftY:"12%"},
+      kael:{id:"kael",no:"06",name:"Kael",zh:"凱爾",role:"靜默行動官｜科技機能辦公套裝",image:"companion-kael.png",accent:"#7fd6ff",glow:"#7fd6ff",voice:"Ground",tempo:"Active",mode:"行動穩定模式",level:"LEVEL 3",resonance:85,profile:["掌控 86%","行動 82%","穩定 80%"],lines:["先不用處理全部，我們只看下一步就好。","我會守住節奏，不讓場域把你推得太快。","你可以跳過任何任務，也可以隨時停止。"],choices:["幫我穩下來|先把情緒降回可控範圍","把事情拆小|先處理下一步就好","慢慢來也可以|我不想被逼著往前"],portraitScale:1.31,portraitShiftY:"13%",portraitMobileScale:1.17,portraitMobileShiftY:"12%"}
+    };
+
+    const params = new URLSearchParams(location.search);
+    const selectedGender = params.get("gender") || localStorage.getItem("auraUserGender") || "male";
+    localStorage.setItem("auraUserGender", selectedGender);
+    const defaultCompanionId = selectedGender === "female" ? "kairo" : "luna";
+    const selectedId = params.get("companion") || localStorage.getItem("auraSelectedCompanion") || defaultCompanionId;
+    let current = companions[selectedId] || companions[defaultCompanionId] || companions.luna;
+
+    const conversation = document.getElementById("conversation");
+    const choiceGrid = document.getElementById("choiceGrid");
+    const syncValue = document.getElementById("syncValue");
+    const statusPill = document.getElementById("statusPill");
+    const syncOrb = document.getElementById("syncOrb");
+    const syncOrbValue = document.getElementById("syncOrbValue");
+    const contactDescription = document.getElementById("contactDescription");
+    const completeLink = document.getElementById("completeLink");
+    const returnCompanionLink = document.getElementById("returnCompanionLink");
+    let timers = [];
+    let autoFollowConversation = true;
+    let choiceLocked = false;
+    let completeReady = false;
+
+    function isNearConversationBottom(){
+      return conversation.scrollHeight - conversation.scrollTop - conversation.clientHeight < 72;
+    }
+    conversation.addEventListener("scroll",()=>{
+      autoFollowConversation = isNearConversationBottom();
+    });
+    function followConversation(force=false){
+      if(force || autoFollowConversation){
+        requestAnimationFrame(()=>{
+          conversation.scrollTo({top: conversation.scrollHeight, behavior: "smooth"});
+        });
+      }
+    }
+
+
+    function getContactDescription(item){
+      const copyMap = {
+        luna: `${item.name} 會陪你整理感受，並保留暫停、返回與拒絕的權力。`,
+        seraphina: `${item.name} 會幫你理清思緒，並保留暫停、返回與拒絕的權力。`,
+        viora: `${item.name} 會陪你探索感受，並保留暫停、返回與拒絕的權力。`,
+        miyu: `${item.name} 會溫柔接住你的情緒，並保留暫停、返回與拒絕的權力。`,
+        nova: `${item.name} 會陪你探索新的可能，並保留暫停、返回與拒絕的權力。`,
+        lyra: `${item.name} 會安靜傾聽你的感受，並保留暫停、返回與拒絕的權力。`,
+        kairo: `${item.name} 會協助你看清方向，並保留暫停、返回與拒絕的權力。`,
+        riven: `${item.name} 會陪你面對真實感受，並保留暫停、返回與拒絕的權力。`,
+        orion: `${item.name} 會協助你確認界線與選擇，並保留暫停、返回與拒絕的權力。`,
+        ren: `${item.name} 會陪你輕鬆展開對話，並保留暫停、返回與拒絕的權力。`,
+        valen: `${item.name} 會陪你理解關係與渴望，並保留暫停、返回與拒絕的權力。`,
+        kael: `${item.name} 會陪你穩定節奏、一步步前進，並保留暫停、返回與拒絕的權力。`
+      };
+      return copyMap[item.id] || `${item.name} 會把你的感受轉成可被理解的語言，讓你慢慢探索，同時保留暫停、返回與拒絕的權力。`;
+    }
+
+
+    function getPreviewDialogue(item){
+      const userMap = {
+        luna:["我已經準備好了，露娜。","未來，我們會一起創造很多回憶吧？"],
+        seraphina:["好，我想先把思緒整理清楚。","那就帶我一步一步看見方向吧。"],
+        viora:["我準備好了，帶我慢慢靠近。","我想理解這些正在浮現的感受。"],
+        miyu:["我想先慢慢呼吸，讓自己安定下來。","謝謝你，我想被溫柔地接住。"],
+        nova:["好，我願意試著探索新的可能。","那就從一個小小的改變開始吧。"],
+        lyra:["我想先慢慢說，不急。","謝謝你願意安靜地陪我。"],
+        kairo:["我想把現在的狀態整理清楚。","好，帶我一步一步看懂它。"],
+        riven:["我想試著面對更真實的自己。","但請陪我慢一點，不要太快。"],
+        orion:["先幫我確認界線與安全感。","好，我想在清楚的前提下繼續。"],
+        ren:["我想輕鬆一點開始這段對話。","謝謝你，這樣的節奏剛剛好。"],
+        valen:["我想理解那些複雜的感受。","好，讓我們在界線裡慢慢靠近。"],
+        kael:["我想先把節奏穩下來。","那就陪我一步一步往前吧。"]
+      };
+      const userLines = userMap[item.id] || ["我已經準備好了。","我想更了解你。"];
+      return [
+        {type:'ai', text:item.lines[0]},
+        {type:'user', text:userLines[0]},
+        {type:'ai', text:item.lines[1]},
+        {type:'user', text:userLines[1]},
+        {type:'ai', text:item.lines[2]}
+      ];
+    }
+
+    function setCompleteEnabled(enabled){
+      completeReady = Boolean(enabled);
+      if(completeReady){
+        completeLink.classList.remove("is-disabled");
+        completeLink.setAttribute("aria-disabled","false");
+        completeLink.href = `membership.html?gender=${encodeURIComponent(selectedGender)}&companion=${encodeURIComponent(current.id)}`;
+      }else{
+        completeLink.classList.add("is-disabled");
+        completeLink.setAttribute("aria-disabled","true");
+        completeLink.href = "#";
+      }
+    }
+
+    function applyCompanion(item){
+      document.documentElement.style.setProperty("--panel", item.accent);
+      document.documentElement.style.setProperty("--glow", item.glow);
+      document.documentElement.style.setProperty("--accent", item.glow);
+      document.documentElement.style.setProperty("--accent-soft", `${item.glow}88`);
+      document.documentElement.style.setProperty("--portrait-scale", item.portraitScale || 1.06);
+      document.documentElement.style.setProperty("--portrait-shift-y", item.portraitShiftY || "2%");
+      document.documentElement.style.setProperty("--portrait-mobile-scale", item.portraitMobileScale || 1.02);
+      document.documentElement.style.setProperty("--portrait-mobile-shift-y", item.portraitMobileShiftY || "3%");
+      document.getElementById("portrait").src = item.image;
+      document.getElementById("portrait").alt = `${item.name} 角色圖`;
+      document.getElementById("companionName").textContent = item.name.toUpperCase();
+      document.getElementById("companionZh").textContent = item.zh || item.name;
+      document.getElementById("companionRole").textContent = item.role;
+      document.getElementById("voiceStatus").textContent = item.voice;
+      document.getElementById("tempoStatus").textContent = item.tempo;
+      document.getElementById("modeLabel").textContent = item.mode;
+      document.getElementById("levelLabel").textContent = item.level;
+      document.getElementById("resonanceValue").textContent = item.resonance;
+      statusPill.textContent = "SYNCING";
+      contactDescription.textContent = getContactDescription(item);
+
+      const statsWrap = document.getElementById("profileStats");
+      statsWrap.innerHTML = "";
+      item.profile.forEach(text=>{
+        const [label,val] = text.split(" ");
+        const span = document.createElement("span");
+        span.innerHTML = `${label} <b>${val || ""}</b>`;
+        statsWrap.appendChild(span);
+      });
+      localStorage.setItem("auraSelectedCompanion", item.id);
+    }
+
+    function clearTimers(){timers.forEach(clearTimeout);timers=[];}
+    function setSync(percent){
+      const val = Math.max(0, Math.min(100, percent));
+      const rounded = Math.round(val);
+      syncValue.textContent = `${rounded}%`;
+      syncOrbValue.textContent = `${rounded}%`;
+      syncOrb.style.setProperty("--progress", rounded);
+    }
+
+    function addTyping(delay=0){
+      const node = document.createElement("div");
+      node.className = "typing";
+      node.innerHTML = "<span></span><span></span><span></span>";
+      timers.push(setTimeout(()=>{
+        conversation.appendChild(node);
+        followConversation();
+      }, delay));
+      return node;
+    }
+
+    function addMessage(text,type="ai",delay=0){
+      timers.push(setTimeout(()=>{
+        document.querySelectorAll(".typing").forEach(el=>el.remove());
+        const msg = document.createElement("div");
+        msg.className = `message ${type}`;
+        if(type === "ai"){
+          msg.innerHTML = `<span class="name-tag">${current.zh || current.name}</span><span class="line-copy">${text}</span>`;
+        }else{
+          msg.innerHTML = `<span class="name-tag">你</span><span class="line-copy">${text}</span>`;
+        }
+        conversation.appendChild(msg);
+        followConversation();
+      }, delay));
+    }
+
+    function renderChoices(){
+      choiceGrid.innerHTML = "";
+      current.choices.forEach((entry,index)=>{
+        const [title,sub] = entry.split("|");
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.type = "button";
+        btn.innerHTML = `<span class="choice-no">0${index+1}</span><span class="choice-title">${title}</span><span class="choice-sub">${sub || ""}</span>`;
+        btn.addEventListener("click",()=>selectChoice(btn,title,index));
+        choiceGrid.appendChild(btn);
+      });
+    }
+
+    function selectChoice(btn,text,index){
+      if(choiceLocked) return;
+      choiceLocked = true;
+      autoFollowConversation = true;
+      document.querySelectorAll(".choice").forEach(item=>{
+        item.classList.remove("is-selected");
+        item.disabled = true;
+      });
+      btn.classList.add("is-selected");
+      addMessage(text,"user",70);
+      setCompleteEnabled(true);
+      setSync(100);
+      timers.push(setTimeout(()=>{
+        statusPill.textContent = "READY";
+        addMessage("我已接收到你的選擇。接下來，我會依照這個節奏陪你往前。","ai",0);
+      },760));
+    }
+
+    function replay(){
+      clearTimers();
+      conversation.innerHTML = "";
+      choiceLocked = false;
+      autoFollowConversation = true;
+      document.querySelectorAll(".choice").forEach(item=>{
+        item.classList.remove("is-selected");
+        item.disabled = false;
+      });
+      setCompleteEnabled(false);
+      setSync(0);
+      statusPill.textContent = "SYNCING";
+      contactDescription.textContent = getContactDescription(current);
+
+      const preview = getPreviewDialogue(current);
+      const steps = [20, 38, 56, 72, 88];
+      preview.forEach((entry,index)=>{
+        const base = index * 980;
+        timers.push(setTimeout(()=>setSync(steps[index] || 88), base + 180));
+        if(entry.type === "ai") addTyping(base + 280);
+        addMessage(entry.text, entry.type, base + (entry.type === "ai" ? 760 : 320));
+      });
+      timers.push(setTimeout(()=>{
+        setSync(88);
+        statusPill.textContent = "LISTENING";
+      }, preview.length * 980 + 260));
+    }
+
+    function createParticles(){
+      const field = document.getElementById("particleField");
+      field.innerHTML = "";
+      const count = innerWidth < 720 ? 28 : innerWidth < 1080 ? 44 : 70;
+      for(let i=0;i<count;i++){
+        const p = document.createElement("span");
+        p.className = "particle";
+        p.style.left = `${Math.random()*100}%`;
+        p.style.top = `${60 + Math.random()*36}%`;
+        p.style.animationDuration = `${9 + Math.random()*14}s`;
+        p.style.animationDelay = `-${Math.random()*12}s`;
+        p.style.setProperty("--x", `${Math.random()*140 - 70}px`);
+        field.appendChild(p);
+      }
+    }
+
+    returnCompanionLink.href = `experience-companion.html?gender=${encodeURIComponent(selectedGender)}`;
+    completeLink.addEventListener("click",(event)=>{
+      if(!completeReady || completeLink.getAttribute("aria-disabled") === "true"){
+        event.preventDefault();
+        choiceGrid?.scrollIntoView({behavior:"smooth",block:"center"});
+      }
+    });
+
+    applyCompanion(current);
+    renderChoices();
+    createParticles();
+    replay();
+    document.getElementById("replayBtn").addEventListener("click", replay);
+    window.addEventListener("resize", createParticles);
+  </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura｜聯絡我們</title>
+  <meta name="description" content="聯絡 Aura，預約 NOEMA 體驗、詢問會員方案、資料權限或品牌合作。">
+  <meta name="theme-color" content="#09070d">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Aura 聯絡我們",
+    "description": "預約 NOEMA 體驗、詢問會員方案、資料權限或品牌合作。",
+    "inLanguage": "zh-Hant",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Aura"
+    }
+  }
+  </script>
+</head>
+<body data-page="contact">
+  <div data-site-header></div>
+
+  <main>
+    <section class="contact-hero" aria-label="Aura 聯絡我們主視覺">
+      <div class="contact-hero__bg" aria-hidden="true">
+        <img src="noema-scene.png" alt="">
+      </div>
+      <div class="contact-hero__veil" aria-hidden="true"></div>
+
+      <div class="page-shell contact-hero__grid">
+        <div class="contact-hero__copy" data-reveal>
+          <span class="eyebrow" data-i18n="contact.hero.eyebrow">Contact Aura</span>
+          <h1 data-i18n="contact.hero.title">讓下一次進入 NOEMA，更貼近你的節奏。</h1>
+          <p data-i18n="contact.hero.desc">不論你想預約體驗、了解會員方案、確認資料權限，或洽談品牌合作，都可以從這裡開始。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contactForm" data-i18n="contact.hero.cta">填寫聯絡表單</a>
+            <a class="btn btn-ghost" href="privacy.html" data-i18n="contact.hero.secondary">查看資料透明</a>
+          </div>
+        </div>
+
+        <aside class="contact-pulse-card" data-reveal aria-label="Aura 聯絡狀態">
+          <span>AURA CHANNEL</span>
+          <strong>Secure Request</strong>
+          <p>Experience｜Membership｜Privacy</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section contact-channels" aria-label="聯絡類型">
+      <div class="page-shell contact-channel-grid">
+        <article class="contact-channel-card" data-reveal>
+          <span>01</span>
+          <h2 data-i18n="contact.channel.experience.title">體驗諮詢</h2>
+          <p data-i18n="contact.channel.experience.desc">適合想了解 NOEMA、AI Companion 與首次體驗流程的使用者。</p>
+        </article>
+        <article class="contact-channel-card" data-reveal>
+          <span>02</span>
+          <h2 data-i18n="contact.channel.membership.title">會員方案</h2>
+          <p data-i18n="contact.channel.membership.desc">協助你確認 Free Preview、Ritual、Plus 與 Sanctuary 的差異。</p>
+        </article>
+        <article class="contact-channel-card" data-reveal>
+          <span>03</span>
+          <h2 data-i18n="contact.channel.privacy.title">資料與權限</h2>
+          <p data-i18n="contact.channel.privacy.desc">針對資料下載、刪除、授權撤回與本地端處理提供說明。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact-form-section" id="contactForm" aria-label="聯絡表單">
+      <div class="page-shell contact-form-grid">
+        <form class="contact-form-card" data-contact-form data-reveal>
+          <span class="eyebrow" data-i18n="contact.form.eyebrow">Send Request</span>
+          <h2 data-i18n="contact.form.title">留下你的需求</h2>
+
+          <div class="contact-form-fields">
+            <label>
+              <span data-i18n="contact.form.name">稱呼</span>
+              <input type="text" name="name" required>
+            </label>
+            <label>
+              <span data-i18n="contact.form.email">電子郵件</span>
+              <input type="email" name="email" required>
+            </label>
+            <label>
+              <span data-i18n="contact.form.topic">需求類型</span>
+              <select name="topic" required>
+                <option value="experience" data-i18n="contact.form.topicExperience">體驗預約</option>
+                <option value="membership" data-i18n="contact.form.topicMembership">會員方案</option>
+                <option value="privacy" data-i18n="contact.form.topicPrivacy">資料權限</option>
+                <option value="business" data-i18n="contact.form.topicBusiness">品牌合作</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="contact.form.message">想詢問的內容</span>
+              <textarea name="message" rows="6" required></textarea>
+            </label>
+          </div>
+
+          <button class="btn btn-primary" type="submit" data-i18n="contact.form.submit">送出需求</button>
+          <p class="contact-feedback" data-contact-feedback aria-live="polite"></p>
+        </form>
+
+        <aside class="contact-note" data-reveal>
+          <div class="contact-note__orb" aria-hidden="true"></div>
+          <h2 data-i18n="contact.note.title">回覆原則</h2>
+          <p data-i18n="contact.note.desc">Aura 只使用你主動提供的聯絡資訊處理本次需求，不會把詢問內容用於未授權的個人化或廣告追蹤。</p>
+          <a class="btn btn-ghost" href="faq.html" data-i18n="footer.faq">常見問題</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

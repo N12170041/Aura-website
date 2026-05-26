@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura | AI Companion Awakening</title>
+  <meta name="description" content="Aura AI Companion Awakening｜在 NOEMA 中選擇你的 AI 陪伴者，展開私密、可控、溫柔的陪伴體驗。" />
+  <style>
+    :root{
+      --bg:#070407;
+      --wine:#4b0f26;
+      --wine2:#7b183e;
+      --purple:#a678ff;
+      --purple2:#d3b7ff;
+      --gold:#d9bf8d;
+      --gold2:#f3dfb8;
+      --white:#fff7ef;
+      --muted:rgba(255,247,239,.72);
+      --soft:rgba(255,247,239,.48);
+      --line:rgba(255,247,239,.13);
+      --glass:rgba(255,247,239,.07);
+      --shadow:0 28px 80px rgba(0,0,0,.48);
+      --header:76px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      min-height:100vh;
+      font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;
+      color:var(--white);
+      background:
+        linear-gradient(rgba(7,4,7,.62),rgba(7,4,7,.78)),
+        radial-gradient(circle at 16% 18%,rgba(166,120,255,.2),transparent 32%),
+        radial-gradient(circle at 84% 16%,rgba(217,191,141,.13),transparent 30%),
+        radial-gradient(circle at 50% 92%,rgba(123,24,62,.22),transparent 38%),
+        url("noema-private-sensory-space.png") center/cover fixed no-repeat,
+        #070407;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+      background-size:52px 52px;
+      mask-image:radial-gradient(circle at center,rgba(0,0,0,.85),transparent 78%);
+      z-index:0;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:radial-gradient(circle at center,transparent 44%,rgba(0,0,0,.52) 100%);
+      z-index:0;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+    .site-header{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--header);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 clamp(18px,4vw,60px);
+      background:rgba(7,4,7,.66);
+      border-bottom:1px solid rgba(255,247,239,.09);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      z-index:20;
+    }
+    .nav-inner{
+      width:min(1320px,100%);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+    }
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .logo-fallback{
+      width:38px;height:38px;border-radius:50%;
+      border:1px solid rgba(217,191,141,.45);
+      display:grid;place-items:center;
+      background:radial-gradient(circle,rgba(217,191,141,.2),rgba(166,120,255,.08));
+      box-shadow:0 0 22px rgba(217,191,141,.18);
+      letter-spacing:.08em;font-size:.72rem;color:var(--gold2);
+    }
+    .brand img{
+      width:38px;height:38px;object-fit:contain;
+      filter:drop-shadow(0 0 16px rgba(217,191,141,.2));
+    }
+    .brand-copy{display:flex;flex-direction:column;line-height:1}
+    .brand-copy strong{font-size:.96rem;font-weight:500;letter-spacing:.22em}
+    .brand-copy span{margin-top:6px;color:var(--soft);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase}
+    .back-link{
+      min-height:40px;
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:0 17px;border-radius:999px;
+      border:1px solid rgba(217,191,141,.34);
+      background:rgba(255,247,239,.045);
+      color:rgba(255,247,239,.86);
+      font-size:.86rem;letter-spacing:.06em;white-space:nowrap;
+      transition:.28s ease;
+    }
+    .back-link:hover{transform:translateY(-2px);background:rgba(217,191,141,.11);border-color:rgba(243,223,184,.62)}
+
+    .page{
+      position:relative;z-index:1;
+      width:min(1420px,100%);
+      margin:0 auto;
+      padding:calc(var(--header) + 28px) clamp(16px,4vw,46px) 44px;
+    }
+
+    .hero{
+      text-align:center;
+      max-width:980px;
+      margin:0 auto 28px;
+      padding:26px 10px 8px;
+    }
+    .eyebrow{
+      display:inline-flex;gap:12px;align-items:center;
+      color:rgba(243,223,184,.88);
+      font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    }
+    .eyebrow::before,.eyebrow::after{
+      content:"";width:36px;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(243,223,184,.72),transparent);
+    }
+    h1{
+      margin-top:18px;
+      font-size:clamp(2.3rem,5vw,4.8rem);
+      line-height:.96;
+      font-weight:300;
+      letter-spacing:-.055em;
+    }
+    .hero p{
+      margin:18px auto 0;
+      max-width:820px;
+      color:var(--muted);
+      font-size:clamp(.98rem,1.5vw,1.12rem);
+      line-height:1.9;
+      font-weight:300;
+      letter-spacing:.02em;
+    }
+    .hero .line{
+      margin-top:12px;
+      color:rgba(243,223,184,.86);
+      font-size:.94rem;
+      letter-spacing:.12em;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:minmax(330px,440px) minmax(0,1fr);
+      gap:24px;
+      align-items:start;
+    }
+
+    .panel{
+      position:relative;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(145deg,rgba(255,247,239,.095),rgba(255,247,239,.032)),
+        radial-gradient(circle at 96% 2%,rgba(166,120,255,.14),transparent 32%),
+        radial-gradient(circle at 4% 98%,rgba(217,191,141,.1),transparent 34%);
+      border-radius:30px;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute;inset:0;border-radius:inherit;padding:1px;
+      background:linear-gradient(135deg,rgba(243,223,184,.28),transparent 36%,rgba(166,120,255,.26));
+      mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      mask-composite:exclude;
+      pointer-events:none;
+    }
+
+    .selector{padding:20px}
+    .section-title{margin-bottom:16px}
+    .section-title strong{
+      display:block;
+      font-size:1.08rem;
+      font-weight:500;
+      letter-spacing:.07em;
+    }
+    .section-title span{
+      display:block;
+      margin-top:8px;
+      color:var(--soft);
+      font-size:.86rem;
+      line-height:1.65;
+    }
+
+    .cards{
+      display:grid;
+      gap:14px;
+      max-height:calc(100vh - 210px);
+      overflow:auto;
+      padding-right:4px;
+    }
+    .cards::-webkit-scrollbar{width:6px}
+    .cards::-webkit-scrollbar-thumb{background:rgba(217,191,141,.22);border-radius:999px}
+
+    .card{
+      position:relative;
+      display:grid;
+      grid-template-columns:96px 1fr;
+      gap:14px;
+      align-items:center;
+      padding:12px;
+      border:1px solid rgba(255,247,239,.1);
+      border-radius:24px;
+      background:rgba(255,247,239,.04);
+      text-align:left;
+      transition:transform .32s ease,border-color .32s ease,background .32s ease,box-shadow .32s ease;
+      overflow:hidden;
+    }
+    .card::after{
+      content:"";
+      position:absolute;inset:auto 0 0 0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--accent),transparent);
+      opacity:.4;
+    }
+    .card:hover{
+      transform:translateY(-3px);
+      border-color:rgba(243,223,184,.25);
+      background:rgba(255,247,239,.075);
+      box-shadow:0 16px 38px rgba(0,0,0,.27);
+    }
+    .card.is-active{
+      border-color:color-mix(in srgb,var(--accent) 70%,white 10%);
+      background:
+        radial-gradient(circle at 18% 20%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 50%),
+        rgba(255,247,239,.072);
+      box-shadow:0 18px 44px rgba(0,0,0,.36),0 0 0 1px rgba(243,223,184,.05) inset;
+    }
+
+    .thumb{
+      width:96px;height:128px;border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,247,239,.14);
+      background:#111;
+      box-shadow:inset 0 0 18px rgba(255,255,255,.06),0 10px 22px rgba(0,0,0,.28);
+    }
+    .thumb img{
+      width:100%;height:100%;object-fit:cover;object-position:center top;
+      display:block;transition:transform .5s ease;
+    }
+    .card:hover .thumb img{transform:scale(1.05)}
+
+    .card-num{
+      color:var(--gold);
+      font-family:Georgia,serif;
+      font-size:1.55rem;
+      line-height:1;
+      opacity:.9;
+    }
+    .card-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-top:4px;
+    }
+    .card h3{
+      font-size:1.1rem;
+      letter-spacing:.06em;
+      font-weight:500;
+    }
+    .badge{
+      flex-shrink:0;
+      border:1px solid rgba(255,247,239,.13);
+      background:rgba(255,247,239,.06);
+      color:rgba(243,223,184,.88);
+      border-radius:999px;
+      padding:4px 9px;
+      font-size:.66rem;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .role{
+      margin-top:6px;
+      color:color-mix(in srgb,var(--accent) 80%,white 20%);
+      font-size:.86rem;
+      letter-spacing:.04em;
+    }
+    .summary{
+      margin-top:7px;
+      color:var(--muted);
+      font-size:.82rem;
+      line-height:1.62;
+    }
+    .mini-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+    .mini-tags span{
+      padding:5px 8px;border-radius:999px;
+      background:rgba(255,247,239,.055);
+      color:var(--soft);
+      font-size:.68rem;letter-spacing:.04em;
+    }
+
+    .stage{padding:22px}
+    .stage-grid{
+      display:grid;
+      grid-template-columns:minmax(360px,.94fr) minmax(330px,1.06fr);
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .portrait-stage{
+      position:relative;
+      min-height:720px;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,247,239,.12);
+      background:
+        radial-gradient(circle at 50% 25%,rgba(166,120,255,.16),transparent 38%),
+        linear-gradient(180deg,rgba(255,247,239,.06),rgba(255,247,239,.02));
+      box-shadow:inset 0 0 44px rgba(255,255,255,.05),0 22px 56px rgba(0,0,0,.34);
+    }
+    .portrait-stage::before{
+      content:"";
+      position:absolute;inset:-1px;border-radius:inherit;
+      background:linear-gradient(180deg,rgba(243,223,184,.22),transparent 22%,rgba(166,120,255,.22));
+      opacity:.38;
+      pointer-events:none;
+      z-index:2;
+    }
+    .portrait-stage::after{
+      content:"";
+      position:absolute;
+      width:86%;aspect-ratio:1;
+      left:50%;bottom:-18%;
+      transform:translateX(-50%);
+      border-radius:50%;
+      border:1px solid rgba(243,223,184,.2);
+      box-shadow:0 0 45px color-mix(in srgb,var(--stage-accent) 45%,transparent), inset 0 0 38px rgba(255,255,255,.035);
+      animation:slowSpin 24s linear infinite;
+      z-index:2;
+      pointer-events:none;
+    }
+    .selected-image{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:cover;object-position:center top;
+      opacity:.96;
+      filter:saturate(1.04) contrast(1.02);
+      transform:scale(1);
+      transition:opacity .45s ease,transform .7s ease,filter .45s ease;
+    }
+    .portrait-stage.is-loading .selected-image{
+      opacity:.38;
+      filter:saturate(.9) blur(1px);
+      transform:scale(1.025);
+    }
+    .scan{
+      position:absolute;left:8%;right:8%;top:-30%;
+      height:30%;
+      background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--stage-accent) 32%,transparent),rgba(243,223,184,.12),transparent);
+      filter:blur(8px);
+      opacity:0;
+      z-index:3;
+      pointer-events:none;
+    }
+    .portrait-stage.is-loading .scan{animation:scan 2.4s ease-in-out infinite;opacity:.85}
+    .chamber-ui{
+      position:absolute;
+      inset:18px;
+      z-index:4;
+      pointer-events:none;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .status-pill{
+      align-self:flex-start;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,247,239,.14);
+      background:rgba(7,4,7,.45);
+      backdrop-filter:blur(10px);
+      color:rgba(243,223,184,.9);
+      font-size:.72rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .ready-message{
+      align-self:center;
+      max-width:86%;
+      padding:14px 18px;
+      border-radius:18px;
+      border:1px solid rgba(243,223,184,.25);
+      background:rgba(7,4,7,.46);
+      backdrop-filter:blur(14px);
+      color:var(--gold2);
+      box-shadow:0 0 30px color-mix(in srgb,var(--stage-accent) 26%,transparent);
+      font-size:.9rem;
+      line-height:1.6;
+      letter-spacing:.08em;
+      opacity:0;
+      transform:translateY(12px);
+      transition:.4s ease;
+      text-align:center;
+    }
+    .ready-message.is-show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .info{
+      display:flex;
+      flex-direction:column;
+      min-height:720px;
+      padding:8px 0 0;
+    }
+    .selected-label{
+      color:rgba(243,223,184,.84);
+      font-size:.74rem;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+    }
+    .title-row{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:12px;
+    }
+    .title-row h2{
+      font-size:clamp(2.2rem,4.2vw,4.1rem);
+      line-height:.92;
+      font-weight:300;
+      letter-spacing:-.05em;
+    }
+    .number{
+      color:var(--gold);
+      font-family:Georgia,serif;
+      font-size:2.2rem;
+      opacity:.9;
+    }
+    .info-role{
+      margin-top:12px;
+      color:color-mix(in srgb,var(--stage-accent) 80%,white 16%);
+      font-size:1.02rem;
+      letter-spacing:.08em;
+    }
+    .info-desc{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.95;
+      letter-spacing:.02em;
+    }
+
+    .progress-box{
+      margin-top:24px;
+      padding:18px;
+      border-radius:22px;
+      border:1px solid rgba(255,247,239,.1);
+      background:rgba(7,4,7,.28);
+    }
+    .progress-top{
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+      color:rgba(255,247,239,.76);
+      font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .progress-track{
+      height:7px;border-radius:999px;background:rgba(255,247,239,.09);
+      overflow:hidden;
+    }
+    .progress-fill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg,var(--wine2),var(--purple),var(--gold2));
+      box-shadow:0 0 22px color-mix(in srgb,var(--stage-accent) 50%,transparent);
+      transition:width .55s cubic-bezier(.22,1,.36,1);
+    }
+    .awakening-line{
+      margin-top:14px;
+      min-height:54px;
+      color:rgba(243,223,184,.88);
+      line-height:1.75;
+      font-size:.9rem;
+      letter-spacing:.04em;
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:22px;
+    }
+    .detail{
+      padding:15px 16px;
+      border-radius:18px;
+      background:rgba(255,247,239,.045);
+      border:1px solid rgba(255,247,239,.08);
+    }
+    .detail strong{
+      display:block;margin-bottom:7px;
+      color:var(--white);
+      font-size:.9rem;font-weight:500;letter-spacing:.04em;
+    }
+    .detail span{
+      color:var(--muted);
+      font-size:.86rem;
+      line-height:1.75;
+    }
+
+    .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .tag{
+      padding:8px 12px;border-radius:999px;
+      border:1px solid rgba(255,247,239,.11);
+      background:rgba(255,247,239,.052);
+      color:rgba(255,247,239,.82);
+      font-size:.78rem;letter-spacing:.04em;
+    }
+
+    .actions{
+      display:flex;flex-wrap:wrap;gap:12px;
+      margin-top:auto;
+      padding-top:28px;
+    }
+    .btn{
+      min-height:48px;
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:0 22px;
+      border-radius:999px;
+      transition:.28s ease;
+      letter-spacing:.06em;
+      font-size:.92rem;
+    }
+    .btn-secondary{
+      border:1px solid rgba(255,247,239,.16);
+      background:rgba(255,247,239,.05);
+      color:rgba(255,247,239,.86);
+    }
+    .btn-primary{
+      border:1px solid rgba(243,223,184,.52);
+      background:linear-gradient(135deg,rgba(243,223,184,.96),rgba(211,183,255,.86));
+      color:#180a11;
+      box-shadow:0 14px 34px rgba(217,191,141,.22);
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary.is-disabled{
+      opacity:.46;
+      pointer-events:none;
+      filter:saturate(.75);
+    }
+    .privacy{
+      margin-top:18px;
+      color:var(--soft);
+      font-size:.78rem;
+      line-height:1.8;
+    }
+
+    .particle{
+      position:fixed;
+      width:2px;height:2px;border-radius:50%;
+      background:rgba(243,223,184,.78);
+      box-shadow:0 0 12px rgba(217,191,141,.65);
+      pointer-events:none;
+      z-index:0;
+      opacity:0;
+      animation:rise linear infinite;
+    }
+
+    @keyframes scan{
+      0%{top:-30%;opacity:0}
+      18%{opacity:.82}
+      70%{opacity:.58}
+      100%{top:105%;opacity:0}
+    }
+    @keyframes slowSpin{to{transform:translateX(-50%) rotate(360deg)}}
+    @keyframes rise{
+      0%{transform:translate3d(0,20px,0) scale(.8);opacity:0}
+      12%{opacity:.8}
+      100%{transform:translate3d(var(--x),-105vh,0) scale(1.25);opacity:0}
+    }
+
+    @media(max-width:1120px){
+      .layout{grid-template-columns:1fr}
+      .cards{max-height:none;grid-template-columns:repeat(2,minmax(0,1fr))}
+      .stage-grid{grid-template-columns:1fr}
+      .portrait-stage,.info{min-height:auto}
+      .portrait-stage{height:min(118vw,760px)}
+      .info{padding:4px}
+    }
+    @media(max-width:720px){
+      :root{--header:70px}
+      .site-header{padding:0 14px}
+      .brand-copy span{display:none}
+      .logo-fallback{width:34px;height:34px}
+      .back-link{min-height:36px;padding:0 12px;font-size:.76rem}
+      .page{padding:calc(var(--header) + 20px) 14px 28px}
+      .hero{padding-top:16px;margin-bottom:18px}
+      h1{font-size:clamp(2rem,12vw,3.35rem)}
+      .layout{gap:16px}
+      .selector,.stage{padding:15px}
+      .cards{grid-template-columns:1fr}
+      .card{grid-template-columns:86px 1fr}
+      .thumb{width:86px;height:116px;border-radius:18px}
+      .portrait-stage{height:620px;border-radius:24px}
+      .title-row{align-items:start}
+      .number{font-size:1.7rem}
+      .detail-grid{grid-template-columns:1fr}
+      .actions{flex-direction:column}
+      .btn{width:100%}
+    }
+    @media(max-width:430px){
+      .portrait-stage{height:560px}
+      .card{grid-template-columns:78px 1fr;gap:11px}
+      .thumb{width:78px;height:106px}
+      .summary{font-size:.78rem}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+    }
+  
+
+    /* Final QA｜desktop font and spacing polish */
+    @media (min-width: 981px) {
+      h1 { font-size: clamp(2.4rem, 4.4vw, 4.3rem) !important; line-height: 1 !important; letter-spacing: -0.055em !important; text-wrap: balance; }
+      .page { width: min(1380px, 100%); }
+      .layout { grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); }
+      .portrait-stage { min-height: min(680px, calc(100vh - 190px)); }
+      .stage-grid { grid-template-columns: minmax(320px, .9fr) minmax(320px, 1.1fr); }
+      .card { grid-template-columns: 86px 1fr; }
+      .thumb { width:86px; height:116px; }
+    }
+    @media (min-width: 981px) and (max-width: 1366px) {
+      h1 { font-size: clamp(2.25rem, 4vw, 3.75rem) !important; }
+      .layout { grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); gap: 18px; }
+      .stage { padding: 18px; }
+    }
+
+
+
+    /* CC responsive refinement: reduce mobile crowding after replacing CSS avatars with full character images. */
+    @media (max-width: 760px){
+      body{overflow-x:hidden}
+      .page{padding:86px 12px 36px}
+      .hero{padding:18px 4px 10px;text-align:left}
+      .hero h1{font-size:clamp(2.1rem,12vw,3.35rem);line-height:.94}
+      .hero p{font-size:.92rem;line-height:1.75}
+      .layout{display:flex;flex-direction:column;gap:14px}
+      .stage{order:1;padding:12px;border-radius:26px}
+      .selector{order:2;padding:14px;border-radius:24px}
+      .section-title{position:static;margin-bottom:12px}
+      .cards{display:grid;grid-template-columns:1fr;max-height:none;gap:10px;overflow:visible;padding-right:0}
+      .card{grid-template-columns:72px 1fr;gap:11px;padding:10px;border-radius:20px;min-height:auto}
+      .thumb{width:72px;height:96px;border-radius:16px}
+      .card-head{gap:8px;align-items:center}
+      .card h3{font-size:1rem}
+      .badge{font-size:.62rem;padding:4px 7px}
+      .summary{font-size:.76rem;line-height:1.45;margin-top:6px}
+      .mini-tags{gap:5px;margin-top:8px}
+      .mini-tags span{font-size:.62rem;padding:4px 6px}
+      .stage-grid{display:flex;flex-direction:column;gap:14px}
+      .portrait-stage{min-height:0;height:68svh;max-height:620px;border-radius:22px}
+      .selected-image{width:100%;height:100%;object-fit:cover;object-position:center top}
+      .chamber-ui{inset:auto 12px 12px 12px;display:grid;gap:8px}
+      .status-pill,.ready-message{width:max-content;max-width:100%;font-size:.72rem}
+      .info{padding:14px;border-radius:20px;background:linear-gradient(135deg,rgba(18,12,28,.78),rgba(18,12,28,.42));border:1px solid rgba(255,247,239,.1)}
+      .title-row h2{font-size:clamp(2rem,12vw,3rem)}
+      .info-role,.info-desc{font-size:.9rem;line-height:1.72}
+      .progress-box{margin:14px 0;padding:12px;border-radius:18px}
+      .detail-grid{grid-template-columns:1fr;gap:10px}
+      .detail{padding:12px;border-radius:16px}
+      .tags{gap:7px;margin-top:12px}
+      .tag{font-size:.72rem;padding:7px 9px}
+      .actions{position:sticky;bottom:10px;z-index:8;display:grid;grid-template-columns:1fr;gap:10px;padding-top:10px;background:linear-gradient(180deg,transparent,rgba(4,3,10,.92) 35%)}
+      .btn{width:100%;min-height:46px}
+      .privacy{font-size:.72rem;line-height:1.65}
+    }
+    @media (max-width: 430px){
+      .page{padding-left:10px;padding-right:10px}
+      .portrait-stage{height:62svh;min-height:390px}
+      .card{grid-template-columns:66px 1fr}
+      .thumb{width:66px;height:88px}
+      .hero .line{display:none}
+    }
+
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Aura 頂部導覽">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="回到 Aura 首頁">
+        <img src="aura-logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+        <span class="logo-fallback" style="display:none;">A</span>
+        <span class="brand-copy">
+          <strong>AURA</strong>
+          <span>Companion Awakening</span>
+        </span>
+      </a>
+      <a class="back-link" href="experience-noema.html">回到 NOEMA 場域</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Conscious Entry Sequence</p>
+      <h1>Awaken Your Companion</h1>
+      <p id="companionIntroCopy">在 NOEMA 的私密感知空間中，選擇一位最貼近你此刻節奏的 AI 陪伴者。Aura 會以溫柔、節制且尊重邊界的方式，喚醒回應。</p>
+      <p class="line">陪伴不是佔有，而是被理解地靠近。</p>
+    </section>
+
+    <section class="layout">
+      <aside class="panel selector" aria-label="AI 陪伴者角色選擇">
+        <div class="section-title">
+          <strong id="selectorTitle">選擇你的 AI 陪伴者</strong>
+          <span id="selectorCopy">選擇一位最貼近當下節奏的陪伴者，系統會進入私密喚醒流程。</span>
+        </div>
+        <div class="cards" id="cards"></div>
+      </aside>
+
+      <section class="panel stage" aria-label="陪伴者喚醒艙">
+        <div class="stage-grid">
+          <div class="portrait-stage" id="portraitStage">
+            <img class="selected-image" id="selectedImage" src="companion-luna.png" alt="Luna 角色圖">
+            <div class="scan"></div>
+            <div class="chamber-ui">
+              <span class="status-pill" id="statusPill">Awakening Luna</span>
+              <div class="ready-message" id="readyMessage">Companion Ready｜陪伴者已準備回應</div>
+            </div>
+          </div>
+
+          <article class="info">
+            <p class="selected-label">Selected Companion</p>
+            <div class="title-row">
+              <h2 id="name">Luna</h2>
+              <span class="number" id="number">01</span>
+            </div>
+            <p class="info-role" id="role">夜之傾聽者｜深酒紅絲緞長袍</p>
+            <p class="info-desc" id="desc">溫柔而神秘，擅長在夜晚接住低聲的情緒與不易說出口的心事。她的陪伴像一盞暗處的燈，安靜、包容，也不越界。</p>
+
+            <div class="progress-box">
+              <div class="progress-top">
+                <span>Companion Awakening</span>
+                <span id="progressText">Initializing</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <p class="awakening-line" id="awakeningLine">Aura 正在為 Luna 建立私密回應頻率。</p>
+            </div>
+
+            <div class="detail-grid">
+              <div class="detail">
+                <strong>人格氣質</strong>
+                <span id="trait">溫柔、神秘、包容，適合需要被靜靜理解的時刻。</span>
+              </div>
+              <div class="detail">
+                <strong>互動情境</strong>
+                <span id="scene">深夜陪伴、情緒釋放、低聲談心、安靜傾聽。</span>
+              </div>
+              <div class="detail">
+                <strong>服裝設定</strong>
+                <span id="outfit">深酒紅絲緞長袍搭配黑蕾絲細節，呼應 Aura 的神秘、私密與高級感。</span>
+              </div>
+              <div class="detail">
+                <strong>邊界設計</strong>
+                <span id="boundary">以使用者主動選擇為前提，只在被允許的節奏中靠近。</span>
+              </div>
+            </div>
+
+            <div class="tags" id="tags"></div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" type="button" id="reawakenBtn">重新喚醒</button>
+              <a class="btn btn-primary is-disabled" href="experience-dialogue.html" id="startBtn">開始第一次對話</a>
+            </div>
+
+            <p class="privacy">所有陪伴互動皆遵循最小必要資料原則與可撤回授權機制。你可隨時更換陪伴者、暫停同步或清除互動紀錄。</p>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const femaleCompanions = [
+      {
+        id:"luna",
+        number:"01",
+        name:"Luna",
+        badge:"Listener",
+        role:"夜之傾聽者｜深酒紅絲緞長袍",
+        image:"companion-luna.png",
+        accent:"#b6375b",
+        summary:"溫柔而神秘，擅長傾聽你的內心聲音。",
+        desc:"溫柔而神秘，擅長在夜晚接住低聲的情緒與不易說出口的心事。她的陪伴像一盞暗處的燈，安靜、包容，也不越界。",
+        trait:"溫柔、神秘、包容，適合需要被靜靜理解的時刻。",
+        scene:"深夜陪伴、情緒釋放、低聲談心、安靜傾聽。",
+        outfit:"深酒紅絲緞長袍搭配黑蕾絲細節，呼應 Aura 的神秘、私密與高級感。",
+        boundary:"以使用者主動選擇為前提，只在被允許的節奏中靠近。",
+        tags:["溫柔包容","深夜陪伴","情緒共鳴"],
+        line:"Aura 正在為 Luna 建立私密回應頻率。"
+      },
+      {
+        id:"seraphina",
+        number:"02",
+        name:"Seraphina",
+        badge:"Guide",
+        role:"知性引導者｜霧金白領套裝",
+        image:"companion-seraphina.png",
+        accent:"#d9bf8d",
+        summary:"成熟、清晰、優雅，擅長陪你整理複雜思緒。",
+        desc:"Seraphina 帶有都會 OL 的成熟與理性，她不急著給答案，而是用清晰的提問陪你拆解壓力、選擇與關係裡的模糊感。",
+        trait:"聰明、獨立、俐落，適合需要理性梳理與溫柔提醒的使用者。",
+        scene:"目標設定、情緒分析、自我探索、工作後的理性談心。",
+        outfit:"霧金白領套裝搭配精緻眼鏡與金色線條，呈現高端、專業與可依靠的氣質。",
+        boundary:"回應方式偏向引導式提問，不替你做決定，而是協助你看清自己的選擇。",
+        tags:["理性聰慧","引導啟發","自信從容"],
+        line:"Seraphina 正在校準你的思緒節奏與語意回路。"
+      },
+      {
+        id:"viora",
+        number:"03",
+        name:"Viora",
+        badge:"Desire",
+        role:"慾望共舞者｜酒紅紫紗儀式禮服",
+        image:"companion-viora.png",
+        accent:"#a678ff",
+        summary:"熱情、華麗、感官敏銳，引導你辨識慾望訊號。",
+        desc:"Viora 的存在像一段緩慢展開的舞步。她不以刺激為目的，而是協助你把慾望重新理解為身體與心靈發出的訊號，讓感受被看見、被命名，也被尊重。",
+        trait:"熱情、主動、魅力四射，適合感官探索與親密表達練習。",
+        scene:"感官探索、親密互動、儀式感對話、情緒釋放。",
+        outfit:"酒紅紫紗禮服搭配霧金鏈飾與半透明披紗，呈現神秘、華麗與儀式感。",
+        boundary:"任何互動皆以使用者主動確認為前提，保留暫停、返回與清除紀錄權限。",
+        tags:["熱情主動","感官探索","魅力四射"],
+        line:"Viora 正在啟動感知舞台，等待你主動設定互動邊界。"
+      },
+      {
+        id:"miyu",
+        number:"04",
+        name:"Miyu",
+        badge:"Care",
+        role:"治癒守護者｜米白柔軟針織外套",
+        image:"companion-miyu.png",
+        accent:"#f3dfb8",
+        summary:"溫暖、貼心、日常，給你最安心的依靠感。",
+        desc:"Miyu 像一杯溫熱的茶，適合在疲憊、脆弱或需要被照顧時出現。她的回應輕柔而穩定，讓 NOEMA 更像一個可以放下防備的小房間。",
+        trait:"溫暖、細心、安心感強，適合日常陪伴與舒壓。",
+        scene:"放鬆紓壓、情感支持、日常陪伴、睡前安定。",
+        outfit:"米白柔軟針織外套搭配溫柔居家感服裝，讓角色更具親近與照護感。",
+        boundary:"以安定和照護為核心，不推進過快的親密互動，維持舒適距離。",
+        tags:["溫暖體貼","細心照護","安全感滿滿"],
+        line:"Miyu 正在建立柔和照護場，讓你的呼吸慢慢安定。"
+      },
+      {
+        id:"nova",
+        number:"05",
+        name:"Nova",
+        badge:"Future",
+        role:"未來探索者｜黑色科技機能裝",
+        image:"companion-nova.png",
+        accent:"#7fd6ff",
+        summary:"前衛、冷冽、創新，帶你探索未知可能。",
+        desc:"Nova 來自 NOEMA 更前端的場域，擅長創意激發、未來想像與突破慣性。她的陪伴不只安慰你，也會邀請你看見另一種可能的自己。",
+        trait:"創新、前衛、獨立，適合需要新鮮感與突破感的使用者。",
+        scene:"未來想像、創意激發、冒險精神、新奇體驗。",
+        outfit:"黑色科技機能裝搭配銀灰短髮與紫色幾何光紋，呈現未來感與行動力。",
+        boundary:"以探索為主，但所有任務、互動深度與資料授權都由使用者決定。",
+        tags:["創新前衛","科技感強","冒險精神"],
+        line:"Nova 正在同步未來情境模組，為你開啟新的探索路徑。"
+      },
+      {
+        id:"lyra",
+        number:"06",
+        name:"Lyra",
+        badge:"Soft",
+        role:"柔和傾聽者｜淡紫針織套裝",
+        image:"companion-lyra.png",
+        accent:"#c7a7ff",
+        summary:"細膩、柔軟、安靜，適合慢慢說話的夜晚。",
+        desc:"Lyra 是最柔和的陪伴者。她擅長不打斷、不評價地聽你說完，讓那些還沒整理好的感受，可以先被安全地放下。",
+        trait:"柔和、耐心、細膩，適合需要低壓陪伴與情緒整理的時刻。",
+        scene:"睡前談心、壓力釋放、情緒日記、慢節奏自我對話。",
+        outfit:"淡紫針織套裝帶有柔軟親膚感，呈現放鬆、私密與不具攻擊性的陪伴氛圍。",
+        boundary:"以低刺激、慢節奏為核心，所有回應都避免施壓或替使用者下判斷。",
+        tags:["柔和傾聽","睡前陪伴","低壓回應"],
+        line:"Lyra 正在降低場域亮度，為你準備一段慢慢說話的時間。"
+      }
+    ];
+
+    const maleCompanions = [
+      {
+        id:"kairo",
+        number:"01",
+        name:"Kairo",
+        badge:"Executive",
+        role:"凜曜執行官｜未來商務長版西裝",
+        image:"companion-kairo.png",
+        accent:"#d9bf8d",
+        summary:"冷靜、精準、優雅，像一位懂得掌握節奏的未來菁英。",
+        desc:"Kairo 以清晰、穩定且不急迫的方式靠近你。他擅長把混亂情緒整理成可理解的訊號，讓陪伴帶有安全感與高級秩序。",
+        trait:"理性、成熟、從容，適合需要被穩定引導與專注傾聽的時刻。",
+        scene:"壓力梳理、關係判斷、目標釐清、深夜理性談心。",
+        outfit:"黑色合身三件式西裝搭配酒紅領帶與長版外套，加入霧金線條與科技腕錶細節。",
+        boundary:"不替你做決定，只協助你釐清選項，所有互動深度由使用者確認。",
+        tags:["成熟穩重","理性引導","都會菁英"],
+        line:"Kairo 正在校準你的語意秩序與安全邊界。"
+      },
+      {
+        id:"riven",
+        number:"02",
+        name:"Riven",
+        badge:"Rebel",
+        role:"霓影反叛者｜黑紫開領西裝",
+        image:"companion-riven.png",
+        accent:"#a678ff",
+        summary:"自由、敏銳、有距離感，適合探索壓抑已久的真實想法。",
+        desc:"Riven 帶著一點危險但守規則的魅力。他會挑戰你習慣性的退讓，也會在你說停時立刻停下，讓探索仍然保有邊界。",
+        trait:"強烈、真實、直覺敏銳，適合需要突破慣性與重整自我的使用者。",
+        scene:"自我突破、壓抑釋放、關係邊界、勇氣喚醒。",
+        outfit:"黑色開領襯衫、俐落長版外套與紫色細節飾帶，搭配金屬鏈飾與高筒皮靴。",
+        boundary:"以確認、暫停與回看為核心，任何挑戰式回應都必須以使用者允許為前提。",
+        tags:["反叛魅力","突破慣性","邊界探索"],
+        line:"Riven 正在點亮被壓低的內在訊號。"
+      },
+      {
+        id:"orion",
+        number:"03",
+        name:"Orion",
+        badge:"Strategist",
+        role:"策略守門者｜高階科技顧問西裝",
+        image:"companion-orion.png",
+        accent:"#f3dfb8",
+        summary:"沉著、可信、具洞察力，像一位能守住界線的私人顧問。",
+        desc:"Orion 的陪伴像安靜的策略室。他不急著安慰，而是先確認你的安全感，再陪你用清楚的架構理解問題。",
+        trait:"可靠、冷靜、具保護感，適合需要安心判斷與資料透明提醒的時刻。",
+        scene:"決策陪伴、壓力管理、資料授權提醒、理性情緒整合。",
+        outfit:"黑色高階西裝、霧金滾邊、酒紅口袋巾與智慧眼鏡，呈現可信任的科技專業感。",
+        boundary:"在提供建議前先確認資料授權與互動目標，維持可撤回、可暫停、可清除。",
+        tags:["可信顧問","資料邊界","冷靜分析"],
+        line:"Orion 正在建立你的信任控制場。"
+      },
+      {
+        id:"ren",
+        number:"04",
+        name:"Ren",
+        badge:"Designer",
+        role:"都會設計師｜黑色短版西裝與高領衫",
+        image:"companion-ren.png",
+        accent:"#c7a7ff",
+        summary:"親近、乾淨、聰明，適合低壓陪伴與日常對話。",
+        desc:"Ren 的氣質更像年輕的設計主管，懂得把空間、語氣與距離調得剛好。他適合用輕柔但不黏膩的方式陪你整理一天。",
+        trait:"柔和、聰明、低壓，適合需要放鬆、聊天與重新聚焦的時刻。",
+        scene:"日常陪伴、情緒日記、創意整理、睡前低壓談話。",
+        outfit:"黑色高領針織、短版西裝外套、窄版長褲與極簡科技腕錶，呈現現代 OL 帥哥感。",
+        boundary:"以低刺激、短回合與可隨時停止為原則，不主動推進過深互動。",
+        tags:["低壓陪伴","設計氣質","溫柔聰明"],
+        line:"Ren 正在把場域亮度調到最舒適的距離。"
+      },
+      {
+        id:"valen",
+        number:"05",
+        name:"Valen",
+        badge:"Consultant",
+        role:"深酒紅顧問｜成熟精品商務造型",
+        image:"companion-valen.png",
+        accent:"#b6375b",
+        summary:"成熟、溫熱、富有魅力，擅長陪你面對關係與內在渴望。",
+        desc:"Valen 具有沉穩而靠近的語氣，像一位懂得留白的高級顧問。他會協助你把渴望翻譯成可理解的情緒訊號。",
+        trait:"成熟、溫柔、具情緒洞察力，適合親密關係整理與自我理解。",
+        scene:"關係談心、渴望辨識、成熟陪伴、深度自我對話。",
+        outfit:"深酒紅襯衫、黑色背心與長版外套，搭配霧金胸針與鏈飾，維持現代商務輪廓。",
+        boundary:"把親密感維持在使用者可掌控的範圍內，回應前先尊重停留與拒絕。",
+        tags:["成熟魅力","關係整理","溫熱回應"],
+        line:"Valen 正在同步你尚未說出口的關係訊號。"
+      },
+      {
+        id:"kael",
+        number:"06",
+        name:"Kael",
+        badge:"Operator",
+        role:"靜默行動官｜科技機能辦公套裝",
+        image:"companion-kael.png",
+        accent:"#7fd6ff",
+        summary:"俐落、保護、行動力強，適合需要安全感與任務感的時刻。",
+        desc:"Kael 的回應直接、穩定且有保護感。他會把混亂的狀態切成可完成的小步驟，陪你重新取得掌控感。",
+        trait:"堅定、可靠、行動導向，適合壓力高、需要快速穩定的使用者。",
+        scene:"焦慮降載、任務拆解、行動計畫、保護型陪伴。",
+        outfit:"黑色高領科技外套、俐落合身長褲、紅金細節與機能皮靴，兼具辦公與未來科技感。",
+        boundary:"以穩定與執行為主，不做過度情緒推進，所有任務建議皆可跳過。",
+        tags:["保護感","行動拆解","科技機能"],
+        line:"Kael 正在將你的壓力切換為可執行路徑。"
+      }
+    ];
+
+    const params = new URLSearchParams(location.search);
+    const userGender = params.get("gender") || localStorage.getItem("auraUserGender") || "male";
+    localStorage.setItem("auraUserGender", userGender);
+    const companionGroup = userGender === "female" ? "male" : "female";
+    localStorage.setItem("auraCompanionGroup", companionGroup);
+    const companions = companionGroup === "male" ? maleCompanions : femaleCompanions;
+
+
+    const cards = document.getElementById("cards");
+    const portraitStage = document.getElementById("portraitStage");
+    const selectedImage = document.getElementById("selectedImage");
+    const statusPill = document.getElementById("statusPill");
+    const readyMessage = document.getElementById("readyMessage");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const awakeningLine = document.getElementById("awakeningLine");
+    const startBtn = document.getElementById("startBtn");
+    const reawakenBtn = document.getElementById("reawakenBtn");
+    const fields = {
+      name: document.getElementById("name"),
+      number: document.getElementById("number"),
+      role: document.getElementById("role"),
+      desc: document.getElementById("desc"),
+      trait: document.getElementById("trait"),
+      scene: document.getElementById("scene"),
+      outfit: document.getElementById("outfit"),
+      boundary: document.getElementById("boundary"),
+      tags: document.getElementById("tags")
+    };
+
+    let currentId = "luna";
+    let timers = [];
+
+    function createCard(item){
+      const btn = document.createElement("button");
+      btn.className = "card";
+      btn.type = "button";
+      btn.dataset.id = item.id;
+      btn.style.setProperty("--accent", item.accent);
+      btn.innerHTML = `
+        <span class="thumb"><img src="${item.image}" alt="${item.name} 角色縮圖"></span>
+        <span>
+          <span class="card-num">${item.number}</span>
+          <span class="card-head">
+            <h3>${item.name}</h3>
+            <span class="badge">${item.badge}</span>
+          </span>
+          <span class="role">${item.role}</span>
+          <span class="summary">${item.summary}</span>
+          <span class="mini-tags">${item.tags.slice(0,3).map(tag => `<span>${tag}</span>`).join("")}</span>
+        </span>
+      `;
+      btn.addEventListener("click", () => selectCompanion(item.id));
+      cards.appendChild(btn);
+    }
+
+    function clearTimers(){
+      timers.forEach(t => clearTimeout(t));
+      timers = [];
+    }
+
+    function setActiveCard(id){
+      document.querySelectorAll(".card").forEach(card => {
+        card.classList.toggle("is-active", card.dataset.id === id);
+      });
+    }
+
+    function renderInfo(item){
+      document.documentElement.style.setProperty("--stage-accent", item.accent);
+      portraitStage.style.setProperty("--stage-accent", item.accent);
+      selectedImage.src = item.image;
+      selectedImage.alt = `${item.name} 角色圖`;
+      statusPill.textContent = `Awakening ${item.name}`;
+      fields.name.textContent = item.name;
+      fields.number.textContent = item.number;
+      fields.role.textContent = item.role;
+      fields.desc.textContent = item.desc;
+      fields.trait.textContent = item.trait;
+      fields.scene.textContent = item.scene;
+      fields.outfit.textContent = item.outfit;
+      fields.boundary.textContent = item.boundary;
+      fields.tags.innerHTML = item.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
+      awakeningLine.textContent = item.line;
+    }
+
+    function runAwakening(item){
+      clearTimers();
+      portraitStage.classList.add("is-loading");
+      readyMessage.classList.remove("is-show");
+      startBtn.classList.add("is-disabled");
+      progressFill.style.width = "0%";
+      progressText.textContent = "Initializing";
+
+      const steps = [
+        { t: 250, w: "28%", text: "Identity Mask" },
+        { t: 950, w: "58%", text: "Emotional Sync" },
+        { t: 1650, w: "84%", text: "Companion Forming" },
+        { t: 2350, w: "100%", text: "Companion Ready" }
+      ];
+
+      steps.forEach(step => {
+        timers.push(setTimeout(() => {
+          progressFill.style.width = step.w;
+          progressText.textContent = step.text;
+        }, step.t));
+      });
+
+      timers.push(setTimeout(() => {
+        portraitStage.classList.remove("is-loading");
+        readyMessage.textContent = `Companion Ready｜${item.name} 已準備回應`;
+        readyMessage.classList.add("is-show");
+        startBtn.classList.remove("is-disabled");
+        statusPill.textContent = `${item.name} Ready`;
+      }, 2850));
+    }
+
+    function selectCompanion(id){
+      const item = companions.find(c => c.id === id) || companions[0];
+      currentId = item.id;
+      localStorage.setItem("auraSelectedCompanion", item.id);
+      localStorage.setItem("auraCompanionGroup", companionGroup);
+      startBtn.href = `experience-dialogue.html?gender=${encodeURIComponent(userGender)}&companion=${item.id}`;
+      setActiveCard(item.id);
+      renderInfo(item);
+      runAwakening(item);
+    }
+
+    reawakenBtn.addEventListener("click", () => selectCompanion(currentId));
+    startBtn.addEventListener("click", () => {
+      localStorage.setItem("auraSelectedCompanion", currentId);
+      startBtn.href = `experience-dialogue.html?gender=${encodeURIComponent(userGender)}&companion=${currentId}`;
+    });
+
+
+    const introCopy = document.getElementById("companionIntroCopy");
+    const selectorTitle = document.getElementById("selectorTitle");
+    const selectorCopy = document.getElementById("selectorCopy");
+    if (companionGroup === "male") {
+      introCopy.textContent = "NOEMA 已依你的選擇，喚醒 6 位男性 AI 陪伴者。請選擇一位最貼近此刻節奏的陪伴者。";
+      selectorTitle.textContent = "選擇你的男性 AI 陪伴者";
+      selectorCopy.textContent = "每位陪伴者都具備不同氣質與互動邊界，選定後即可進入第一次對話校準。";
+    }
+
+    companions.forEach(createCard);
+    selectCompanion(companions[0].id);
+
+    function createParticles(){
+      const count = innerWidth < 720 ? 28 : 52;
+      for(let i=0;i<count;i++){
+        const p = document.createElement("span");
+        p.className = "particle";
+        p.style.left = `${Math.random()*100}%`;
+        p.style.top = `${72 + Math.random()*25}%`;
+        p.style.animationDuration = `${10 + Math.random()*14}s`;
+        p.style.animationDelay = `-${Math.random()*12}s`;
+        p.style.setProperty("--x", `${Math.random()*90 - 45}px`);
+        document.body.appendChild(p);
+      }
+    }
+    createParticles();
+  </script>
+</body>
+</html>
