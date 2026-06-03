@@ -6,7 +6,18 @@
   <title>Aura｜AI 親密科技與隱私優先自我照護</title>
   <meta name="description" content="Aura 是結合意識同步穿戴裝置、NOEMA 沉浸式空間、AI 陪伴與資料透明設計的高端自我照護品牌。">
   <meta name="theme-color" content="#09070d">
+
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L0YK27LLKX"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-L0YK27LLKX');  //辦完GA4要改
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
+  
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -49,21 +60,21 @@
       </aside>
 
       <div class="home-hero__content">
-        <span class="eyebrow" data-i18n="home.hero.eyebrow">Aura NOEMA 系統</span>
-        <h1 data-i18n="home.hero.title">不是逃離世界，<br>而是回到自己。</h1>
+        <span class="eyebrow" data-i18n="home.hero.eyebrow">Aura x NOEMA</span>
+        <h1 data-i18n="home.hero.title">再靠近一點</h1>
         <p data-i18n="home.hero.desc">
-          以意識同步穿戴裝置、AI 陪伴與隱私優先設計，建立一個可控、安靜、只屬於你的沉浸式自我照護入口。
+          等你開啟，只屬於我們的祕密
         </p>
 
         <div class="hero-actions">
-          <button class="btn btn-primary" type="button" data-open-trial data-i18n="home.hero.ctaTrial">免費體驗 NOEMA</button>
+          <a class="btn btn-primary" href="noema.html" data-i18n="home.hero.ctaTrial">免費體驗 NOEMA</a>
         </div>
 
         <div class="hero-pills" aria-label="Aura 重點承諾">
-          <span data-i18n="home.hero.pillAge">18+ 安全體驗</span>
-          <span data-i18n="home.hero.pillPrivacy">隱私優先</span>
-          <span data-i18n="home.hero.pillConsent">可撤回授權</span>
-          <span data-i18n="home.hero.pillData">不出售資料</span>
+          <span data-i18n="home.hero.pillAge">18+</span>
+          <span data-i18n="home.hero.pillPrivacy">私密空間</span>
+          <span data-i18n="home.hero.pillConsent">匿名</span>
+          <span data-i18n="home.hero.pillData">安全隱私</span>
         </div>
       </div>
     </section>
@@ -75,9 +86,9 @@
         <div class="trial-strip" data-reveal>
           <div>
             <span class="eyebrow" data-i18n="home.trial.eyebrow">首次體驗</span>
-            <h2 data-i18n="home.trial.title">先體驗，再決定靠近的深度。</h2>
+            <h2 data-i18n="home.trial.title">如果你也有一點喜歡我…</h2>
             <p data-i18n="home.trial.desc">
-              Aura 首次體驗提供 7 分鐘 NOEMA 引導預覽。你可以先選擇狀態、調整隱私權限，再由系統推薦適合的體驗模式。
+              那就進來，鎖上門
             </p>
           </div>
           <div class="trial-steps" aria-label="免費體驗步驟">
@@ -85,7 +96,7 @@
             <span data-i18n="home.trial.step2">02 設定權限</span>
             <span data-i18n="home.trial.step3">03 進入預覽</span>
           </div>
-          <button class="btn btn-primary" type="button" data-open-trial data-i18n="home.trial.cta">開始免費體驗</button>
+            <a class="btn btn-primary" href="noema.html" data-i18n="home.trial.cta">開始免費體驗</a>
         </div>
       </div>
     </section>
@@ -96,15 +107,15 @@
       <div class="noema-fullbleed__shade" aria-hidden="true"></div>
       <div class="page-shell noema-fullbleed__content" data-reveal>
         <span class="eyebrow" data-i18n="home.noema.eyebrow">NOEMA 體驗</span>
-        <h2 data-i18n="home.noema.title">一個只屬於你的安靜場域。</h2>
-        <p data-i18n="home.noema.desc">在低光、柔霧與環形光暈中，整理情緒、釋放壓力，練習更清楚地靠近自己。</p>
+        <h2 data-i18n="home.noema.title">私密領地</h2>
+        <p data-i18n="home.noema.desc">想成為你，最順從的那個秘密</p>
         <div class="noema-mode-row" aria-label="NOEMA 體驗模式">
           <span data-i18n="home.noema.mode1">情緒陪伴</span>
           <span data-i18n="home.noema.mode2">壓力釋放</span>
           <span data-i18n="home.noema.mode3">親密表達練習</span>
         </div>
         <div class="noema-actions">
-          <button class="btn btn-primary" type="button" data-open-trial data-i18n="home.noema.trialCta">預約免費預覽</button>
+          <a class="btn btn-primary" href="noema.html" data-i18n="home.noema.trialCta">預約免費預覽</a>
         </div>
       </div>
     </section>
@@ -113,12 +124,12 @@
     <section class="section privacy-home" aria-label="資料透明互動預覽">
       <div class="page-shell privacy-home__grid">
         <div class="privacy-copy" data-reveal>
-          <span class="eyebrow" data-i18n="home.privacy.eyebrow">隱私優先設計</span>
-          <h2 data-i18n="home.privacy.title">貼心，但不越界。</h2>
+          <span class="eyebrow" data-i18n="home.privacy.eyebrow">隱私設計</span>
+          <h2 data-i18n="home.privacy.title">透明，是我們底線</h2>
           <p data-i18n="home.privacy.desc">
-            Aura 的互動體驗建立在明示授權、資料最小化與可撤回控制上。你可以隨時調整資料使用方式。
+            數據將限時內銷毀，權限由你主導
           </p>
-          <a class="btn btn-ghost" href="privacy.html" data-i18n="home.privacy.cta">開啟資料透明中心</a>
+          <a class="btn btn-ghost" href="privacy.html" data-i18n="home.privacy.cta">資料透明中心</a>
         </div>
 
         <div class="dashboard" data-reveal>

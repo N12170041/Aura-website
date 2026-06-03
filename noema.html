@@ -32,18 +32,18 @@
           <div class="noema-scene-selector" role="tablist" aria-label="選擇 NOEMA 場景">
             <button type="button" class="is-active" data-noema-scene="calm">
               <span>01</span>
-              <strong>Calm Room</strong>
+              <strong>靜謐</strong>
               <small data-i18n="noema.clean.calm">低刺激安定場域</small>
             </button>
             <button type="button" data-noema-scene="reflection">
               <span>02</span>
-              <strong>Reflection Lounge</strong>
-              <small data-i18n="noema.clean.reflection">內在整理場域</small>
+              <strong>觀隅</strong>
+              <small data-i18n="noema.clean.reflection">心靈反思與沉澱</small>
             </button>
             <button type="button" data-noema-scene="companion">
               <span>03</span>
-              <strong>Companion Garden</strong>
-              <small data-i18n="noema.clean.companion">AI 陪伴互動場域</small>
+              <strong>聆苑</strong>
+              <small data-i18n="noema.clean.companion">AI 陪伴與對話</small>
             </button>
           </div>
         </section>
@@ -64,36 +64,36 @@
           calm: {
             img: "noema-scene.png",
             alt: "Calm Room 低刺激安定場域",
-            caption: "Calm Room"
+            caption: "靜隘"
           },
           reflection: {
             img: "noema-world-bg.png",
-            alt: "Reflection Lounge 內在整理場域",
-            caption: "Reflection Lounge"
+            alt: "Reflection Lounge 內在整理與沈澱",
+            caption: "觀隅"
           },
           companion: {
             img: "noema-private-sensory-space.png",
-            alt: "Companion Garden AI 陪伴互動場域",
-            caption: "Companion Garden"
+            alt: "Companion Garden AI 陪伴與對話",
+            caption: "聆苑"
           }
         },
-        en: {
-          calm: {
-            img: "noema-scene.png",
-            alt: "Calm Room low-stimulation space",
-            caption: "Calm Room"
-          },
-          reflection: {
-            img: "noema-world-bg.png",
-            alt: "Reflection Lounge inner reflection space",
-            caption: "Reflection Lounge"
-          },
-          companion: {
-            img: "noema-private-sensory-space.png",
-            alt: "Companion Garden AI companion space",
-            caption: "Companion Garden"
-          }
-        }
+        // en: {
+        //   calm: {
+        //     img: "noema-scene.png",
+        //     alt: "Calm Room low-stimulation space",
+        //     caption: "Calm Room"
+        //   },
+        //   reflection: {
+        //     img: "noema-world-bg.png",
+        //     alt: "Reflection Lounge inner reflection space",
+        //     caption: "Reflection Lounge"
+        //   },
+        //   companion: {
+        //     img: "noema-private-sensory-space.png",
+        //     alt: "Companion Garden AI companion space",
+        //     caption: "Companion Garden"
+        //   }
+        // }
       };
 
       const buttons = Array.from(document.querySelectorAll("[data-noema-scene]"));
