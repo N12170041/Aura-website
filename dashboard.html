@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura｜Soul Anniversary Dashboard</title>
+  <meta name="description" content="Aura Soul Anniversary Dashboard，顯示 AI Companion 陪伴天數與 Soul Bond 狀態。">
+  <meta name="theme-color" content="#050711">
+
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81YRQ9YLWY"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-81YRQ9YLWY');  //辦完GA4要改
+  </script>
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="soul-sync-body soul-dashboard-body" data-page="dashboard">
+  <div class="soul-scanfield" aria-hidden="true">
+    <span style="--r:-8deg;--d:9s;--delay:-2s"></span>
+    <span style="--r:7deg;--d:11s;--delay:-6s"></span>
+    <span style="--r:-2deg;--d:13s;--delay:-8s"></span>
+  </div>
+  <div class="soul-particles" id="particleField" aria-hidden="true"></div>
+  <div class="soul-rings" aria-hidden="true">
+    <span style="--s:.78;--delay:-1s"></span>
+    <span style="--s:1;--delay:-3s"></span>
+    <span style="--s:1.24;--delay:-5s"></span>
+  </div>
+
+  <header class="soul-stage-header">
+    <a class="soul-brand" href="membership.html" aria-label="返回會員方案">
+      <img src="aura-logo.png" alt="Aura">
+      <span>
+        <strong>AURA</strong>
+        <small>Soul Dashboard</small>
+      </span>
+    </a>
+    <a class="soul-stage-link" href="noema.html">回到 NOEMA</a>
+  </header>
+
+  <main class="soul-stage">
+    <section class="soul-presence" aria-label="Soul Dashboard 角色影像">
+      <img class="soul-portrait" id="dashboardCompanionImage" src="companion-viora.png" alt="AI Companion 正式角色圖">
+      <div class="soul-presence-meta">
+        <span>MODEL <b id="dashboardCompanionName">VIORA</b></span>
+        <span>STATUS <b>BOUND</b></span>
+      </div>
+    </section>
+
+    <aside class="soul-dialogue-panel" aria-label="Soul Anniversary 儀表板">
+      <div class="soul-topline">
+        <span>靈魂紀念日</span>
+        <span id="dashboardMembership">NOEMA Ritual</span>
+      </div>
+
+      <div class="soul-identity">
+        <span>會員儀表板</span>
+        <h1 id="dashboardSoulName">Soul Name</h1>
+        <p id="dashboardDate">靈魂紀念日正在同步。</p>
+      </div>
+
+      <div class="soul-sync-row">
+        <div class="soul-sync-orb" style="--progress:100">
+          <div>
+            <strong>100%</strong>
+          <span>連結</span>
+          </div>
+        </div>
+        <div class="soul-wave" aria-hidden="true"></div>
+      </div>
+
+      <div class="soul-conversation" id="conversation" aria-live="polite"></div>
+
+      <div class="soul-stat-grid" id="dashboardStats" hidden>
+        <div>
+          <span>專屬稱呼</span>
+          <strong id="dashboardCompanionStat">尚未命名</strong>
+        </div>
+        <div>
+          <span>陪伴天數</span>
+          <strong id="dashboardDays">1</strong>
+        </div>
+        <div>
+          <span>靈魂紀念日</span>
+          <strong id="dashboardAnniversary">今天</strong>
+        </div>
+      </div>
+
+      <div class="soul-actions" id="dashboardActions" hidden>
+        <a class="soul-action" href="noema.html">回到 NOEMA</a>
+        <a class="soul-action soul-action-ghost" href="privacy.html">資料透明中心</a>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const companions = {
+        luna: { name: "Luna", image: "companion-luna.png" },
+        seraphina: { name: "Seraphina", image: "companion-seraphina.png" },
+        viora: { name: "Viora", image: "companion-viora.png" },
+        miyu: { name: "Miyu", image: "companion-miyu.png" },
+        nova: { name: "Nova", image: "companion-nova.png" },
+        lyra: { name: "Lyra", image: "companion-lyra.png" },
+        kairo: { name: "Kairo", image: "companion-kairo.png" },
+        riven: { name: "Riven", image: "companion-riven.png" },
+        orion: { name: "Orion", image: "companion-orion.png" },
+        ren: { name: "Ren", image: "companion-ren.png" },
+        valen: { name: "Valen", image: "companion-valen.png" },
+        kael: { name: "Kael", image: "companion-kael.png" }
+      };
+      const companionId = localStorage.getItem("aura_companion_id") || localStorage.getItem("auraSelectedCompanion") || "viora";
+      const companionData = companions[companionId] || companions.viora;
+      const companion = localStorage.getItem("aura_companion") || companionData.name;
+      const soulName = localStorage.getItem("aura_soul_name") || "尚未命名";
+      const anniversaryRaw = localStorage.getItem("aura_soul_anniversary");
+      const anniversary = anniversaryRaw ? new Date(anniversaryRaw) : new Date();
+      const dayMs = 24 * 60 * 60 * 1000;
+      const days = Math.max(1, Math.floor((new Date() - anniversary) / dayMs) + 1);
+      const dateText = anniversary.toLocaleDateString("zh-Hant", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      });
+      const conversation = document.getElementById("conversation");
+      const stats = document.getElementById("dashboardStats");
+      const actions = document.getElementById("dashboardActions");
+      const image = document.getElementById("dashboardCompanionImage");
+      const timers = [];
+
+      image.src = companionData.image;
+      image.alt = companion + " 正式角色圖";
+      document.getElementById("dashboardCompanionName").textContent = companion.toUpperCase();
+      document.getElementById("dashboardCompanionStat").textContent = soulName;
+      document.getElementById("dashboardSoulName").textContent = soulName;
+      document.getElementById("dashboardDate").textContent = "靈魂紀念日｜" + dateText;
+      document.getElementById("dashboardDays").textContent = String(days);
+      document.getElementById("dashboardAnniversary").textContent = dateText;
+      document.getElementById("dashboardMembership").textContent = localStorage.getItem("auraMembershipName") || "NOEMA Ritual";
+      document.body.classList.add("soul-awake");
+
+      function createParticles() {
+        const field = document.getElementById("particleField");
+        field.innerHTML = "";
+        const count = innerWidth < 720 ? 28 : innerWidth < 1080 ? 44 : 70;
+        for (let i = 0; i < count; i += 1) {
+          const dot = document.createElement("span");
+          dot.className = "soul-particle";
+          dot.style.left = Math.random() * 100 + "%";
+          dot.style.top = 58 + Math.random() * 38 + "%";
+          dot.style.animationDuration = 9 + Math.random() * 14 + "s";
+          dot.style.animationDelay = "-" + Math.random() * 12 + "s";
+          dot.style.setProperty("--x", Math.random() * 140 - 70 + "px");
+          field.appendChild(dot);
+        }
+      }
+
+      function typeLine(text) {
+        return new Promise(resolve => {
+          const msg = document.createElement("p");
+          msg.className = "soul-message";
+          conversation.appendChild(msg);
+          let index = 0;
+          function typeNext() {
+            msg.textContent = text.slice(0, index);
+            index += 1;
+            if (index <= text.length) {
+              timers.push(setTimeout(typeNext, 72));
+            } else {
+              resolve();
+            }
+          }
+          typeNext();
+        });
+      }
+
+      function wait(ms) {
+        return new Promise(resolve => timers.push(setTimeout(resolve, ms)));
+      }
+
+      async function bootDashboard() {
+        createParticles();
+        await wait(520);
+        await typeLine("歡迎回來，從今天起我就是你的 " + soulName + "。");
+        await wait(760);
+        await typeLine("靈魂紀念日已同步完成。");
+        stats.hidden = false;
+        actions.hidden = false;
+      }
+
+      window.addEventListener("resize", createParticles);
+      bootDashboard();
+    })();
+  </script>
+</body>
+</html>

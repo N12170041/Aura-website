@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura | NOEMA Portal</title>
   <meta name="description" content="Aura NOEMA 傳送門啟動頁，開啟一個私密、溫柔且可控的感知世界。" />
+
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81YRQ9YLWY"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-81YRQ9YLWY');  //辦完GA4要改
+  </script>
+  
   <style>
     :root {
       --black: #050306;
@@ -917,14 +927,58 @@
 
     /* Final QA｜desktop font and spacing polish */
     @media (min-width: 981px) {
-      h1 { font-size: clamp(3rem, 6vw, 5.2rem) !important; line-height: .98 !important; letter-spacing: -0.055em !important; text-wrap: balance; }
+      *, *::before, *::after { box-sizing: border-box; }
+      h1 {
+        max-width: 100%;
+        font-size: clamp(2.65rem, 5vw, 4.55rem) !important;
+        line-height: 1.02 !important;
+        letter-spacing: -0.045em !important;
+        overflow-wrap: anywhere;
+        text-wrap: balance;
+      }
       .hero { padding-top: calc(var(--header-height) + 24px); }
-      .subtitle { max-width: 700px; line-height: 1.78; }
+      .subtitle,
+      p,
+      .step-label,
+      .ready-sub,
+      .link-start-sub {
+        font-size: clamp(.9rem, .95vw, 1rem);
+        line-height: 1.72;
+        overflow-wrap: break-word;
+      }
+      .subtitle { max-width: 700px; }
       .sequence-wrap { padding-top: clamp(24px, 4vh, 56px); }
+      .sequence-card,
+      .sequence-content,
+      .step-view,
+      .ready-view,
+      .portal-actions,
+      .link-start-core {
+        min-width: 0;
+        overflow: visible;
+      }
       .sequence-card { min-height: 214px; }
+      .step-label,
+      .sequence-status,
+      .ready-sub,
+      .action-btn,
+      .return-link {
+        letter-spacing: .08em;
+        white-space: normal;
+      }
+      .action-btn,
+      button,
+      a {
+        min-height: 44px;
+        height: auto;
+        white-space: normal;
+        line-height: 1.35;
+        text-align: center;
+      }
     }
     @media (min-width: 981px) and (max-width: 1366px) {
-      h1 { font-size: clamp(2.8rem, 5.5vw, 4.75rem) !important; }
+      h1 { font-size: clamp(2.35rem, 4.6vw, 4rem) !important; }
+      .sequence-card { min-height: 228px; }
     }
 
   </style>

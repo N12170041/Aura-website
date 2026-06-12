@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura | NOEMA Private Sensory Space</title>
   <meta name="description" content="Aura NOEMA 私密感知空間載入頁，讓使用者進入安全、可控且溫柔的內在場域。" />
+
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81YRQ9YLWY"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-81YRQ9YLWY');  //辦完GA4要改
+  </script>
+  
   <style>
     :root {
       --black: #050305;
@@ -1104,13 +1114,64 @@
 
     /* Final QA｜desktop font and spacing polish */
     @media (min-width: 981px) {
-      h1 { font-size: clamp(3.1rem, 6vw, 5.35rem) !important; line-height: .96 !important; letter-spacing: -0.058em !important; text-wrap: balance; }
-      .subtitle { max-width: 700px; line-height: 1.78; }
+      *, *::before, *::after { box-sizing: border-box; }
+      h1 {
+        max-width: 100%;
+        font-size: clamp(2.7rem, 5vw, 4.65rem) !important;
+        line-height: 1.02 !important;
+        letter-spacing: -0.045em !important;
+        overflow-wrap: anywhere;
+        text-wrap: balance;
+      }
+      .subtitle,
+      p,
+      .step-title,
+      .ready-panel p,
+      .enter-panel p,
+      .gender-gate p,
+      .choice-card p,
+      .mode-card p {
+        font-size: clamp(.9rem, .95vw, 1rem);
+        line-height: 1.72;
+        overflow-wrap: break-word;
+      }
+      .eyebrow,
+      .step-index,
+      .choice-card span,
+      .mode-card span {
+        letter-spacing: .08em;
+        white-space: normal;
+      }
+      .subtitle { max-width: 700px; }
       .world-stage { min-height: clamp(420px, 52vh, 600px); }
-      .gender-gate, .ready-panel, .enter-panel { max-width: 760px; margin-left: auto; margin-right: auto; }
+      .sequence-layer,
+      .step-card,
+      .gender-gate,
+      .ready-panel,
+      .enter-panel,
+      .choice-card,
+      .mode-card {
+        min-width: 0;
+        overflow: visible;
+      }
+      .gender-gate,
+      .ready-panel,
+      .enter-panel {
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .btn,
+      .enter-btn,
+      button,
+      a {
+        white-space: normal;
+        line-height: 1.35;
+      }
     }
     @media (min-width: 981px) and (max-width: 1366px) {
-      h1 { font-size: clamp(2.85rem, 5.6vw, 4.9rem) !important; }
+      h1 { font-size: clamp(2.4rem, 4.6vw, 4.05rem) !important; }
+      .world-stage { min-height: clamp(390px, 48vh, 540px); }
     }
 
   </style>

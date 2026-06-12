@@ -6,6 +6,16 @@
   <title>Aura｜資料透明中心</title>
   <meta name="description" content="Aura 資料透明中心，以互動式隱私控制艙呈現資料權限、本地端處理、個人化記憶、刪除與下載控制。">
   <meta name="theme-color" content="#08060b">
+
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81YRQ9YLWY"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-81YRQ9YLWY');  //辦完GA4要改
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
   <script type="application/ld+json">
   {
@@ -442,7 +452,7 @@
             <div class="privacy-mini-icon">◎</div>
             <div>
               <h2>個人化</h2>
-              <p>平衡模式：保留推薦，但不擴張權限。</p>
+              <p>平衡模式：預設(可調整)</p>
               <input class="pc-range" type="range" min="0" max="100" value="56" data-personal-depth aria-label="個人化深度">
               <small data-personal-label>Balanced</small>
             </div>
@@ -451,8 +461,8 @@
           <section class="privacy-card privacy-mini-card" id="local" data-reveal>
             <div class="privacy-mini-icon">▣</div>
             <div>
-              <h2>本地端處理</h2>
-              <p><strong>Active</strong>｜敏感訊號優先在裝置端處理，減少不必要傳輸。</p>
+              <h2>邊緣運算狀態</h2>
+              <p><strong></strong>核心訊號本體加密解析</p>
               <a href="product.html" class="privacy-inline-link">查看產品設計 →</a>
             </div>
           </section>
@@ -468,7 +478,7 @@
               <i style="height:30%"></i><i style="height:58%"></i><i style="height:28%"></i><i style="height:60%"></i>
               <i style="height:31%"></i><i style="height:57%"></i><i style="height:28%"></i><i style="height:24%"></i>
             </div>
-            <div class="activity-foot"><span>本地端處理事件</span><strong>1,287</strong></div>
+            <div class="activity-foot"><span>歷史處理事件</span><strong>1,287</strong></div>
           </section>
 
           <section class="privacy-card privacy-plan-depth" data-reveal>
@@ -508,9 +518,9 @@
 
           <section class="privacy-card privacy-principle-card" data-reveal>
             <span class="eyebrow">Aura Privacy Promise</span>
-            <h2>不偷看、不出售、不強迫記憶。</h2>
-            <p>資料最小化、明示授權、可撤回控制，是 Aura 會員與 NOEMA 體驗的共同底線。</p>
-            <div class="privacy-feedback" data-center-feedback>你可以切換權限，系統會即時更新目前狀態。</div>
+            <h2>隱私承諾</h2>
+            <p>落實資料最小化與可撤回控制。若有任何資安疑慮，請參閱我們的透明應變機制。</p>
+            <!-- <div class="privacy-feedback" data-center-feedback>你可以切換權限，系統會即時更新目前狀態。</div> -->
             <a class="btn btn-ghost privacy-crisis-link" href="crisis.html">查看信任回應機制</a>
           </section>
         </div>
@@ -519,6 +529,20 @@
   </main>
 
   <div data-site-footer></div>
+  <script>
+    //處理is-active動態選擇
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.querySelectorAll('.privacy-side-nav a');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          navLinks.forEach(item => item.classList.remove('is-active'));
+          
+          this.classList.add('is-active');
+        });
+      });
+    });
+  </script>
   <script src="js/script.js"></script>
 </body>
 </html>

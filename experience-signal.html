@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura｜Signal Lock</title>
   <meta name="description" content="Aura 產品體驗流程 Step 01：意識同步頭盔啟動與本地端訊號鎖定。" />
+
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81YRQ9YLWY"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-81YRQ9YLWY');  //辦完GA4要改
+  </script>
+  
   <style>
     :root {
       --bg: #050307;
@@ -1035,18 +1045,56 @@
 
     /* Final QA｜desktop font and spacing polish */
     @media (min-width: 981px) {
+      *, *::before, *::after { box-sizing: border-box; }
       .signal-title h1, .hero-copy h1, h1 {
-        font-size: clamp(3rem, 6.4vw, 5.2rem) !important;
-        line-height: 1 !important;
-        letter-spacing: -0.055em !important;
+        max-width: 100%;
+        font-size: clamp(2.65rem, 5.2vw, 4.5rem) !important;
+        line-height: 1.03 !important;
+        letter-spacing: -0.045em !important;
+        overflow-wrap: anywhere;
         text-wrap: balance;
       }
       .signal-hero { min-height: calc(100vh - 84px); }
       .container { width: min(var(--max-width), calc(100% - 72px)); }
-      .signal-card, .status-panel, .flow-panel { min-width: 0; }
+      .signal-card,
+      .status-panel,
+      .flow-panel,
+      .control-panel,
+      .panel-head,
+      .sequence-item,
+      .panel-actions {
+        min-width: 0;
+        overflow: visible;
+      }
+      p,
+      li,
+      .panel-head p,
+      .sequence-item span,
+      .sequence-item strong,
+      .data-note {
+        font-size: clamp(.9rem, .95vw, 1rem);
+        line-height: 1.7;
+        overflow-wrap: break-word;
+      }
+      .eyebrow,
+      .progress-top,
+      .sequence-index,
+      .btn {
+        letter-spacing: .08em;
+        white-space: normal;
+      }
+      .btn,
+      button,
+      a {
+        min-height: 44px;
+        height: auto;
+        white-space: normal;
+        line-height: 1.35;
+        text-align: center;
+      }
     }
     @media (min-width: 981px) and (max-width: 1366px) {
-      .signal-title h1, .hero-copy h1, h1 { font-size: clamp(2.85rem, 5.8vw, 4.75rem) !important; }
+      .signal-title h1, .hero-copy h1, h1 { font-size: clamp(2.35rem, 4.7vw, 3.95rem) !important; }
     }
 
   </style>

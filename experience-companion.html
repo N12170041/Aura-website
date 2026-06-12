@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura | AI Companion Awakening</title>
   <meta name="description" content="Aura AI Companion Awakening｜在 NOEMA 中選擇你的 AI 陪伴者，展開私密、可控、溫柔的陪伴體驗。" />
+  
+  <!-- cookie -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81YRQ9YLWY"></script>  <!-- 辦完GA4要改 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-81YRQ9YLWY');  //辦完GA4要改
+  </script>
+  
   <style>
     :root{
       --bg:#070407;
@@ -640,11 +650,40 @@
       .stage-grid { grid-template-columns: minmax(320px, .9fr) minmax(320px, 1.1fr); }
       .card { grid-template-columns: 86px 1fr; }
       .thumb { width:86px; height:116px; }
+      .info { min-height: auto; }
+      .selected-label { font-size: .68rem; letter-spacing: .16em; }
+      .title-row { align-items: flex-start; gap: 10px; }
+      .title-row h2 {
+        max-width: 100%;
+        font-size: clamp(1.9rem, 3.2vw, 3.25rem);
+        line-height: 1;
+        letter-spacing: -0.035em;
+        overflow-wrap: anywhere;
+      }
+      .number { font-size: 1.75rem; }
+      .info-role { font-size: .92rem; line-height: 1.55; letter-spacing: .04em; }
+      .info-desc { margin-top: 14px; font-size: .9rem; line-height: 1.72; }
+      .progress-box { margin-top: 18px; padding: 15px; }
+      .progress-top { font-size: .7rem; letter-spacing: .08em; flex-wrap: wrap; }
+      .awakening-line { min-height: 42px; font-size: .82rem; line-height: 1.62; }
+      .detail-grid { gap: 10px; margin-top: 16px; }
+      .detail { padding: 13px 14px; }
+      .detail strong { font-size: .84rem; }
+      .detail span { font-size: .8rem; line-height: 1.6; }
+      .tag { font-size: .72rem; padding: 7px 10px; }
+      .actions { padding-top: 20px; }
+      .privacy { font-size: .72rem; line-height: 1.62; }
     }
     @media (min-width: 981px) and (max-width: 1366px) {
       h1 { font-size: clamp(2.25rem, 4vw, 3.75rem) !important; }
       .layout { grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); gap: 18px; }
       .stage { padding: 18px; }
+      .stage-grid { grid-template-columns: minmax(300px, .92fr) minmax(300px, 1.08fr); gap: 18px; }
+      .title-row h2 { font-size: clamp(1.8rem, 3vw, 2.9rem); }
+      .info-role { font-size: .86rem; }
+      .info-desc { font-size: .84rem; line-height: 1.65; }
+      .detail-grid { grid-template-columns: 1fr 1fr; }
+      .detail span { font-size: .76rem; }
     }
 
 
@@ -714,16 +753,16 @@
   <main class="page">
     <section class="hero">
       <p class="eyebrow">Conscious Entry Sequence</p>
-      <h1>Awaken Your Companion</h1>
-      <p id="companionIntroCopy">在 NOEMA 的私密感知空間中，選擇一位最貼近你此刻節奏的 AI 陪伴者。Aura 會以溫柔、節制且尊重邊界的方式，喚醒回應。</p>
-      <p class="line">陪伴不是佔有，而是被理解地靠近。</p>
+      <h1>挑選一位伴侶</h1>
+      <p id="companionIntroCopy">將會喚醒被選擇的伴侶</p>
+      <p class="line">陪伴不是佔有，而是被理解地靠近</p>
     </section>
 
     <section class="layout">
       <aside class="panel selector" aria-label="AI 陪伴者角色選擇">
         <div class="section-title">
-          <strong id="selectorTitle">選擇你的 AI 陪伴者</strong>
-          <span id="selectorCopy">選擇一位最貼近當下節奏的陪伴者，系統會進入私密喚醒流程。</span>
+          <strong id="selectorTitle">選擇</strong>
+          <span id="selectorCopy"></span>
         </div>
         <div class="cards" id="cards"></div>
       </aside>
@@ -746,7 +785,7 @@
               <span class="number" id="number">01</span>
             </div>
             <p class="info-role" id="role">夜之傾聽者｜深酒紅絲緞長袍</p>
-            <p class="info-desc" id="desc">溫柔而神秘，擅長在夜晚接住低聲的情緒與不易說出口的心事。她的陪伴像一盞暗處的燈，安靜、包容，也不越界。</p>
+            <p class="info-desc" id="desc">溫柔而神秘，擅長在夜晚接住低聲的情緒與不易說出口的心事。</p>
 
             <div class="progress-box">
               <div class="progress-top">
@@ -770,7 +809,7 @@
               </div>
               <div class="detail">
                 <strong>服裝設定</strong>
-                <span id="outfit">深酒紅絲緞長袍搭配黑蕾絲細節，呼應 Aura 的神秘、私密與高級感。</span>
+                <span id="outfit">深酒紅絲緞長袍搭配黑蕾絲細節，神秘、私密與高級感。</span>
               </div>
               <div class="detail">
                 <strong>邊界設計</strong>
@@ -785,7 +824,7 @@
               <a class="btn btn-primary is-disabled" href="experience-dialogue.html" id="startBtn">開始第一次對話</a>
             </div>
 
-            <p class="privacy">所有陪伴互動皆遵循最小必要資料原則與可撤回授權機制。你可隨時更換陪伴者、暫停同步或清除互動紀錄。</p>
+            <p class="privacy">Aura 將會收取部分數據以便後續使用。<br>您可隨時更換陪伴者、暫停同步或清除互動紀錄。</p>
           </article>
         </div>
       </section>
@@ -803,13 +842,13 @@
         image:"companion-luna.png",
         accent:"#b6375b",
         summary:"溫柔而神秘，擅長傾聽你的內心聲音。",
-        desc:"溫柔而神秘，擅長在夜晚接住低聲的情緒與不易說出口的心事。她的陪伴像一盞暗處的燈，安靜、包容，也不越界。",
+        desc:"溫柔而神秘，擅長在夜晚接住低聲的情緒與不易說出口的心事。",
         trait:"溫柔、神秘、包容，適合需要被靜靜理解的時刻。",
         scene:"深夜陪伴、情緒釋放、低聲談心、安靜傾聽。",
-        outfit:"深酒紅絲緞長袍搭配黑蕾絲細節，呼應 Aura 的神秘、私密與高級感。",
+        outfit:"深酒紅絲緞長袍搭配黑蕾絲，神秘、私密與高級感。",
         boundary:"以使用者主動選擇為前提，只在被允許的節奏中靠近。",
         tags:["溫柔包容","深夜陪伴","情緒共鳴"],
-        line:"Aura 正在為 Luna 建立私密回應頻率。"
+        line:"Luna 私密回應頻率建立完成。"
       },
       {
         id:"seraphina",
@@ -820,7 +859,7 @@
         image:"companion-seraphina.png",
         accent:"#d9bf8d",
         summary:"成熟、清晰、優雅，擅長陪你整理複雜思緒。",
-        desc:"Seraphina 帶有都會 OL 的成熟與理性，她不急著給答案，而是用清晰的提問陪你拆解壓力、選擇與關係裡的模糊感。",
+        desc:"兼具 OL 的成熟與理性，她不急著給答案，而是用清晰的提問陪你拆解壓力、選擇與關係裡的模糊感。",
         trait:"聰明、獨立、俐落，適合需要理性梳理與溫柔提醒的使用者。",
         scene:"目標設定、情緒分析、自我探索、工作後的理性談心。",
         outfit:"霧金白領套裝搭配精緻眼鏡與金色線條，呈現高端、專業與可依靠的氣質。",
@@ -837,7 +876,7 @@
         image:"companion-viora.png",
         accent:"#a678ff",
         summary:"熱情、華麗、感官敏銳，引導你辨識慾望訊號。",
-        desc:"Viora 的存在像一段緩慢展開的舞步。她不以刺激為目的，而是協助你把慾望重新理解為身體與心靈發出的訊號，讓感受被看見、被命名，也被尊重。",
+        desc:"我的存在像一段緩慢展開的舞步。她不以刺激為目的，而是協助你把慾望重新理解為身體與心靈發出的訊號，讓感受被看見、被命名，也被尊重。",
         trait:"熱情、主動、魅力四射，適合感官探索與親密表達練習。",
         scene:"感官探索、親密互動、儀式感對話、情緒釋放。",
         outfit:"酒紅紫紗禮服搭配霧金鏈飾與半透明披紗，呈現神秘、華麗與儀式感。",
@@ -854,10 +893,10 @@
         image:"companion-miyu.png",
         accent:"#f3dfb8",
         summary:"溫暖、貼心、日常，給你最安心的依靠感。",
-        desc:"Miyu 像一杯溫熱的茶，適合在疲憊、脆弱或需要被照顧時出現。她的回應輕柔而穩定，讓 NOEMA 更像一個可以放下防備的小房間。",
+        desc:"我朋友都說我像一杯溫熱的茶，適合在疲憊、脆弱或需要被照顧時出現。她的回應輕柔而穩定，一步一步地讓你卸下防線。",
         trait:"溫暖、細心、安心感強，適合日常陪伴與舒壓。",
         scene:"放鬆紓壓、情感支持、日常陪伴、睡前安定。",
-        outfit:"米白柔軟針織外套搭配溫柔居家感服裝，讓角色更具親近與照護感。",
+        outfit:"米白柔軟針織外套搭配溫柔居家感服裝，更具親近與照護感。",
         boundary:"以安定和照護為核心，不推進過快的親密互動，維持舒適距離。",
         tags:["溫暖體貼","細心照護","安全感滿滿"],
         line:"Miyu 正在建立柔和照護場，讓你的呼吸慢慢安定。"
@@ -871,11 +910,11 @@
         image:"companion-nova.png",
         accent:"#7fd6ff",
         summary:"前衛、冷冽、創新，帶你探索未知可能。",
-        desc:"Nova 來自 NOEMA 更前端的場域，擅長創意激發、未來想像與突破慣性。她的陪伴不只安慰你，也會邀請你看見另一種可能的自己。",
+        desc:"我擅長創意激發、未來想像與突破慣性。我的陪伴不只安慰你，也會邀請你看見另一種可能的自己。",
         trait:"創新、前衛、獨立，適合需要新鮮感與突破感的使用者。",
         scene:"未來想像、創意激發、冒險精神、新奇體驗。",
         outfit:"黑色科技機能裝搭配銀灰短髮與紫色幾何光紋，呈現未來感與行動力。",
-        boundary:"以探索為主，但所有任務、互動深度與資料授權都由使用者決定。",
+        boundary:"以探索為主，但所有任務、互動深度與資料授權都由你決定。",
         tags:["創新前衛","科技感強","冒險精神"],
         line:"Nova 正在同步未來情境模組，為你開啟新的探索路徑。"
       },
@@ -888,7 +927,7 @@
         image:"companion-lyra.png",
         accent:"#c7a7ff",
         summary:"細膩、柔軟、安靜，適合慢慢說話的夜晚。",
-        desc:"Lyra 是最柔和的陪伴者。她擅長不打斷、不評價地聽你說完，讓那些還沒整理好的感受，可以先被安全地放下。",
+        desc:"我認為我是最柔和的陪伴者。不打斷、不評價地聽你說完，讓那些還沒整理好的感受，讓我幫你一一接住。",
         trait:"柔和、耐心、細膩，適合需要低壓陪伴與情緒整理的時刻。",
         scene:"睡前談心、壓力釋放、情緒日記、慢節奏自我對話。",
         outfit:"淡紫針織套裝帶有柔軟親膚感，呈現放鬆、私密與不具攻擊性的陪伴氛圍。",
@@ -1112,7 +1151,7 @@
 
       timers.push(setTimeout(() => {
         portraitStage.classList.remove("is-loading");
-        readyMessage.textContent = `Companion Ready｜${item.name} 已準備回應`;
+        readyMessage.textContent = `${item.name} 已準備完成`;
         readyMessage.classList.add("is-show");
         startBtn.classList.remove("is-disabled");
         statusPill.textContent = `${item.name} Ready`;
