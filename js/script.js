@@ -44,8 +44,8 @@
       "footer.foundation": "以隱私優先的自我照護體驗為核心設計。",
 
       "contact.hero.eyebrow": "Contact Aura",
-      "contact.hero.title": "讓下一次進入 NOEMA，更貼近你的節奏。",
-      "contact.hero.desc": "不論你想預約體驗、了解會員方案、確認資料權限，或洽談品牌合作，都可以從這裡開始。",
+      "contact.hero.title": "聯絡我們",
+      "contact.hero.desc": "預約體驗、了解會員方案、確認資料權限，或洽談品牌合作，歡迎與我們聯繫",
       "contact.hero.cta": "填寫聯絡表單",
       "contact.hero.secondary": "查看資料透明",
       "contact.channel.experience.title": "體驗諮詢",
@@ -76,8 +76,8 @@
       "age.denied": "很抱歉，Aura 官網內容僅提供 18 歲以上使用者瀏覽。",
 
       "home.hero.eyebrow": "Aura NOEMA 系統",
-      "home.hero.title": "<span class=\"title-line\">再靠近一點</span><span class=\"title-line\"></span>",
-      "home.hero.desc": "等你開啟，只屬於我們的祕密",
+      "home.hero.title": "你渴望被理解",
+      "home.hero.desc": "而我為你而存在",
       "home.hero.ctaTrial": "免費體驗 NOEMA",
       "home.hero.ctaProduct": "探索 NOEMA 體驗",
       "home.hero.pillAge": "18+",
@@ -178,8 +178,8 @@
       "home.membership.upgrade": "升級體驗",
 
       "membership.hero.eyebrow": "NOEMA 會員方案",
-      "membership.hero.title": "選擇你的 NOEMA 進入深度。",
-      "membership.hero.desc": "免費體驗結束後，你不需要立刻被推向承諾。Aura 讓你依照自己的節奏，從回訪、日常沉浸到深度陪伴，選擇一個安全、合意、可控的接續方式。",
+      "membership.hero.title": "與 NOEMA 的深度",
+      "membership.hero.desc": "Aura 讓你依照自己的節奏，選擇您想要的接續方式",
       "membership.hero.ctaPlans": "查看會員方案",
       "membership.hero.ctaPrivacy": "先看資料透明",
       "membership.status.eyebrow": "校準摘要",
@@ -199,57 +199,57 @@
       "membership.model.premium.title": "高端模組",
       "membership.model.premium.desc": "聲紋敘事包、限定宇宙與深度記憶劇本，必須建立在明示授權之上。",
       "membership.plans.eyebrow": "選擇方案",
-      "membership.plans.title": "從一次回訪，到一個可持續的私密空間。",
+      "membership.plans.title": "永續的私密空間",
       "membership.billing.monthly": "月度",
       "membership.billing.annual": "年度",
       "membership.plan.preview.badge": "體驗",
       "membership.plan.preview.title": "Free Preview",
-      "membership.plan.preview.for": "適合：剛完成體驗、還想再確認一次的人",
-      "membership.plan.preview.desc": "保留短版 NOEMA 回訪，讓使用者重新感受場景、節奏與邊界設定。",
+      "membership.plan.preview.for": "短暫重返：感知狀態的二次確認",
+      "membership.plan.preview.desc": "保留短版 NOEMA 回訪，讓使用者重新感受場景、節奏與邊界設定",
       "membership.plan.preview.f1": "7 分鐘 NOEMA 回訪",
       "membership.plan.preview.f2": "重新選擇狀態與場景",
       "membership.plan.preview.f3": "資料透明看板入口",
-      "membership.plan.preview.cta": "選擇回訪",
+      "membership.plan.preview.cta": "免費回訪",
       "membership.plan.ritual.recommended": "推薦",
       "membership.plan.ritual.badge": "自我照護",
       "membership.plan.ritual.title": "NOEMA Ritual",
-      "membership.plan.ritual.for": "適合：想把沉浸體驗變成日常自我照護的人",
-      "membership.plan.ritual.desc": "以穩定節奏進入 Calm、Reflection 與 Companion 場景，保留每次進入前的權限確認。",
+      "membership.plan.ritual.for": "感官常規：將沉浸內化為呼吸節奏",
+      "membership.plan.ritual.desc": "以穩定節奏進入 <b>靜謐、觀隅 與 聆苑</b> 場景，保留每次進入前的權限確認",
       "membership.plan.ritual.f1": "完整 NOEMA 場景庫",
       "membership.plan.ritual.f2": "AI 陪伴者語氣保存",
       "membership.plan.ritual.f3": "月度情緒回顧與反思日誌",
-      "membership.plan.ritual.cta": "選擇 Ritual",
+      "membership.plan.ritual.cta": "選擇日常儀式",
       "membership.plan.plus.badge": "沉浸",
       "membership.plan.plus.title": "NOEMA Plus",
-      "membership.plan.plus.for": "適合：需要更多角色宇宙與內容庫的人",
-      "membership.plan.plus.desc": "在 Ritual 基礎上，加入多層級角色宇宙、進階場景路徑與更完整的體驗摘要。",
+      "membership.plan.plus.for": "進階路徑：多維度的角色宇宙擴充",
+      "membership.plan.plus.desc": "在 Ritual 基礎上，加入多層級角色宇宙、進階場景路徑與更完整的體驗摘要",
       "membership.plan.plus.f1": "多層級角色宇宙",
       "membership.plan.plus.f2": "限定 NOEMA 場景更新",
       "membership.plan.plus.f3": "感知摘要與體驗回顧",
-      "membership.plan.plus.cta": "升級 Plus",
+      "membership.plan.plus.cta": "升級進階沉浸",
       "membership.plan.sanctuary.badge": "高端",
       "membership.plan.sanctuary.title": "Sanctuary",
-      "membership.plan.sanctuary.for": "適合：需要高端個人化與更強隱私控制的人",
-      "membership.plan.sanctuary.desc": "聲紋敘事包、限定宇宙與深度記憶劇本採預約制，所有敏感資料皆需明示授權。",
+      "membership.plan.sanctuary.for": "極致私密：完全客製的深層意識避難所",
+      "membership.plan.sanctuary.desc": "聲紋敘事包、限定宇宙與深度記憶劇本採預約制，所有敏感資料皆需明示授權",
       "membership.plan.sanctuary.f1": "聲紋敘事包",
       "membership.plan.sanctuary.f2": "深度記憶劇本",
       "membership.plan.sanctuary.f3": "進階刪除與授權管理",
-      "membership.plan.sanctuary.cta": "預約 Sanctuary",
+      "membership.plan.sanctuary.cta": "預約私密聖域",
       "membership.trust.eyebrow": "方案與資料透明",
-      "membership.trust.title": "越個人化，越需要看得見的控制權。",
-      "membership.trust.desc": "Aura 的高階體驗不應該偷偷擴權。當方案包含更細緻的 AI 陪伴、記憶劇本或感知摘要，就必須同時提供可關閉、可下載、可刪除與可撤回的資料控制。",
+      "membership.trust.title": "沉浸·主權",
+      "membership.trust.desc": "在 Aura 的世界觀中，越深層的沉浸，越需要對等的透明度。無論是聆苑的語氣保存或深層記憶劇本，所有數據皆受自主撤回機制的嚴格約束",
       "membership.trust.ctaPrivacy": "查看資料透明中心",
       "membership.trust.ctaNoema": "回到 NOEMA 入口",
       "membership.trust.item1.label": "必要資料",
       "membership.trust.item1.value": "帳號、裝置與付款資訊",
-      "membership.trust.item2.label": "個人化資料",
-      "membership.trust.item2.value": "偏好、場景與語氣設定，可關閉",
-      "membership.trust.item3.label": "敏感資料",
-      "membership.trust.item3.value": "明示授權，可即時刪除",
-      "membership.trust.item4.label": "匿名分析",
-      "membership.trust.item4.value": "僅用於改善體驗，可關閉",
+      "membership.trust.item2.label": "感知數據",
+      "membership.trust.item2.value": "場景偏好與語氣模組·隨時熔斷",
+      "membership.trust.item3.label": "深層記憶",
+      "membership.trust.item3.value": "明示授權驗證·即時銷毀",
+      "membership.trust.item4.label": "系統優化",
+      "membership.trust.item4.value": "去識別化分析·自由阻絕",
       "membership.next.eyebrow": "已選擇路徑",
-      "membership.next.ctaTrial": "建立會員預約",
+      "membership.next.ctaTrial": "啟動靈魂連結",
       "membership.next.ctaProduct": "查看 Aura 頭盔",
       "membership.selected.preview.title": "你目前選擇：Free Preview",
       "membership.selected.preview.desc": "適合再回訪一次 NOEMA，重新確認場景、節奏與資料邊界，暫時不延伸到日常使用。",
@@ -259,14 +259,16 @@
       "membership.selected.plus.desc": "Plus 適合想延伸角色宇宙與內容庫的人，能加入更多場景更新、感知摘要與體驗回顧。",
       "membership.selected.sanctuary.title": "你目前選擇：Sanctuary",
       "membership.selected.sanctuary.desc": "Sanctuary 是高端個人化路徑，適合需要聲紋敘事、限定宇宙與深度記憶劇本的人。敏感資料必須明示授權。",
-      "membership.modal.closeAria": "關閉會員預約表單",
-      "membership.modal.eyebrow": "會員預約",
-      "membership.modal.title": "預約 Aura 會員方案",
-      "membership.modal.desc": "送出後將建立體驗預約，Aura 團隊會依你選擇的方案提供接續資訊。",
-      "membership.modal.plan": "想了解的方案",
-      "membership.modal.consent": "我同意 Aura 依預約需求處理資料，並可於資料透明中心撤回授權。",
-      "membership.modal.submit": "建立預約",
-      "membership.modal.success": "已為你建立「{mode}」會員方案預約。下一步建議先查看資料透明中心，確認資料權限與使用邊界。",
+      "membership.modal.closeAria": "關閉付費確認視窗",
+      "membership.modal.eyebrow": "啟動靈魂連結",
+      "membership.modal.title": "確認你的靈魂連結方案",
+      "membership.modal.desc": "這是 Aura 的模擬付款確認，不會產生真實扣款。確認後將前往覺醒頁面，完成陪伴者命名。",
+      "membership.modal.plan": "選擇方案",
+      "membership.modal.cycle": "付款週期",
+      "membership.modal.amount": "模擬金額",
+      "membership.modal.consent": "我理解這是模擬付款，並授權 Aura 進入 Soul Bond 覺醒流程。",
+      "membership.modal.submit": "啟動靈魂連結",
+      "membership.modal.success": "模擬付款已確認，正在前往覺醒頁面。",
       "membership.modal.goPrivacy": "前往資料透明中心",
 
       "home.modal.eyebrow": "免費預覽",
@@ -295,26 +297,26 @@
       "noema.clean.companion": "AI 陪伴與對話",
       "noema.clean.enter": "進入全畫面體驗",
       "faq.hero.eyebrow": "Aura Guide",
-      "faq.hero.title": "進入之前，先把邊界說清楚。",
-      "faq.hero.desc": "這裡整理 NOEMA 體驗、AI Companion、會員方案與資料透明的重點。少一點術語，多一點可理解的控制權。",
+      "faq.hero.title": "常見問題",
+      "faq.hero.desc": "收錄 NOEMA 體驗、AI Companion 與隱私核心的常見解答。",
       "faq.hero.ctaFaq": "查看問題",
       "faq.hero.ctaPrivacy": "資料透明中心",
-      "faq.assurance.title": "三個先說清楚",
-      "faq.assurance.item1.title": "不是醫療診斷",
-      "faq.assurance.item1.desc": "Aura 是自我照護與沉浸體驗概念。",
-      "faq.assurance.item2.title": "不預設讀取敏感資料",
-      "faq.assurance.item2.desc": "情緒與感知訊號需明示授權。",
-      "faq.assurance.item3.title": "記憶可以關閉",
-      "faq.assurance.item3.desc": "AI Companion 不強迫保存互動紀錄。",
-      "faq.principle.1.title": "先同意，再進入。",
-      "faq.principle.1.desc": "NOEMA 體驗從狀態選擇與資料授權開始，不讓沉浸感蓋過控制權。",
-      "faq.principle.2.title": "先體驗，再承諾。",
-      "faq.principle.2.desc": "免費體驗結束後，再選擇適合自己的會員深度。",
-      "faq.principle.3.title": "先透明，再個人化。",
-      "faq.principle.3.desc": "越個人化的體驗，越需要可查看、可關閉與可刪除。",
+      "faq.assurance.title": "核心知情同意",
+      "faq.assurance.item1.title": "非醫療診斷",
+      "faq.assurance.item1.desc": "Aura 是自我照護與沉浸的感官體驗",
+      "faq.assurance.item2.title": "零預設讀取",
+      "faq.assurance.item2.desc": "感官數據唯有在明示授權下才會甦醒",
+      "faq.assurance.item3.title": "隨時遺忘的自由",
+      "faq.assurance.item3.desc": "AI Companion 不強迫留存任何記錄",
+      "faq.principle.1.title": "先賦權，後沉浸",
+      "faq.principle.1.desc": "NOEMA 的一切體驗始於你的主動授權，我們深信：掌控權，比沉浸感更具價值",
+      "faq.principle.2.title": "先觸動，後選擇",
+      "faq.principle.2.desc": "在感官被輕柔喚醒之後，再依據你的步調，定義專屬的會員深度",
+      "faq.principle.3.title": "先坦誠，後靈魂",
+      "faq.principle.3.desc": "打造靈魂共鳴的個人化體驗之前，我們將主動權交還予你——可審視、可靜止、可抹除",
       "faq.filter.eyebrow": "Question Map",
-      "faq.filter.title": "快速找到你在意的事。",
-      "faq.filter.desc": "選擇分類後，右側問題會即時收斂。內容聚焦關鍵問題，不做冗長條款。",
+      "faq.filter.title": "核心問題",
+      // "faq.filter.desc": "選擇分類後，右側問題會即時收斂。內容聚焦關鍵問題，不做冗長條款。",
       "faq.filter.all": "全部",
       "faq.filter.experience": "體驗流程",
       "faq.filter.companion": "AI 陪伴",
@@ -349,67 +351,68 @@
       "faq.q13.title": "如果發生資料異常或產品瑕疵，Aura 會怎麼做？",
       "faq.q13.desc": "Aura 會先暫停風險功能、保留事件紀錄、於 72 小時內主動通知受影響使用者，並提供資料查看、下載、刪除或裝置檢測流程。",
       "faq.next.eyebrow": "Next Step",
-      "faq.next.title": "理解邊界後，再選擇你的進入方式。",
-      "faq.next.desc": "你可以先進入 NOEMA 體驗，也可以查看會員方案與資料透明中心，確認自己想要的接續深度。",
+      "faq.next.title": "開始探索",
+      "faq.next.desc": "即刻步入 NOEMA 體驗，或依據你的步調，自由定義與感知共鳴的深度",
       "faq.next.ctaNoema": "進入 NOEMA",
       "faq.next.ctaPlan": "查看會員方案",
       "faq.next.ctaPrivacy": "資料透明中心",
       "product.hero.eyebrow": "Aura 意識同步頭盔",
-      "product.hero.title": "進入 NOEMA 的第一道入口。",
-      "product.hero.desc": "一款為沉浸式自我照護設計的穿戴裝置。它將感測、顯示、聲學與隱私控制整合在同一個安靜、可控的體驗入口。",
+      "product.hero.title": "NEOMA 沉浸式體驗 ",
+      "product.hero.desc": "全域加密聲學與動態行為防護 ── 在絕對安全的數位邊界內，開啟無限沉浸。",
       "product.hero.ctaPlan": "查看會員方案",
+      "product.hero.price": "NT 12,800 購買",
       "product.hero.ctaPrivacy": "查看隱私設計",
       "product.hero.imageAlt": "Aura 意識同步頭盔",
       "product.principle.eyebrow": "產品原則",
-      "product.principle.title": "沉浸感，不代表失去掌控。",
-      "product.principle.desc": "Aura 頭盔不是為了讓使用者被動陷入體驗，而是讓每一次進入、停留與退出都保持清楚、合意與可撤回。",
-      "product.principle.card1.title": "進入前先授權",
-      "product.principle.card1.desc": "感測與個人化功能須經使用者明確同意後才會啟用。",
-      "product.principle.card2.title": "本地端優先",
-      "product.principle.card2.desc": "敏感訊號優先在裝置端處理，減少不必要的資料傳輸。",
-      "product.principle.card3.title": "隨時退出",
-      "product.principle.card3.desc": "使用者可以中止體驗、關閉個人化或刪除互動紀錄。",
+      "product.principle.title": "沉浸感",
+      "product.principle.desc": "NEOMA 頭盔是為了有更深入更完整的體驗，盡可能地滿足您每一次的渴望",
+      "product.principle.card1.title": "動態知情同意機制",
+      "product.principle.card1.desc": "建立於明確知情授權。系統絕不預設追蹤，將數位邊界主權完整歸還給您。",
+      "product.principle.card2.title": "零信任邊緣運算",
+      "product.principle.card2.desc": "核心訊號僅在硬體端加密、即時解析。非必要不上傳雲端，從源頭阻斷外洩。",
+      "product.principle.card3.title": "即時軌跡淨空",
+      "product.principle.card3.desc": "隨時切換安全離線模式。系統啟動最高規格覆寫，數位意識絕不留存實體空間。",
       "product.modules.eyebrow": "核心模組",
-      "product.modules.title": "把科技藏在安靜裡。",
-      "product.modules.desc": "點選不同模組，查看 Aura 頭盔如何支撐 NOEMA 的沉浸、自我照護與資料透明體驗。",
-      "product.modules.tabDisplay": "透明顯示面板",
-      "product.modules.tabSensor": "意識感測模組",
-      "product.modules.tabAudio": "沉浸聲學艙",
-      "product.modules.tabPrivacy": "隱私運算核心",
+      "product.modules.title": "防護隱於沉浸",
+      "product.modules.desc": "解密 NEOMA 如何在零信任防禦體制下，完美平衡生物感測、意識主權與數據進化",
+      "product.modules.tabDisplay": "視網膜級動態隱私防護面板",
+      "product.modules.tabSensor": "去識別化生物特徵感測器",
+      "product.modules.tabAudio": "全域定向加密聲學系統",
+      "product.modules.tabPrivacy": "AURA 密碼學加密晶片",
       "product.modules.imageAlt": "Aura 意識同步頭盔功能示意",
       "product.modules.display.kicker": "視覺入口",
-      "product.modules.display.title": "透明顯示面板",
-      "product.modules.display.desc": "以低干擾的視覺介面呈現 NOEMA 場景、狀態提示與退出指令，避免資訊過載。",
+      "product.modules.display.title": "視網膜級動態隱私防護面板",
+      "product.modules.display.desc": "獨家光學物理隔絕技術，確保面板所呈現的 NEOMA 意識場景、系統狀態與敏感指令，僅對配戴者建立微米級定向投影。防堵任何外部光學側錄，讓隱私在完全透明的視野中得到絕對捍衛。",
       "product.modules.sensor.kicker": "感測入口",
-      "product.modules.sensor.title": "意識感測模組",
-      "product.modules.sensor.desc": "概念上以低光感測與狀態輸入輔助判斷體驗節奏，並在啟用前取得明確授權。",
+      "product.modules.sensor.title": "去識別化生物特徵感測器",
+      "product.modules.sensor.desc": "負責擷取微弱的腦電波與眼動軌跡。該模組在底層硬體即注入差分隱私 (Differential Privacy) 技術 ── 品牌端僅能透過此模組獲得去識別化的巨觀趨勢以優化共鳴演算法（品牌贏），但任何外部駭客皆無法從中反推或拼湊出您的個人心智模型（用戶贏），達成安全與進化的雙贏。",
       "product.modules.audio.kicker": "沉浸聲場",
-      "product.modules.audio.title": "沉浸聲學艙",
-      "product.modules.audio.desc": "以低干擾聲場建立安靜包覆感，讓使用者更容易進入專注、呼吸與整理狀態。",
+      "product.modules.audio.title": "全域定向加密聲學系統",
+      "product.modules.audio.desc": "採用逆向聲波抵消與動態加密傳輸。除了提供身歷其境的「聆苑」環境音效，更確保所有聲音訊號僅在耳道內形成封閉聲場，杜絕聲音外溢與骨傳導監聽，為您的聽覺意識建立國防級防空洞。",
       "product.modules.privacy.kicker": "資料邊界",
-      "product.modules.privacy.title": "隱私運算核心",
-      "product.modules.privacy.desc": "敏感訊號優先在本地端處理，搭配可關閉個人化、可下載與可刪除紀錄的控制邏輯。",
+      "product.modules.privacy.title": "AURA 密碼學加密晶片",
+      "product.modules.privacy.desc": "NEOMA 的資安心臟。專為處理端點多語言 (I18N) 行為標籤與動態密鑰而生。它將用戶的敏感行為轉化為混淆後的加密代碼，在不犧牲個人隱私的前提下，流暢驅動每一次的意識同步體驗。",
       "product.flow.eyebrow": "使用流程",
-      "product.flow.title": "四步完成一次可控體驗。",
+      "product.flow.title": "主權在握，輕量四步",
       "product.flow.step1.title": "配戴裝置",
-      "product.flow.step1.desc": "啟動頭盔並確認舒適貼合。",
+      "product.flow.step1.desc": "啟動 NEOMA，系統自動進行微米級人體工學貼合校正。",
       "product.flow.step2.title": "設定權限",
-      "product.flow.step2.desc": "選擇個人化、匿名分析與本地處理偏好。",
+      "product.flow.step2.desc": "自訂隱私權限，自主調配端點運算與去識別化數據偏好。",
       "product.flow.step3.title": "選擇模式",
-      "product.flow.step3.desc": "依狀態進入情緒陪伴、壓力釋放或表達練習。",
+      "product.flow.step3.desc": "鎖定心流狀態，無縫導入專屬的情緒共鳴與意識修復艙。",
       "product.flow.step4.title": "退出與回顧",
-      "product.flow.step4.desc": "結束後查看摘要，保留、下載或刪除紀錄。",
+      "product.flow.step4.desc": "中斷同步並檢視摘要，支援個人數據一鍵下載或物理級抹除。",
       "product.spec.eyebrow": "規格摘要",
-      "product.spec.title": "為私密沉浸設計的硬體入口。",
-      "product.spec.desc": "以下為產品概念規格，協助理解 Aura 如何連結硬體入口、NOEMA 體驗與資料透明設計。",
+      "product.spec.title": "心智硬體核心",
+      "product.spec.desc": "AURA 如何在物理端點構築零信任防線，整合動態隱私架構與去識別化分析體制",
       "product.spec.item1.label": "顯示介面",
-      "product.spec.item1.value": "透明曲面 OLED 面板",
+      "product.spec.item1.value": "3D 定向定向透明曲面 OLED 面板",
       "product.spec.item2.label": "資料處理",
-      "product.spec.item2.value": "本地端優先運算",
+      "product.spec.item2.value": "晶片級獨立邊緣運算",
       "product.spec.item3.label": "隱私控制",
-      "product.spec.item3.value": "明示授權 / 可撤回 / 可刪除",
+      "product.spec.item3.value": "動態知情同意與可逆抹除機制",
       "product.spec.item4.label": "體驗連動",
-      "product.spec.item4.value": "NOEMA 場景與 AI 陪伴者",
+      "product.spec.item4.value": "去識別化 AI 共鳴與加密場景渲染",
       "product.cta.eyebrow": "下一步",
       "product.cta.title": "選擇你的 Aura 進入方式。",
       "product.cta.desc": "從免費預覽開始，或直接查看會員方案，決定你想靠近 NOEMA 的深度。",
@@ -1077,9 +1080,11 @@
     const form = document.querySelector("[data-trial-form]");
     const success = document.querySelector("[data-trial-success]");
     const feedback = document.getElementById("trial-feedback");
+    const consent = document.getElementById("soulBondConsent");
     if (form) form.hidden = false;
     if (success) success.hidden = true;
     if (feedback) feedback.textContent = "";
+    if (consent) consent.checked = false;
   }
 
   // function setupTrialModal() {
@@ -1138,30 +1143,88 @@
       sanctuary: "Sanctuary"
     };
 
+    const planPrices = {
+      preview: {
+        monthly: { amount: "NT$0", cycle: "一次體驗", summary: "NT$0" },
+        annual: { amount: "NT$0", cycle: "一次體驗", summary: "NT$0" }
+      },
+      ritual: {
+        monthly: { amount: "NT$390", cycle: "/ 月", summary: "NT$390 / 月" },
+        annual: { amount: "NT$3,900", cycle: "/ 年", summary: "NT$3,900 / 年" }
+      },
+      plus: {
+        monthly: { amount: "NT$690", cycle: "/ 月", summary: "NT$690 / 月" },
+        annual: { amount: "NT$6,900", cycle: "/ 年", summary: "NT$6,900 / 年" }
+      },
+      sanctuary: {
+        monthly: { amount: "NT$1,290", cycle: "/ 月", summary: "NT$1,290 / 月" },
+        annual: { amount: "NT$12,900", cycle: "/ 年", summary: "NT$12,900 / 年" }
+      }
+    };
+
+    const billingNames = {
+      monthly: "月度",
+      annual: "年度"
+    };
+
     const params = new URLSearchParams(location.search);
-    const selectedCompanion = params.get("companion") || localStorage.getItem("auraSelectedCompanion") || "luna";
-    const companion = companionMap[selectedCompanion] || companionMap.luna;
+    const selectedCompanion = params.get("companion") || localStorage.getItem("auraSelectedCompanion") || "viora";
+    const companion = companionMap[selectedCompanion] || companionMap.viora;
     const nameEl = document.getElementById("membershipCompanionName");
     const hintEl = document.getElementById("membershipCompanionHint");
     const recommendedEl = document.getElementById("membershipRecommendedPlan");
     const selectedTitle = document.getElementById("membershipSelectedTitle");
     const selectedDesc = document.getElementById("membershipSelectedDesc");
     const modalPlan = document.getElementById("membershipModalPlan");
+    const modalCycle = document.getElementById("membershipModalCycle");
+    const modalAmount = document.getElementById("membershipModalAmount");
+    const feedback = document.getElementById("trial-feedback");
+    const consent = document.getElementById("soulBondConsent");
+    let activePlan = localStorage.getItem("auraSelectedPlan") || companion.plan || "ritual";
+    if (activePlan === "preview" || !planPrices[activePlan]) activePlan = "ritual";
+    let activeBilling = localStorage.getItem("auraBillingCycle") || "monthly";
 
     if (nameEl) nameEl.textContent = companion.name;
     if (hintEl) hintEl.textContent = currentLang === "en" ? companion.hintEn : companion.hintZh;
     if (recommendedEl) recommendedEl.textContent = planNames[companion.plan] || "NOEMA Ritual";
 
-    const setPlan = (plan, userAction = false) => {
-      cards.forEach(card => card.classList.toggle("is-selected", card.dataset.plan === plan));
-      if (selectedTitle) selectedTitle.textContent = t(`membership.selected.${plan}.title`);
-      if (selectedDesc) selectedDesc.textContent = t(`membership.selected.${plan}.desc`);
-      if (modalPlan) modalPlan.value = planNames[plan] || "NOEMA Ritual";
-      if (userAction) localStorage.setItem("auraSelectedPlan", plan);
+    const getPrice = (plan = activePlan, billing = activeBilling) => {
+      const prices = planPrices[plan] || planPrices.ritual;
+      return prices[billing] || prices.monthly;
     };
 
-    const currentPlan = localStorage.getItem("auraSelectedPlan") || companion.plan || "ritual";
-    setPlan(currentPlan);
+    const updatePrices = (billing = activeBilling) => {
+      cards.forEach(card => {
+        const plan = card.dataset.plan || "ritual";
+        const price = getPrice(plan, billing);
+        const amount = card.querySelector("[data-plan-price]");
+        const cycle = card.querySelector("[data-plan-cycle]");
+        if (amount) amount.textContent = price.amount;
+        if (cycle) cycle.textContent = price.cycle;
+      });
+    };
+
+    const updateModalSummary = () => {
+      const price = getPrice(activePlan, activeBilling);
+      if (modalPlan) modalPlan.textContent = planNames[activePlan] || "NOEMA Ritual";
+      if (modalCycle) modalCycle.textContent = billingNames[activeBilling] || "月度";
+      if (modalAmount) modalAmount.textContent = price.summary;
+    };
+
+    const setPlan = (plan, userAction = false) => {
+      activePlan = planPrices[plan] ? plan : "ritual";
+      cards.forEach(card => card.classList.toggle("is-selected", card.dataset.plan === activePlan));
+      if (selectedTitle) selectedTitle.textContent = t(`membership.selected.${activePlan}.title`);
+      if (selectedDesc) selectedDesc.textContent = t(`membership.selected.${activePlan}.desc`);
+      updateModalSummary();
+      if (userAction) localStorage.setItem("auraSelectedPlan", activePlan);
+    };
+
+    document.querySelectorAll("[data-billing]").forEach(btn => {
+      btn.classList.toggle("is-active", btn.dataset.billing === activeBilling);
+    });
+    updatePrices(activeBilling);
+    setPlan(activePlan);
 
     if (!translationOnly) {
       cards.forEach(card => {
@@ -1172,7 +1235,43 @@
         btn.addEventListener("click", () => {
           document.querySelectorAll("[data-billing]").forEach(item => item.classList.remove("is-active"));
           btn.classList.add("is-active");
-          localStorage.setItem("auraBillingCycle", btn.dataset.billing || "monthly");
+          activeBilling = btn.dataset.billing || "monthly";
+          updatePrices(activeBilling);
+          updateModalSummary();
+          localStorage.setItem("auraBillingCycle", activeBilling);
+        });
+      });
+      document.querySelectorAll("[data-open-trial]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          resetTrialModal();
+          updateModalSummary();
+          openTrialModal();
+        });
+      });
+      document.querySelectorAll("[data-close-trial]").forEach(btn => {
+        btn.addEventListener("click", closeTrialModal);
+      });
+      document.querySelectorAll("[data-confirm-payment]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (consent && !consent.checked) {
+            if (feedback) feedback.textContent = "請先勾選 Soul Bond 授權確認。";
+            return;
+          }
+          const price = getPrice(activePlan, activeBilling);
+          localStorage.setItem("auraSelectedPlan", activePlan);
+          localStorage.setItem("auraMembershipPlan", activePlan);
+          localStorage.setItem("auraMembershipName", planNames[activePlan] || "NOEMA Ritual");
+          localStorage.setItem("auraMembershipCycle", activeBilling);
+          localStorage.setItem("auraMembershipAmount", price.summary);
+          localStorage.setItem("auraPaymentStatus", "mock-authorized");
+          localStorage.setItem("auraPaymentAuthorizedAt", new Date().toISOString());
+          localStorage.setItem("auraSelectedCompanion", selectedCompanion);
+          localStorage.setItem("aura_companion_id", selectedCompanion);
+          localStorage.setItem("aura_companion", companion.name);
+          if (feedback) feedback.textContent = t("membership.modal.success");
+          window.setTimeout(() => {
+            location.href = `membership-bind.html?plan=${encodeURIComponent(activePlan)}&companion=${encodeURIComponent(selectedCompanion)}`;
+          }, 520);
         });
       });
     }
