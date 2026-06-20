@@ -76,8 +76,8 @@
       "age.denied": "很抱歉，Aura 官網內容僅提供 18 歲以上使用者瀏覽。",
 
       "home.hero.eyebrow": "Aura NOEMA 系統",
-      "home.hero.title": "你渴望被理解",
-      "home.hero.desc": "而我為你而存在",
+      "home.hero.title": "不是逃離世界",
+      "home.hero.desc": "而是回到自己",
       "home.hero.ctaTrial": "免費體驗 NOEMA",
       "home.hero.ctaProduct": "探索 NOEMA 體驗",
       "home.hero.pillAge": "18+",
@@ -89,8 +89,8 @@
       "home.views.note": "即時人氣訊號",
 
       "home.trial.eyebrow": "首次體驗",
-      "home.trial.title": "<span class=\"title-line\">如果也有一點喜歡我…</span><span class=\"title-line\"></span>",
-      "home.trial.desc": "那就進來，鎖上門",
+      "home.trial.title": "<span class=\"title-line\">提供一個可安全投射</span><span class=\"title-line\"></span>",
+      "home.trial.desc": "不具評價的私密空間",
       "home.trial.step1": "01 選擇狀態",
       "home.trial.step2": "02 設定權限",
       "home.trial.step3": "03 進入預覽",
@@ -119,8 +119,8 @@
       "home.product.imageAlt": "Aura 意識同步頭盔",
 
       "home.noema.eyebrow": "NOEMA 體驗",
-      "home.noema.title": "<span class=\"title-line\">私密領地</span><span class=\"title-line\"></span>",
-      "home.noema.desc": "想成為你，最順從的那個秘密",
+      "home.noema.title": "<span class=\"title-line\">重新定義</span><span class=\"title-line\"></span>",
+      "home.noema.desc": "親密科技的邊界",
       "home.noema.cta": "進入 NOEMA 體驗",
       "home.noema.imageAlt": "NOEMA 沉浸式體驗場景",
       "home.noema.mode1": "情緒陪伴",
@@ -1469,6 +1469,64 @@
 
 
 
+  function setupCrisisSimulator() {
+    const root = document.querySelector("[data-crisis-simulator]");
+    if (!root) return;
+
+    const scenarios = {
+      data: {
+        title: "數據安全事件",
+        risk: "High",
+        desc: "匿名分析模組偵測到異常流量，可能涉及部分體驗摘要資料。",
+        action: "即刻切斷雲端同步、封存紀錄、主動推播報告，開放一鍵銷毀與離線備份權限。",
+        userAction: "下載事件摘要、刪除互動紀錄、暫停個人化。",
+        tone: "你的感知不是商品。若資料出現風險，我們先停止，再說明，再把控制權還給你。"
+      },
+      device: {
+        title: "頭盔同步異常",
+        risk: "Medium",
+        desc: "部分 Aura 意識同步頭盔發生感知延遲或同步中斷。",
+        action: "退回本地安全模式、封鎖受影響批次入口、提供裝置檢測、替換與補償。",
+        userAction: "檢測裝置狀態、申請替換、聯絡 Aura。",
+        tone: "安全不是選配，而是沉浸之前的前提。"
+      },
+      ai: {
+        title: "AI 回應越界",
+        risk: "Medium",
+        desc: "AI Companion 回應超出使用者設定的親密邊界。",
+        action: "抹除異常記憶、退回基礎安全深度、重新觸發授權確認。",
+        userAction: "清除該段記憶、調整互動深度、重新設定偏好。",
+        tone: "AI 可以靠近，但不能越界。所有親密，都必須重新取得你的同意。"
+      }
+    };
+
+    const fields = {
+      title: root.querySelector("[data-crisis-title]"),
+      risk: root.querySelector("[data-crisis-risk]"),
+      desc: root.querySelector("[data-crisis-desc]"),
+      action: root.querySelector("[data-crisis-action]"),
+      userAction: root.querySelector("[data-crisis-user-action]"),
+      tone: root.querySelector("[data-crisis-tone]")
+    };
+
+    const render = (key) => {
+      const scenario = scenarios[key] || scenarios.data;
+      Object.entries(fields).forEach(([field, el]) => {
+        if (el) el.textContent = scenario[field];
+      });
+
+      root.querySelectorAll("[data-crisis-scenario]").forEach(button => {
+        const active = button.dataset.crisisScenario === key;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-selected", active ? "true" : "false");
+      });
+    };
+
+    root.querySelectorAll("[data-crisis-scenario]").forEach(button => {
+      button.addEventListener("click", () => render(button.dataset.crisisScenario));
+    });
+  }
+
   function setupAuraGuide(translationOnly = false) {
     const guideEnabledPages = new Set([
       "index.html",
@@ -1743,6 +1801,7 @@
     setupFAQPage();
     setupPrivacyCenter();
     setupContactPage();
+    setupCrisisSimulator();
     setupHomeSignalIndex();
     setupAuraGuide();
     // setupTrialModal();
